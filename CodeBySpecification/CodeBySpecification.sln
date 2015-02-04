@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UIAutomation.Base", "Seleni
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeBySpecification.API", "CodeBySpecification.API\CodeBySpecification.API.csproj", "{0D000C6F-12E9-4135-BD46-81FE6A1865D4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestFramework.Base", "TestFramework.Base\TestFramework.Base.csproj", "{C186C184-1376-4DEC-85DE-180609C73619}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{0D000C6F-12E9-4135-BD46-81FE6A1865D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D000C6F-12E9-4135-BD46-81FE6A1865D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D000C6F-12E9-4135-BD46-81FE6A1865D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C186C184-1376-4DEC-85DE-180609C73619}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C186C184-1376-4DEC-85DE-180609C73619}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C186C184-1376-4DEC-85DE-180609C73619}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C186C184-1376-4DEC-85DE-180609C73619}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -4,10 +4,10 @@ using System.Configuration;
 using System.IO;
 using CodeBySpecification.API.Domain;
 using CodeBySpecification.API.Service.Api;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
+using TestFramework.Base.Service;
 
 namespace Selenium.Base.Service
 {
@@ -15,6 +15,7 @@ namespace Selenium.Base.Service
 	{
 		private readonly double timeOut = Double.Parse(ConfigurationManager.AppSettings["UI.Tests.Timeout"]);
 		private readonly string SutUrl = ConfigurationManager.AppSettings["UI.Tests.SUT.Url"];
+		private readonly ITestAssertService assert = new MSTestAssertService();
 
 		public SeleniumUIAutomationService()
 		{
@@ -44,42 +45,42 @@ namespace Selenium.Base.Service
 		public void IsElementContentEqual(string elementKey, string expectedContent)
 		{
 			var element = GetElementByKey(elementKey);
-			if (element == null) Assert.Fail("\"" + elementKey + "\" is not avilable.");
-			Assert.AreEqual<string>(expectedContent, element.Text.Trim().Replace("\r\n", ""));
+			if (element == null) assert.Fail("\"" + elementKey + "\" is not avilable.");
+			assert.IsEqual(expectedContent, element.Text.Trim().Replace("\r\n", ""));
 		}
 
 		public void IsElementContentEqual(string elementKey, string selectionMethod, string selection, string expectedContent)
 		{
 			var element = GetElement(elementKey, selectionMethod, selection);
-			if (element == null) Assert.Fail("\"" + element.TagName + "\" is not avilable.");
-			Assert.AreEqual<string>(expectedContent, element.Text.Trim().Replace("\r\n", ""));
+			if (element == null) assert.Fail("\"" + element.TagName + "\" is not avilable.");
+			assert.IsEqual(expectedContent, element.Text.Trim().Replace("\r\n", ""));
 		}
 
 		public void ClickOn(string elementKey)
 		{
 			var element = GetElementByKey(elementKey);
-			if (element == null) Assert.Fail("\"" + elementKey + "\" is not avilable to Click");
+			if (element == null) assert.Fail("\"" + elementKey + "\" is not avilable to Click");
 			element.Click();
 		}
 
 		public void ClickOn(string elementKey, string selectionMethod, string selection)
 		{
 			var element = GetElement(elementKey, selectionMethod, selection);
-			if (element == null) Assert.Fail("\"" + elementKey + "\" is not avilable to Click");
+			if (element == null) assert.Fail("\"" + elementKey + "\" is not avilable to Click");
 			element.Click();
 		}
 
 		public void EnterTextTo(string elementKey, string text)
 		{
 			var element = GetElementByKey(elementKey);
-			if (element == null) Assert.Fail("\"" + elementKey + "\" is not avilable to input the value \"" + text + "\"");
+			if (element == null) assert.Fail("\"" + elementKey + "\" is not avilable to input the value \"" + text + "\"");
 			element.SendKeys(text);
 		}
 
 		public void EnterTextTo(string elementKey, string text, string selectionMethod, string selection)
 		{
 			var element = GetElement(elementKey, selectionMethod, selection);
-			if (element == null) Assert.Fail("\"" + elementKey + "\" is not avilable to input the value \"" + text + "\"");
+			if (element == null) assert.Fail("\"" + elementKey + "\" is not avilable to input the value \"" + text + "\"");
 			element.SendKeys(text);
 		}
 
@@ -132,25 +133,25 @@ namespace Selenium.Base.Service
 
 		public void IsElementVisible(string elementKey)
 		{
-			Assert.IsNotNull(GetElementByKey(elementKey));
+			assert.IsNotNull(GetElementByKey(elementKey));
 		}
 
 		public void IsElementVisible(string elementKey, string selectionMethod, string selection)
 		{
-			Assert.IsNotNull(GetElement(elementKey, selectionMethod, selection));
+			assert.IsNotNull(GetElement(elementKey, selectionMethod, selection));
 		}
 
 		public string GetElementText(string elementKey)
 		{
 			var element = GetElementByKey(elementKey);
-			if (element == null) Assert.Fail("\"" + elementKey + "\" is not avilable to read the content.");
+			if (element == null) assert.Fail("\"" + elementKey + "\" is not avilable to read the content.");
 			return element.Text;
 		}
 
 		public string GetElementText(string elementKey, string selectionMethod, string selection)
 		{
 			var element = GetElement(elementKey, selectionMethod, selection);
-			if (element == null) Assert.Fail("\"" + elementKey + "\" is not avilable to read the content.");
+			if (element == null) assert.Fail("\"" + elementKey + "\" is not avilable to read the content.");
 			return element.Text;
 		}
 
