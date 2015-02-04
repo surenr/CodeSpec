@@ -8,7 +8,7 @@ namespace CodeBySpecification.Core
 	[Binding]
 	public class FeatureBase
 	{ //TODO: At present this class has too many responsibility, but we will refactor it once we have the basic system avilable.
-		private static readonly IFeatureTestHelper UiFeatureTestsHelper = new SeleniumUiFeatureTestHelper();
+		private static readonly IUIAutomationService UiFeatureTestsHelper = new SeleniumUIAutomationService();
 
 		#region Core Step Definition Vocabulary
 

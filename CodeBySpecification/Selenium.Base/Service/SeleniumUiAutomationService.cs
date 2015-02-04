@@ -11,12 +11,12 @@ using OpenQA.Selenium.Support.UI;
 
 namespace Selenium.Base.Service
 {
-	public class SeleniumUiFeatureTestHelper : IFeatureTestHelper
+	public class SeleniumUIAutomationService : IUIAutomationService
 	{
 		private readonly double timeOut = Double.Parse(ConfigurationManager.AppSettings["UI.Tests.Timeout"]);
 		private readonly string SutUrl = ConfigurationManager.AppSettings["UI.Tests.SUT.Url"];
 
-		public SeleniumUiFeatureTestHelper()
+		public SeleniumUIAutomationService()
 		{
 			ObjectRepo = new Dictionary<string, UiElement>();
 		}
@@ -112,7 +112,7 @@ namespace Selenium.Base.Service
 			return new WebDriverWait(((IWebDriver) GetBrowser), TimeSpan.FromSeconds(timeOut)).Until(ExpectedConditions.ElementExists((selction)));
 		}
 
-		public bool WaitForElementContentToLoad(string key, string content, string selectionMethod = null, string selection = null)
+		private bool WaitForElementContentToLoad(string key, string content, string selectionMethod = null, string selection = null)
 		{
 			var elementList = ObjectRepo;
 			key = key.ToUpper();
@@ -154,7 +154,7 @@ namespace Selenium.Base.Service
 			return element.Text;
 		}
 
-		string IFeatureTestHelper.SutUrl
+		string IUIAutomationService.SutUrl
 		{
 			get { return SutUrl; }
 		}

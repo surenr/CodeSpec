@@ -70,9 +70,9 @@
       <Project>{0d000c6f-12e9-4135-bd46-81fe6a1865d4}</Project>
       <Name>CodeBySpecification.API</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Selenium.Base\Selenium.Base.csproj">
+    <ProjectReference Include="..\Selenium.Base\UIAutomation.Base.csproj">
       <Project>{955248c4-00bb-488c-8750-b3d41c0f1aef}</Project>
-      <Name>Selenium.Base</Name>
+      <Name>UIAutomation.Base</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

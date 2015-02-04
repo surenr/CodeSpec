@@ -3,7 +3,7 @@ using CodeBySpecification.API.Domain;
 
 namespace CodeBySpecification.API.Service.Api
 {
-	public interface IFeatureTestHelper
+	public interface IUIAutomationService
 	{
 		string GetElementText(string elementKey);
 

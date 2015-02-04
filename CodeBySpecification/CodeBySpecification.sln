@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeBySpecification", "Code
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FacilitTests", "FacilitTests\FacilitTests.csproj", "{25524F1A-882F-4BD1-8F74-C23F3A6C7FB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Selenium.Base", "Selenium.Base\Selenium.Base.csproj", "{955248C4-00BB-488C-8750-B3D41C0F1AEF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UIAutomation.Base", "Selenium.Base\UIAutomation.Base.csproj", "{955248C4-00BB-488C-8750-B3D41C0F1AEF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeBySpecification.API", "CodeBySpecification.API\CodeBySpecification.API.csproj", "{0D000C6F-12E9-4135-BD46-81FE6A1865D4}"
 EndProject
