@@ -1,0 +1,11 @@
+E:\Projects\Selenium.Bdd.Framework\TestSeleniumBdd\bin\Debug>mstest /testcontainer:OrderedTest1.orderedtest
+TestSeleniumBdd.csproj
+E:\Projects\Selenium.Bdd.Framework\TestSeleniumBdd\bin\Debug\TestResults\surenr_SURENR 2015-02-02 13_26_57.trx
+
+specflow.exe mstestexecutionreport "E:\Projects\Selenium.Bdd.Framework\TestSeleniumBdd\TestSeleniumBdd.csproj" /testResult:"E:\Projects\Selenium.Bdd.Framework\TestSeleniumBdd\bin\Debug\TestResults\surenr_SURENR 2015-02-04 09_36_33.trx" /out:"E:\Projects\Selenium.Bdd.Framework\TestSeleniumBdd\bin\Debug\TestResults\MyResult.html"
+
+Specflow configuration details
+--------------------------------
+1. Need to add Selenim.Bdd.Framework as a reference and update the app.config file accordingly
+2. Need to include the AssemblyInitilization.cs file which will force mstest to load assemblies
+3. use specflow.exe.config file to ensure correct .net framework version is used in the command line so it can generate the repot
