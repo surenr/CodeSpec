@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Configuration;
+using CodeBySpecification.API.Service.Api;
+using Selenium.Base.Service;
 using TechTalk.SpecFlow;
 
 namespace CodeBySpecification.Core
@@ -6,9 +8,24 @@ namespace CodeBySpecification.Core
 	[Binding]
 	public class FeatureBase
 	{ //TODO: At present this class has too many responsibility, but we will refactor it once we have the basic system avilable.
-		private readonly UiFeatureTestsHelper uiFeatureTestsHelper = new UiFeatureTestsHelper();
+		private static readonly IFeatureTestHelper UiFeatureTestsHelper = new SeleniumUiFeatureTestHelper();
 
 		#region Core Step Definition Vocabulary
+
+		[BeforeFeature("SeleniumTest")]
+		public static void BeforeSeleniumTestFeature()
+		{
+			var browserName = ConfigurationManager.AppSettings["UI.Tests.Target.Browser"];
+			var objectDefSource = ConfigurationManager.AppSettings["UI.Tests.Object.Definitions.Path"];
+
+			UiFeatureTestsHelper.InitilizeTests(browserName, objectDefSource);
+		}
+
+		[AfterFeature("SeleniumTest")]
+		public static void AfterSeleniumTestFeature()
+		{
+			//Browser.Quit();
+		}
 
 		#region Read the content of <element>
 
@@ -17,9 +34,7 @@ namespace CodeBySpecification.Core
 		[Then(@"Read the content of ""(.*)""")]
 		public void ReadTheContentOf(string elementKey)
 		{
-			var element = uiFeatureTestsHelper.GetElementByKey(elementKey);
-			if (element == null) Assert.Fail("\"" + elementKey + "\" is not avilable to read the content.");
-			FeatureContext.Current[elementKey] = element.Text;
+			FeatureContext.Current[elementKey] = UiFeatureTestsHelper.GetElementText(elementKey);
 		}
 
 		[Given(@"Read the content of ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
@@ -27,9 +42,7 @@ namespace CodeBySpecification.Core
 		[Then(@"Read the content of ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
 		public void ReadTheContentOfWithTheOf(string elementKey, string selectionType, string selection)
 		{
-			var element = uiFeatureTestsHelper.GetElement(elementKey, selectionType, selection);
-			if (element == null) Assert.Fail("\"" + elementKey + "\" is not avilable to read the content.");
-			FeatureContext.Current[elementKey] = element.Text;
+			FeatureContext.Current[elementKey] = UiFeatureTestsHelper.GetElementText(elementKey, selectionType, selection);
 		}
 
 		#endregion
@@ -41,7 +54,7 @@ namespace CodeBySpecification.Core
 		[Then(@"The content of ""(.*)"" is equal to ""(.*)""")]
 		public void TheConentOfIsEqualTo(string elementKey, string expectedContent)
 		{
-			uiFeatureTestsHelper.IsElementContentEqual(elementKey, expectedContent);
+			UiFeatureTestsHelper.IsElementContentEqual(elementKey, expectedContent);
 		}
 
 		[Given(@"The content of ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) is equal to ""(.*)""")]
@@ -49,7 +62,7 @@ namespace CodeBySpecification.Core
 		[Then(@"The content of ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) is equal to ""(.*)""")]
 		public void TheConentOfWithTheOfIsEqualTo(string elementKey, string selectionMethod, string selection, string expectedContent)
 		{
-			uiFeatureTestsHelper.IsElementContentEqual(elementKey, selectionMethod, selection, expectedContent);
+			UiFeatureTestsHelper.IsElementContentEqual(elementKey, selectionMethod, selection, expectedContent);
 		}
 
 		#endregion
@@ -61,7 +74,7 @@ namespace CodeBySpecification.Core
 		[Then(@"I click on ""(.*)""")]
 		public void IClickOn(string elementKey)
 		{
-			uiFeatureTestsHelper.ClickOn(elementKey);
+			UiFeatureTestsHelper.ClickOn(elementKey);
 		}
 
 		[Given(@"I click on ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
@@ -69,7 +82,7 @@ namespace CodeBySpecification.Core
 		[Then(@"I click on ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
 		public void IClickOnWithTheOf(string elementKey, string selectionMethod, string selection)
 		{
-			uiFeatureTestsHelper.ClickOn(elementKey, selectionMethod, selection);
+			UiFeatureTestsHelper.ClickOn(elementKey, selectionMethod, selection);
 		}
 
 		#endregion
@@ -81,7 +94,7 @@ namespace CodeBySpecification.Core
 		[Then(@"I enter ""(.*)"" to the ""(.*)""")]
 		public void IEnterToThe(string value, string elementKey)
 		{
-			uiFeatureTestsHelper.EnterTextTo(elementKey, value);
+			UiFeatureTestsHelper.EnterTextTo(elementKey, value);
 		}
 
 		[Given(@"I enter ""(.*)"" to the ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
@@ -89,7 +102,7 @@ namespace CodeBySpecification.Core
 		[Then(@"I enter ""(.*)"" to the ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
 		public void IEnterToTheWithTheOf(string value, string elementKey, string selectionMethod, string selection)
 		{
-			uiFeatureTestsHelper.EnterTextTo(elementKey, value, selectionMethod, selection);
+			UiFeatureTestsHelper.EnterTextTo(elementKey, value, selectionMethod, selection);
 		}
 
 		#endregion
@@ -101,7 +114,7 @@ namespace CodeBySpecification.Core
 		[Then(@"I navigate to SUT")]
 		public void INavigateToSut()
 		{
-			uiFeatureTestsHelper.GotoUrl(uiFeatureTestsHelper.SutUrl);
+			UiFeatureTestsHelper.GotoUrl(UiFeatureTestsHelper.SutUrl);
 		}
 
 		#endregion
@@ -113,7 +126,7 @@ namespace CodeBySpecification.Core
 		[Then(@"I navigate to ""(.*)""")]
 		public void INavigateTo(string url)
 		{
-			uiFeatureTestsHelper.GotoUrl(url);
+			UiFeatureTestsHelper.GotoUrl(url);
 		}
 
 		#endregion
@@ -128,7 +141,7 @@ namespace CodeBySpecification.Core
 		[Then(@"I wait for the ""(.*)"" to appear")]
 		public void TheElementIsVisible(string elementKey)
 		{
-			Assert.IsNotNull(uiFeatureTestsHelper.GetElementByKey(elementKey));
+			UiFeatureTestsHelper.IsElementVisible(elementKey);
 		}
 
 		[Given(@"The ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) is visible")]
@@ -139,7 +152,7 @@ namespace CodeBySpecification.Core
 		[Then(@"I wait for the ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) to appear")]
 		public void TheElementWithTheOfIsVisible(string elementKey, string selectionMethod, string selection)
 		{
-			Assert.IsNotNull(uiFeatureTestsHelper.GetElement(elementKey, selectionMethod, selection));
+			UiFeatureTestsHelper.IsElementVisible(elementKey, selectionMethod, selection);
 		}
 
 		#endregion
@@ -151,7 +164,7 @@ namespace CodeBySpecification.Core
 		[When(@"I accept the confirmation")]
 		public void IAcceptTheConfirmation()
 		{
-			uiFeatureTestsHelper.AcceptTheConfirmation();
+			UiFeatureTestsHelper.AcceptTheConfirmation();
 		}
 
 		#endregion

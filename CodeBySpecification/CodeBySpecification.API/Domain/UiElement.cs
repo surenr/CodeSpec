@@ -1,6 +1,6 @@
-﻿namespace CodeBySpecification.Domain
+﻿namespace CodeBySpecification.API.Domain
 {
-	public class ElementInfo
+	public class UiElement
 	{
 		public string SelectionMethod { get; set; }
 		public string Selection { get; set; }
