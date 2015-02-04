@@ -12,7 +12,7 @@ namespace CodeBySpecification.Core
 
 		#region Core Step Definition Vocabulary
 
-		[BeforeFeature("SeleniumTest")]
+		[BeforeFeature("UIAutomationTest")]
 		public static void BeforeSeleniumTestFeature()
 		{
 			var browserName = ConfigurationManager.AppSettings["UI.Tests.Target.Browser"];
@@ -21,7 +21,7 @@ namespace CodeBySpecification.Core
 			UiFeatureTestsHelper.InitilizeTests(browserName, objectDefSource);
 		}
 
-		[AfterFeature("SeleniumTest")]
+		[AfterFeature("UIAutomationTest")]
 		public static void AfterSeleniumTestFeature()
 		{
 			//Browser.Quit();
