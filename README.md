@@ -1,0 +1,2 @@
+# CodeSpec
+Code by Specification
