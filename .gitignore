@@ -13,6 +13,8 @@
 [Rr]eleases/
 .localhistory/
 .gitattributes
+FacilitTests/
+Facilit*
 
 x64/
 x86/
