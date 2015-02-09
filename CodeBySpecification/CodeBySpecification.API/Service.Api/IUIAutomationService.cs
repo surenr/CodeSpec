@@ -17,6 +17,10 @@ namespace CodeBySpecification.API.Service.Api
 
 		void ClickOn(string elementKey, string selectionMethod, string selection);
 
+		void DragAndDrop(string dragElementKey, string dropElementKey);
+
+		void DragAndDrop(string dragElementKey, string dragElementSelectionMethod, string dragElementSelection, string dropElementKey, string dropElementKeySelectionMethod, string dropElementKeySelection);
+
 		void EnterTextTo(string elementKey, string value);
 
 		void EnterTextTo(string elementKey, string value, string selectionMethod, string selection);

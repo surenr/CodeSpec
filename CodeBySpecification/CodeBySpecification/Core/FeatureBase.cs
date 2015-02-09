@@ -99,6 +99,32 @@ namespace CodeBySpecification.Core
 
 		#endregion
 
+		#region Drag <element1> and drop on to <element2>
+
+		[Given(@"I drag ""(.*)"" and drop on to ""(.*)""")]
+		[When(@"I drag ""(.*)"" and drop on to ""(.*)""")]
+		[Then(@"I drag ""(.*)"" and drop on to ""(.*)""")]
+		[Given(@"drag ""(.*)"" and drop on to ""(.*)""")]
+		[When(@"drag ""(.*)"" and drop on to ""(.*)""")]
+		[Then(@"drag ""(.*)"" and drop on to ""(.*)""")]
+		public void DragAndDropOnTo(string elementToDrag, string elementToDrop)
+		{
+			UiFeatureTestsHelper.DragAndDrop(elementToDrag, elementToDrop);
+		}
+
+		[Given(@"I drag ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) and drop on to ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
+		[When(@"I drag ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) and drop on to ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
+		[Then(@"I drag ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) and drop on to ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
+		[Given(@"drag ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) and drop on to ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
+		[When(@"drag ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) and drop on to ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
+		[Then(@"drag ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) and drop on to ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
+		public void DragAndDropOnTo(string elementToDrag, string elementToDragSelectionMethod, string elementToDragSelection, string elementToDrop, string elementToDropSelectionMethod, string elementToDropSelection)
+		{
+			UiFeatureTestsHelper.DragAndDrop(elementToDrag, elementToDrop);
+		}
+
+		#endregion
+
 		#region Enter <value> to <element>
 
 		[Given(@"I enter ""(.*)"" to the ""(.*)""")]

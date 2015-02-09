@@ -2,10 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
+using System.Threading;
 using CodeBySpecification.API.Domain;
 using CodeBySpecification.API.Service.Api;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Support.Extensions;
 using OpenQA.Selenium.Support.UI;
 using TestFramework.Base.Service;
 
@@ -166,21 +169,25 @@ namespace Selenium.Base.Service
 
 		public void InitilizeTests(string browserType, string objectRepoSourcePath)
 		{
-			var Browser = (IWebDriver) GetBrowser;
-			if (Browser == null)
+			var browser = (IWebDriver) GetBrowser;
+
+			if (browser == null)
 			{
 				switch (browserType)
 				{
 					case "FireFox":
-						Browser = new FirefoxDriver();
+
+						var profile = new FirefoxProfile();
+						profile.EnableNativeEvents = true;
+						profile.AcceptUntrustedCertificates = true;
+						browser = new FirefoxDriver(profile);
 						break;
 				}
-				Browser.Manage().Window.Maximize();
-				Browser.Manage().Cookies.DeleteAllCookies();
-				GetBrowser = Browser;
+				if (browser == null) throw new Exception("Browser driver initilization error. Please ensure you have set the \"UI.Tests.Target.Browser\" setting correctly in the App.Config file.");
+				browser.Manage().Window.Maximize();
+				browser.Manage().Cookies.DeleteAllCookies();
+				GetBrowser = browser;
 			}
-
-			if (GetBrowser == null) throw new Exception("Browser driver initilization error. Please ensure you have set the \"UI.Tests.Target.Browser\" setting correctly in the App.Config file.");
 
 			if (ObjectRepo.Count != 0) return; //ensure we don't Unnecessarily  read and create the repo all over again.
 
@@ -201,6 +208,30 @@ namespace Selenium.Base.Service
 					});
 				}
 			}
+		}
+
+		public void DragAndDrop(string dragElementKey, string dropElementKey)
+		{
+			var locatorFrom = GetElementByKey(dragElementKey);
+			var locatorTo = GetElementByKey(dropElementKey);
+			SeleniumDragAndDrop(dragElementKey, dropElementKey, locatorFrom, locatorTo);
+		}
+
+		private void SeleniumDragAndDrop(string dragElementKey, string dropElementKey, IWebElement locatorFrom,
+			IWebElement locatorTo)
+		{
+			if (locatorFrom == null) assert.Fail("\"" + dragElementKey + "\" is not avilable to drag.");
+			if (locatorTo == null) assert.Fail("\"" + dropElementKey + "\" is not avilable to drop \"" + dropElementKey + "\".");
+			var driver = (IWebDriver) GetBrowser;
+			var action = new Actions(driver);
+			action.DragAndDrop(locatorFrom, locatorTo);
+		}
+
+		public void DragAndDrop(string dragElementKey, string dragElementSelectionMethod, string dragElementSelection, string dropElementKey, string dropElementKeySelectionMethod, string dropElementKeySelection)
+		{
+			var locatorFrom = GetElement(dragElementKey, dragElementSelectionMethod, dragElementSelection);
+			var locatorTo = GetElement(dropElementKey, dropElementKeySelectionMethod, dropElementKeySelection);
+			SeleniumDragAndDrop(dragElementKey, dropElementKey, locatorFrom, locatorTo);
 		}
 	}
 }
