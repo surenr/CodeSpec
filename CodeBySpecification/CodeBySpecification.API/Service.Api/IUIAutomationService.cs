@@ -26,7 +26,6 @@ namespace CodeBySpecification.API.Service.Api
 		void EnterTextTo(string elementKey, string value, string selectionMethod, string selection);
 
 		string SutUrl { get; }
-		IDictionary<string, UiElement> ObjectRepo { get; set; }
 
 		object GetBrowser { get; set; }
 
@@ -38,6 +37,6 @@ namespace CodeBySpecification.API.Service.Api
 
 		void AcceptTheConfirmation();
 
-		void InitilizeTests(string browserType, string objectRepoSourcePath);
+		void InitilizeTests(string browserType, string objectRepoResource);
 	}
 }

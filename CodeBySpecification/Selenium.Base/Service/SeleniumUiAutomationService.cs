@@ -1,14 +1,11 @@
 using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.IO;
-using System.Threading;
 using CodeBySpecification.API.Domain;
 using CodeBySpecification.API.Service.Api;
+using ObjectRepository.Base.Service;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Interactions;
-using OpenQA.Selenium.Support.Extensions;
 using OpenQA.Selenium.Support.UI;
 using TestFramework.Base.Service;
 
@@ -19,15 +16,13 @@ namespace Selenium.Base.Service
 		private readonly double timeOut = Double.Parse(ConfigurationManager.AppSettings["UI.Tests.Timeout"]);
 		private readonly string SutUrl = ConfigurationManager.AppSettings["UI.Tests.SUT.Url"];
 		private readonly ITestAssertService assert = new MSTestAssertService();
+		private readonly IObjectRepoService objectRepoManager = new CSVObjectRepositoryService();
 
-		public SeleniumUIAutomationService()
-		{
-			ObjectRepo = new Dictionary<string, UiElement>();
-		}
+		public object GetBrowser { get; set; }
 
 		public void AddNewElementToObjectRepo(string key, UiElement uiElement)
 		{
-			ObjectRepo.Add(key.ToUpper(), uiElement);
+			objectRepoManager.AddObject(key, uiElement);
 		}
 
 		public void AcceptTheConfirmation()
@@ -37,8 +32,7 @@ namespace Selenium.Base.Service
 
 		public IWebElement GetElement(string key, string selectionMethod, string selection)
 		{
-			var elementList = ObjectRepo;
-			if (elementList.ContainsKey(key)) return GetElementBy(elementList[key].SelectionMethod, elementList[key].Selection);
+			if (objectRepoManager.ObjectExists(key)) return GetElementBy(objectRepoManager.GetObject(key).SelectionMethod, objectRepoManager.GetObject(key).Selection);
 			var element = GetElementBy(selectionMethod, selection);
 			if (element == null) return null;
 			AddNewElementToObjectRepo(key, new UiElement { SelectionMethod = selectionMethod, Selection = selection });
@@ -94,8 +88,7 @@ namespace Selenium.Base.Service
 
 		private IWebElement GetElementByKey(string key)
 		{
-			var elementList = ObjectRepo;
-			return elementList.ContainsKey(key.ToUpper()) ? GetElementBy(elementList[key.ToUpper()].SelectionMethod, elementList[key.ToUpper()].Selection) : null;
+			return objectRepoManager.ObjectExists(key) ? GetElementBy(objectRepoManager.GetObject(key).SelectionMethod, objectRepoManager.GetObject(key).Selection) : null;
 		}
 
 		private IWebElement GetElementBy(string selecitonMethod, string selection)
@@ -118,18 +111,17 @@ namespace Selenium.Base.Service
 
 		private bool WaitForElementContentToLoad(string key, string content, string selectionMethod = null, string selection = null)
 		{
-			var elementList = ObjectRepo;
 			key = key.ToUpper();
-			if (!elementList.ContainsKey(key) && selectionMethod == null && selection == null) return false;
-			if (!elementList.ContainsKey(key) && selectionMethod != null && selection != null) elementList.Add(key, new UiElement { Selection = selection, SelectionMethod = selectionMethod });
+			if (!objectRepoManager.ObjectExists(key) && selectionMethod == null && selection == null) return false;
+			if (!objectRepoManager.ObjectExists(key) && selectionMethod != null && selection != null) objectRepoManager.AddObject(key, new UiElement { Selection = selection, SelectionMethod = selectionMethod });
 
-			switch (elementList[key].SelectionMethod.ToUpper())
+			switch (objectRepoManager.GetObject(key).SelectionMethod.ToUpper())
 			{
 				case "ID":
-					return new WebDriverWait(((IWebDriver) GetBrowser), TimeSpan.FromSeconds(timeOut)).Until(d => d.FindElement(By.Id(elementList[key].Selection)).Text.Contains(content));
+					return new WebDriverWait(((IWebDriver) GetBrowser), TimeSpan.FromSeconds(timeOut)).Until(d => d.FindElement(By.Id(objectRepoManager.GetObject(key).Selection)).Text.Contains(content));
 
 				case "XPATH":
-					return new WebDriverWait(((IWebDriver) GetBrowser), TimeSpan.FromSeconds(timeOut)).Until(d => d.FindElement(By.XPath(elementList[key].Selection)).Text.Contains(content));
+					return new WebDriverWait(((IWebDriver) GetBrowser), TimeSpan.FromSeconds(timeOut)).Until(d => d.FindElement(By.XPath(objectRepoManager.GetObject(key).Selection)).Text.Contains(content));
 			}
 			return false;
 		}
@@ -163,11 +155,7 @@ namespace Selenium.Base.Service
 			get { return SutUrl; }
 		}
 
-		public IDictionary<string, UiElement> ObjectRepo { get; set; }
-
-		public object GetBrowser { get; set; }
-
-		public void InitilizeTests(string browserType, string objectRepoSourcePath)
+		public void InitilizeTests(string browserType, string objectRepoResource)
 		{
 			var browser = (IWebDriver) GetBrowser;
 
@@ -188,26 +176,8 @@ namespace Selenium.Base.Service
 				browser.Manage().Cookies.DeleteAllCookies();
 				GetBrowser = browser;
 			}
-
-			if (ObjectRepo.Count != 0) return; //ensure we don't Unnecessarily  read and create the repo all over again.
-
-			var fileList = Directory.GetFiles(objectRepoSourcePath, "*.csv");
-			foreach (var file in fileList)
-			{
-				var reader = new StreamReader(File.OpenRead(file));
-				reader.ReadLine(); //read out the first line so the topics line is ignored
-				while (!reader.EndOfStream)
-				{
-					var line = reader.ReadLine();
-					var values = line.Split(',');
-					if (ObjectRepo.ContainsKey(values[0].Trim().ToUpper())) continue;
-					ObjectRepo.Add(values[0].Trim().ToUpper(), new UiElement
-					{
-						SelectionMethod = values[1].Trim(),
-						Selection = values[2].Trim()
-					});
-				}
-			}
+			if (objectRepoManager.ObjectCount() == 0)
+				objectRepoManager.Populate(objectRepoResource);
 		}
 
 		public void DragAndDrop(string dragElementKey, string dropElementKey)
