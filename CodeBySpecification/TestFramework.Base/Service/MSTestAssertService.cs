@@ -79,5 +79,15 @@ namespace TestFramework.Base.Service
 		{
 			Assert.IsNull(element);
 		}
+
+		public void IsTrue(bool condition)
+		{
+			Assert.IsTrue(condition);
+		}
+
+		public void IsNotTrue(bool condition)
+		{
+			Assert.IsFalse(condition);
+		}
 	}
 }

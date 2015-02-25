@@ -1,5 +1,7 @@
 using System;
 using System.Configuration;
+using System.Text.RegularExpressions;
+using System.Threading;
 using CodeBySpecification.API.Domain;
 using CodeBySpecification.API.Service.Api;
 using ObjectRepository.Base.Service;
@@ -41,16 +43,12 @@ namespace Selenium.Base.Service
 
 		public void IsElementContentEqual(string elementKey, string expectedContent)
 		{
-			var element = GetElementByKey(elementKey);
-			if (element == null) assert.Fail("\"" + elementKey + "\" is not avilable.");
-			assert.IsEqual(expectedContent, element.Text.Trim().Replace("\r\n", ""));
+			assert.IsTrue(WaitForElementContentToLoad(elementKey, expectedContent));
 		}
 
 		public void IsElementContentEqual(string elementKey, string selectionMethod, string selection, string expectedContent)
 		{
-			var element = GetElement(elementKey, selectionMethod, selection);
-			if (element == null) assert.Fail("\"" + element.TagName + "\" is not avilable.");
-			assert.IsEqual(expectedContent, element.Text.Trim().Replace("\r\n", ""));
+			assert.IsTrue(WaitForElementContentToLoad(elementKey, expectedContent, selectionMethod, selection));
 		}
 
 		public void ClickOn(string elementKey)
@@ -67,10 +65,30 @@ namespace Selenium.Base.Service
 			element.Click();
 		}
 
+		public void ClickOn(string elementKey, int timeout)
+		{
+			ClickOn(elementKey);
+			Thread.Sleep(timeout * 1000);
+		}
+
+		public void ClickOn(string elementKey, string selectionMethod, string selection, int timeout)
+		{
+			ClickOn(elementKey, selectionMethod, selection);
+			Thread.Sleep(timeout * 1000);
+		}
+
 		public void EnterTextTo(string elementKey, string text)
 		{
 			var element = GetElementByKey(elementKey);
 			if (element == null) assert.Fail("\"" + elementKey + "\" is not avilable to input the value \"" + text + "\"");
+			try
+			{
+				element.Clear();
+			}
+			catch (Exception)
+			{
+				//ignore element clear related exceptions
+			}
 			element.SendKeys(text);
 		}
 
@@ -78,6 +96,14 @@ namespace Selenium.Base.Service
 		{
 			var element = GetElement(elementKey, selectionMethod, selection);
 			if (element == null) assert.Fail("\"" + elementKey + "\" is not avilable to input the value \"" + text + "\"");
+			try
+			{
+				element.Clear();
+			}
+			catch (Exception)
+			{
+				//ignore element clear related exceptions
+			}
 			element.SendKeys(text);
 		}
 
@@ -134,6 +160,16 @@ namespace Selenium.Base.Service
 		public void IsElementVisible(string elementKey, string selectionMethod, string selection)
 		{
 			assert.IsNotNull(GetElement(elementKey, selectionMethod, selection));
+		}
+
+		public void IsElementNotVisible(string elementKey)
+		{
+			assert.IsNull(GetElementByKey(elementKey));
+		}
+
+		public void IsElementNotVisible(string elementKey, string selectionMethod, string selection)
+		{
+			assert.IsNull(GetElement(elementKey, selectionMethod, selection));
 		}
 
 		public string GetElementText(string elementKey)
@@ -202,6 +238,32 @@ namespace Selenium.Base.Service
 			var locatorFrom = GetElement(dragElementKey, dragElementSelectionMethod, dragElementSelection);
 			var locatorTo = GetElement(dropElementKey, dropElementKeySelectionMethod, dropElementKeySelection);
 			SeleniumDragAndDrop(dragElementKey, dropElementKey, locatorFrom, locatorTo);
+		}
+
+		public string ReadURL()
+		{
+			var driver = (IWebDriver) GetBrowser;
+			return driver.Url;
+		}
+
+		public void AreValuesEqual(string value1, string value2)
+		{
+			assert.IsEqual(value1, value2);
+		}
+
+		public void IsPageContainsTextPattern(string textPattern)
+		{
+			var pageSource = ((IWebDriver) GetBrowser).PageSource;
+			var match = Regex.Match(pageSource, @textPattern, RegexOptions.IgnoreCase);
+			assert.IsTrue(match.Success);
+		}
+
+		public void IsElementContainsTextPattern(string elementKey, string textPattern)
+		{
+			var element = GetElementByKey(elementKey);
+			if (element == null) throw new Exception("\"" + elementKey + "\" is not found.");
+			var match = Regex.Match(element.Text, @textPattern, RegexOptions.IgnoreCase);
+			assert.IsTrue(match.Success);
 		}
 	}
 }

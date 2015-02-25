@@ -1,4 +1,6 @@
-﻿namespace CodeBySpecification.API.Service.Api
+﻿using System;
+
+namespace CodeBySpecification.API.Service.Api
 {
 	public interface ITestAssertService
 	{
@@ -29,6 +31,10 @@
 		void IsNotEqual(float expected, float actual, string message = null);
 
 		void IsNotNull(object element);
+
+		void IsTrue(bool condition);
+
+		void IsNotTrue(bool condition);
 
 		void IsNull(object element);
 	}

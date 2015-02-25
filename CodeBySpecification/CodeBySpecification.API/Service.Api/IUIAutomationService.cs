@@ -35,8 +35,24 @@ namespace CodeBySpecification.API.Service.Api
 
 		void IsElementVisible(string elementKey, string selectionMethod, string selection);
 
+		void IsElementNotVisible(string elementKey);
+
+		void IsElementNotVisible(string elementKey, string selectionMethod, string selection);
+
 		void AcceptTheConfirmation();
 
 		void InitilizeTests(string browserType, string objectRepoResource);
+
+		string ReadURL();
+
+		void AreValuesEqual(string value1, string value2);
+
+		void IsPageContainsTextPattern(string textPattern);
+
+		void IsElementContainsTextPattern(string elementKey, string textPattern);
+
+		void ClickOn(string elementKey, int timeout);
+
+		void ClickOn(string elementKey, string selectionMethod, string selection, int timeout);
 	}
 }
