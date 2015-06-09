@@ -70,20 +70,16 @@ I enter value of variable "<variable_name>" to the "<element_key>"
 Enter value of variable "<variable_name>" to the "<element_key>"
 I enter value of variable "<variable_name>" to the "<element_key>" (with the "<selection_method>" of "<XPATH or ID>")
 Enter value of variable "<variable_name>" to the "<element_key>" (with the "<selection_method>" of "<XPATH or ID>")
-
 I read the URL and store in "<variable_name>" variable
 Read the URL and store in "<variable_name>" variable
-
 I read the content of element "<element_key>" and store in variable "<variable_name>"
 Read the content of element "<element_key>" and store in variable "<variable_name>"
-
 I read the "<URL_Param_Numbrer>"st element of the URL path and store in "<variable_name>" variable
 Read the "<URL_Param_Numbrer>"st element of the URL path and store in "<variable_name>" variable
 I read the "<URL_Param_Numbrer>"nd element of the URL path and store in "<variable_name>" variable
 Read the "<URL_Param_Numbrer>"nd element of the URL path and store in "<variable_name>" variable
 I read the "<URL_Param_Numbrer>"th element of the URL path and store in "<variable_name>" variable
 Read the "<URL_Param_Numbrer>"th element of the URL path and store in "<variable_name>" variable
-
 The value of variable "<variable_name>" is equal to "<element_key>"
 Value of variable "<variable_name>" is equal to "<element_key>"
 }

@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Drawing.Printing;
-using System.Linq.Expressions;
 using CodeBySpecification.API.Service.Api;
 using Selenium.Base.Service;
 using TechTalk.SpecFlow;
@@ -12,7 +9,7 @@ namespace CodeBySpecification.Core
 {
 	[Binding]
 	public class FeatureBase
-	{ //TODO: At present this class has too many responsibility, but we will refactor it once we have the basic system avilable.
+	{
 		private static readonly IUIAutomationService UiFeatureTestsHelper = new SeleniumUIAutomationService();
 		private static IDictionary<string, string> dataShare = new Dictionary<string, string>();
 		private static string objectRepoResource = null;
@@ -44,9 +41,9 @@ namespace CodeBySpecification.Core
 			FeatureContext.Current[elementKey] = UiFeatureTestsHelper.GetElementText(elementKey);
 		}
 
-		[Given(@"Read the content of ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
-		[When(@"Read the content of ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
-		[Then(@"Read the content of ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
+		[Given(@"Get the content of ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+		[When(@"Get the content of ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+		[Then(@"Get the content of ""(.*)"" with the ""(.*)"" of ""(.*)""")]
 		public void ReadTheContentOfWithTheOf(string elementKey, string selectionType, string selection)
 		{
 			FeatureContext.Current[elementKey] = UiFeatureTestsHelper.GetElementText(elementKey, selectionType, selection);
@@ -67,12 +64,12 @@ namespace CodeBySpecification.Core
 			UiFeatureTestsHelper.IsElementContentEqual(elementKey, expectedContent);
 		}
 
-		[Given(@"The content of ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) contains text ""(.*)""")]
-		[When(@"The content of ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) contains text ""(.*)""")]
-		[Then(@"The content of ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) contains text ""(.*)""")]
-		[Given(@"Content of ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) contains text ""(.*)""")]
-		[When(@"Content of ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) contains text ""(.*)""")]
-		[Then(@"Content of ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) contains text ""(.*)""")]
+		[Given(@"The content of ""(.*)"" with the ""(.*)"" of ""(.*)"" has text ""(.*)""")]
+		[When(@"The content of ""(.*)"" with the ""(.*)"" of ""(.*)"" has text ""(.*)""")]
+		[Then(@"The content of ""(.*)"" with the ""(.*)"" of ""(.*)"" has text ""(.*)""")]
+		[Given(@"Content of ""(.*)"" with the ""(.*)"" of ""(.*)"" has text ""(.*)""")]
+		[When(@"Content of ""(.*)"" with the ""(.*)"" of ""(.*)"" has text ""(.*)""")]
+		[Then(@"Content of ""(.*)"" with the ""(.*)"" of ""(.*)"" has text ""(.*)""")]
 		public void TheConentOfWithTheOfIsEqualTo(string elementKey, string selectionMethod, string selection, string expectedContent)
 		{
 			UiFeatureTestsHelper.IsElementContentEqual(elementKey, selectionMethod, selection, expectedContent);
@@ -125,12 +122,12 @@ namespace CodeBySpecification.Core
 			UiFeatureTestsHelper.ClickOn(elementKey);
 		}
 
-		[Given(@"I click on ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
-		[When(@"I click on ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
-		[Then(@"I click on ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
-		[Given(@"Click on ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
-		[When(@"Click on ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
-		[Then(@"Click on ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
+		[Given(@"I click on element ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+		[When(@"I click on element ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+		[Then(@"I click on element ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+		[Given(@"Click on element ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+		[When(@"Click on element ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+		[Then(@"Click on element ""(.*)"" with the ""(.*)"" of ""(.*)""")]
 		public void IClickOnWithTheOf(string elementKey, string selectionMethod, string selection)
 		{
 			UiFeatureTestsHelper.ClickOn(elementKey, selectionMethod, selection);
@@ -155,12 +152,12 @@ namespace CodeBySpecification.Core
 			}
 		}
 
-		[Given(@"I click on ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) and wait ""(.*)"" seconds")]
-		[When(@"I click on ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) and wait ""(.*)"" seconds")]
-		[Then(@"I click on ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) and wait ""(.*)"" seconds")]
-		[Given(@"Click on ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) and wait ""(.*)"" seconds")]
-		[When(@"Click on ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) and wait ""(.*)"" seconds")]
-		[Then(@"Click on ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) and wait ""(.*)"" seconds")]
+		[Given(@"I click on element ""(.*)"" with the ""(.*)"" of ""(.*)"" and wait ""(.*)"" seconds")]
+		[When(@"I click on element ""(.*)"" with the ""(.*)"" of ""(.*)"" and wait ""(.*)"" seconds")]
+		[Then(@"I click on element ""(.*)"" with the ""(.*)"" of ""(.*)"" and wait ""(.*)"" seconds")]
+		[Given(@"Click on element ""(.*)"" with the ""(.*)"" of ""(.*)"" and wait ""(.*)"" seconds")]
+		[When(@"Click on element ""(.*)"" with the ""(.*)"" of ""(.*)"" and wait ""(.*)"" seconds")]
+		[Then(@"Click on element ""(.*)"" with the ""(.*)"" of ""(.*)"" and wait ""(.*)"" seconds")]
 		public void IClickOnWithTheOfAndWaitSeconds(string elementKey, string selectionMethod, string selection, string waitTime)
 		{
 			int timeout;
@@ -215,12 +212,12 @@ namespace CodeBySpecification.Core
 			UiFeatureTestsHelper.EnterTextTo(elementKey, value);
 		}
 
-		[Given(@"I enter ""(.*)"" to the ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
-		[When(@"I enter ""(.*)"" to the ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
-		[Then(@"I enter ""(.*)"" to the ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
-		[Given(@"Enter ""(.*)"" to the ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
-		[When(@"Enter ""(.*)"" to the ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
-		[Then(@"Enter ""(.*)"" to the ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
+		[Given(@"I enter value ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+		[When(@"I enter value ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+		[Then(@"I enter value ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+		[Given(@"Enter value ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+		[When(@"Enter value ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+		[Then(@"Enter value ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
 		public void IEnterToTheWithTheOf(string value, string elementKey, string selectionMethod, string selection)
 		{
 			UiFeatureTestsHelper.EnterTextTo(elementKey, value, selectionMethod, selection);
@@ -299,18 +296,18 @@ namespace CodeBySpecification.Core
 			UiFeatureTestsHelper.IsElementVisible(elementKey);
 		}
 
-		[Given(@"The ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) is visible")]
-		[Then(@"The ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) is visible")]
-		[When(@"The ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) is visible")]
-		[Given(@"I wait for the ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) to appear")]
-		[When(@"I wait for the ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) to appear")]
-		[Then(@"I wait for the ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) to appear")]
-		[Given(@"""(.*)"" \(with the ""(.*)"" of ""(.*)""\) is visible")]
-		[Then(@"""(.*)"" \(with the ""(.*)"" of ""(.*)""\) is visible")]
-		[When(@"""(.*)"" \(with the ""(.*)"" of ""(.*)""\) is visible")]
-		[Given(@"Wait for the ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) to appear")]
-		[When(@"Wait for the ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) to appear")]
-		[Then(@"Wait for the ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) to appear")]
+		[Given(@"The ""(.*)"" with the ""(.*)"" of ""(.*)"" is shown")]
+		[Then(@"The ""(.*)"" with the ""(.*)"" of ""(.*)"" is shown")]
+		[When(@"The ""(.*)"" with the ""(.*)"" of ""(.*)"" is shown")]
+		[Given(@"I wait for the ""(.*)"" with the ""(.*)"" of ""(.*)"" to show")]
+		[When(@"I wait for the ""(.*)"" with the ""(.*)"" of ""(.*)"" to show")]
+		[Then(@"I wait for the ""(.*)"" with the ""(.*)"" of ""(.*)"" to show")]
+		[Given(@"""(.*)"" with the ""(.*)"" of ""(.*)"" is shown")]
+		[Then(@"""(.*)"" with the ""(.*)"" of ""(.*)"" is shown")]
+		[When(@"""(.*)"" with the ""(.*)"" of ""(.*)"" is shown")]
+		[Given(@"Wait for the ""(.*)"" with the ""(.*)"" of ""(.*)"" to show")]
+		[When(@"Wait for the ""(.*)"" with the ""(.*)"" of ""(.*)"" to show")]
+		[Then(@"Wait for the ""(.*)"" with the ""(.*)"" of ""(.*)"" to show")]
 		public void TheElementWithTheOfIsVisible(string elementKey, string selectionMethod, string selection)
 		{
 			UiFeatureTestsHelper.IsElementVisible(elementKey, selectionMethod, selection);
@@ -344,9 +341,9 @@ namespace CodeBySpecification.Core
 		[Given(@"I read the URL and store in ""(.*)"" variable")]
 		[When(@"I read the URL and store in ""(.*)"" variable")]
 		[Then(@"I read the URL and store in ""(.*)"" variable")]
-		[Given(@"read the URL and store in ""(.*)"" variable")]
-		[When(@"read the URL and store in ""(.*)"" variable")]
-		[Then(@"read the URL and store in ""(.*)"" variable")]
+		[Given(@"Read the URL and store in ""(.*)"" variable")]
+		[When(@"Read the URL and store in ""(.*)"" variable")]
+		[Then(@"Read the URL and store in ""(.*)"" variable")]
 		public void ReadTheUrlAndStoreIn(string veriable)
 		{
 			if (dataShare.ContainsKey(veriable.ToUpper()))
@@ -379,9 +376,9 @@ namespace CodeBySpecification.Core
 		[Given(@"I read the ""(.*)""nd element of the URL path and store in ""(.*)"" variable")]
 		[When(@"I read the ""(.*)""nd element of the URL path and store in ""(.*)"" variable")]
 		[Then(@"I read the ""(.*)""nd element of the URL path and store in ""(.*)"" variable")]
-		[Given(@"read the ""(.*)""nd element of the URL path and store in ""(.*)"" variable")]
-		[When(@"read the ""(.*)""nd element of the URL path and store in ""(.*)"" variable")]
-		[Then(@"read the ""(.*)""nd element of the URL path and store in ""(.*)"" variable")]
+		[Given(@"Read the ""(.*)""nd element of the URL path and store in ""(.*)"" variable")]
+		[When(@"Read the ""(.*)""nd element of the URL path and store in ""(.*)"" variable")]
+		[Then(@"Read the ""(.*)""nd element of the URL path and store in ""(.*)"" variable")]
 		[Given(@"I read the ""(.*)""rd element of the URL path and store in ""(.*)"" variable")]
 		[When(@"I read the ""(.*)""rd element of the URL path and store in ""(.*)"" variable")]
 		[Then(@"I read the ""(.*)""rd element of the URL path and store in ""(.*)"" variable")]
@@ -423,12 +420,12 @@ namespace CodeBySpecification.Core
 			UiFeatureTestsHelper.EnterTextTo(elementKey, dataShare[veriable.ToUpper()]);
 		}
 
-		[Given(@"I enter value of variable ""(.*)"" to the ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
-		[When(@"I enter value of variable ""(.*)"" to the ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
-		[Then(@"I enter value of variable ""(.*)"" to the ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
-		[Given(@"Enter value of variable ""(.*)"" to the ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
-		[When(@"Enter value of variable ""(.*)"" to the ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
-		[Then(@"Enter value of variable ""(.*)"" to the ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
+		[Given(@"I enter variable value ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+		[When(@"I enter variable value ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+		[Then(@"I enter variable value ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+		[Given(@"Enter variable value ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+		[When(@"Enter variable value ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+		[Then(@"Enter variable value ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
 		public void IEnterContentOfVeriableToTheWithTheOf(string veriable, string elementKey, string selectionMethod, string selection)
 		{
 			if (!dataShare.ContainsKey(veriable.ToUpper())) throw new Exception("Veriable \"" + veriable + "\" is not defined.");
