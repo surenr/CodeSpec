@@ -5,25 +5,15 @@ namespace CodeBySpecification.API.Service.Api
 {
 	public interface IUIAutomationService
 	{
-		string GetElementText(string elementKey);
+		string GetElementText(string elementKey, string selectionType = null, string selection = null);
 
-		string GetElementText(string elementKey, string selectionType, string selection);
+		void IsElementContentEqual(string elementKey, string expectedContent, string selectionMethod = null, string selection = null);
 
-		void IsElementContentEqual(string elementKey, string expectedContent);
+		void ClickOn(string elementKey, string selectionMethod = null, string selection = null);
 
-		void IsElementContentEqual(string elementKey, string selectionMethod, string selection, string expectedContent);
+		void DragAndDrop(string dragElementKey, string dropElementKey, string dragElementSelectionMethod = null, string dragElementSelection = null, string dropElementKeySelectionMethod = null, string dropElementKeySelection = null);
 
-		void ClickOn(string elementKey);
-
-		void ClickOn(string elementKey, string selectionMethod, string selection);
-
-		void DragAndDrop(string dragElementKey, string dropElementKey);
-
-		void DragAndDrop(string dragElementKey, string dragElementSelectionMethod, string dragElementSelection, string dropElementKey, string dropElementKeySelectionMethod, string dropElementKeySelection);
-
-		void EnterTextTo(string elementKey, string value);
-
-		void EnterTextTo(string elementKey, string value, string selectionMethod, string selection);
+		void EnterTextTo(string elementKey, string value, string selectionMethod = null, string selection = null);
 
 		string SutUrl { get; }
 
@@ -31,17 +21,15 @@ namespace CodeBySpecification.API.Service.Api
 
 		void GotoUrl(string p);
 
-		void IsElementVisible(string elementKey);
+		void IsElementVisible(string elementKey, string selectionMethod = null, string selection = null);
 
-		void IsElementVisible(string elementKey, string selectionMethod, string selection);
-
-		void IsElementNotVisible(string elementKey);
-
-		void IsElementNotVisible(string elementKey, string selectionMethod, string selection);
+		void IsElementNotVisible(string elementKey, string selectionMethod = null, string selection = null);
 
 		void AcceptTheConfirmation();
 
 		void InitilizeTests(string browserType, string objectRepoResource);
+
+		void Dispose();
 
 		string ReadURL();
 
@@ -49,10 +37,8 @@ namespace CodeBySpecification.API.Service.Api
 
 		void IsPageContainsTextPattern(string textPattern);
 
-		void IsElementContainsTextPattern(string elementKey, string textPattern);
+		void IsElementContainsTextPattern(string elementKey, string selectionMethod, string selection = null, string textPattern = null);
 
-		void ClickOn(string elementKey, int timeout);
-
-		void ClickOn(string elementKey, string selectionMethod, string selection, int timeout);
+		void ClickOn(string elementKey, int timeout, string selectionMethod = null, string selection = null);
 	}
 }

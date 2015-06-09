@@ -15,6 +15,7 @@ namespace CodeBySpecification.Core
 	{ //TODO: At present this class has too many responsibility, but we will refactor it once we have the basic system avilable.
 		private static readonly IUIAutomationService UiFeatureTestsHelper = new SeleniumUIAutomationService();
 		private static IDictionary<string, string> dataShare = new Dictionary<string, string>();
+		private static string objectRepoResource = null;
 
 		#region Core Step Definition Vocabulary
 
@@ -22,15 +23,15 @@ namespace CodeBySpecification.Core
 		public static void BeforeSeleniumTestFeature()
 		{
 			var browserName = ConfigurationManager.AppSettings["UI.Tests.Target.Browser"];
-			var objectDefSource = ConfigurationManager.AppSettings["UI.Tests.Object.Definitions.Path"];
+			objectRepoResource = ConfigurationManager.AppSettings["UI.Tests.Object.Definitions.Path"];
 
-			UiFeatureTestsHelper.InitilizeTests(browserName, objectDefSource);
+			UiFeatureTestsHelper.InitilizeTests(browserName, objectRepoResource);
 		}
 
 		[AfterFeature("UIAutomationTest")]
 		public static void AfterSeleniumTestFeature()
 		{
-			//Browser.Quit();
+			UiFeatureTestsHelper.Dispose();
 		}
 
 		#region Read the content of <element>
@@ -55,23 +56,23 @@ namespace CodeBySpecification.Core
 
 		#region The content of <element> is equal to <expected value>
 
-		[Given(@"Content of ""(.*)"" is equal to ""(.*)""")]
-		[When(@"Content of ""(.*)"" is equal to ""(.*)""")]
-		[Then(@"Content of ""(.*)"" is equal to ""(.*)""")]
-		[Given(@"The content of ""(.*)"" is equal to ""(.*)""")]
-		[When(@"The content of ""(.*)"" is equal to ""(.*)""")]
-		[Then(@"The content of ""(.*)"" is equal to ""(.*)""")]
+		[Given(@"Content of ""(.*)"" contains text ""(.*)""")]
+		[When(@"Content of ""(.*)"" contains text ""(.*)""")]
+		[Then(@"Content of ""(.*)"" contains text ""(.*)""")]
+		[Given(@"The content of ""(.*)"" contains text ""(.*)""")]
+		[When(@"The content of ""(.*)"" contains text ""(.*)""")]
+		[Then(@"The content of ""(.*)"" contains text ""(.*)""")]
 		public void TheConentOfIsEqualTo(string elementKey, string expectedContent)
 		{
 			UiFeatureTestsHelper.IsElementContentEqual(elementKey, expectedContent);
 		}
 
-		[Given(@"The content of ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) is equal to ""(.*)""")]
-		[When(@"The content of ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) is equal to ""(.*)""")]
-		[Then(@"The content of ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) is equal to ""(.*)""")]
-		[Given(@"Content of ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) is equal to ""(.*)""")]
-		[When(@"Content of ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) is equal to ""(.*)""")]
-		[Then(@"Content of ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) is equal to ""(.*)""")]
+		[Given(@"The content of ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) contains text ""(.*)""")]
+		[When(@"The content of ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) contains text ""(.*)""")]
+		[Then(@"The content of ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) contains text ""(.*)""")]
+		[Given(@"Content of ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) contains text ""(.*)""")]
+		[When(@"Content of ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) contains text ""(.*)""")]
+		[Then(@"Content of ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) contains text ""(.*)""")]
 		public void TheConentOfWithTheOfIsEqualTo(string elementKey, string selectionMethod, string selection, string expectedContent)
 		{
 			UiFeatureTestsHelper.IsElementContentEqual(elementKey, selectionMethod, selection, expectedContent);
@@ -165,7 +166,7 @@ namespace CodeBySpecification.Core
 			int timeout;
 			if (int.TryParse(waitTime, out timeout))
 			{
-				UiFeatureTestsHelper.ClickOn(elementKey, selectionMethod, selection, timeout);
+				UiFeatureTestsHelper.ClickOn(elementKey, timeout, selectionMethod, selection);
 			}
 			else
 			{
@@ -223,30 +224,6 @@ namespace CodeBySpecification.Core
 		public void IEnterToTheWithTheOf(string value, string elementKey, string selectionMethod, string selection)
 		{
 			UiFeatureTestsHelper.EnterTextTo(elementKey, value, selectionMethod, selection);
-		}
-
-		[Given(@"I enter content of veriable ""(.*)"" to the ""(.*)""")]
-		[When(@"I enter content of veriable ""(.*)"" to the ""(.*)""")]
-		[Then(@"I enter content of veriable ""(.*)"" to the ""(.*)""")]
-		[Given(@"Enter content of veriable ""(.*)"" to the ""(.*)""")]
-		[When(@"Enter content of veriable ""(.*)"" to the ""(.*)""")]
-		[Then(@"Enter content of veriable ""(.*)"" to the ""(.*)""")]
-		public void IEnterContentOfVeriableToThe(string veriable, string elementKey)
-		{
-			if (!dataShare.ContainsKey(veriable.ToUpper())) throw new Exception("Veriable \"" + veriable + "\" is not defined.");
-			UiFeatureTestsHelper.EnterTextTo(elementKey, dataShare[veriable.ToUpper()]);
-		}
-
-		[Given(@"I enter content of veriable ""(.*)"" to the ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
-		[When(@"I enter content of veriable ""(.*)"" to the ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
-		[Then(@"I enter content of veriable ""(.*)"" to the ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
-		[Given(@"Enter content of veriable ""(.*)"" to the ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
-		[When(@"Enter content of veriable ""(.*)"" to the ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
-		[Then(@"Enter content of veriable ""(.*)"" to the ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
-		public void IEnterContentOfVeriableToTheWithTheOf(string veriable, string elementKey, string selectionMethod, string selection)
-		{
-			if (!dataShare.ContainsKey(veriable.ToUpper())) throw new Exception("Veriable \"" + veriable + "\" is not defined.");
-			UiFeatureTestsHelper.EnterTextTo(elementKey, dataShare[veriable.ToUpper()], selectionMethod, selection);
 		}
 
 		#endregion
@@ -364,12 +341,12 @@ namespace CodeBySpecification.Core
 
 		#region Read URL/<element> and store in data share
 
-		[Given(@"I read the URL and store in ""(.*)"" veriable")]
-		[When(@"I read the URL and store in ""(.*)"" veriable")]
-		[Then(@"I read the URL and store in ""(.*)"" veriable")]
-		[Given(@"read the URL and store in ""(.*)"" veriable")]
-		[When(@"read the URL and store in ""(.*)"" veriable")]
-		[Then(@"read the URL and store in ""(.*)"" veriable")]
+		[Given(@"I read the URL and store in ""(.*)"" variable")]
+		[When(@"I read the URL and store in ""(.*)"" variable")]
+		[Then(@"I read the URL and store in ""(.*)"" variable")]
+		[Given(@"read the URL and store in ""(.*)"" variable")]
+		[When(@"read the URL and store in ""(.*)"" variable")]
+		[Then(@"read the URL and store in ""(.*)"" variable")]
 		public void ReadTheUrlAndStoreIn(string veriable)
 		{
 			if (dataShare.ContainsKey(veriable.ToUpper()))
@@ -378,12 +355,12 @@ namespace CodeBySpecification.Core
 				dataShare.Add(veriable.ToUpper(), UiFeatureTestsHelper.ReadURL());
 		}
 
-		[Given(@"I read the content of element ""(.*)"" and store in veriable ""(.*)""")]
-		[When(@"I read the content of element ""(.*)"" and store in veriable ""(.*)""")]
-		[Then(@"I read the content of element ""(.*)"" and store in veriable ""(.*)""")]
-		[Given(@"Read the content of element ""(.*)"" and store in veriable ""(.*)""")]
-		[When(@"Read the content of element ""(.*)"" and store in veriable ""(.*)""")]
-		[Then(@"Read the content of element ""(.*)"" and store in veriable ""(.*)""")]
+		[Given(@"I read the content of element ""(.*)"" and store in variable ""(.*)""")]
+		[When(@"I read the content of element ""(.*)"" and store in variable ""(.*)""")]
+		[Then(@"I read the content of element ""(.*)"" and store in variable ""(.*)""")]
+		[Given(@"Read the content of element ""(.*)"" and store in variable ""(.*)""")]
+		[When(@"Read the content of element ""(.*)"" and store in variable ""(.*)""")]
+		[Then(@"Read the content of element ""(.*)"" and store in variable ""(.*)""")]
 		public void ReadTheContentOfElementAndStoreInVeriable(string elementKey, string veriable)
 		{
 			var elementContent = UiFeatureTestsHelper.GetElementText(elementKey);
@@ -393,30 +370,30 @@ namespace CodeBySpecification.Core
 				dataShare.Add(veriable.ToUpper(), elementContent);
 		}
 
-		[Given(@"I read the ""(.*)""st element of the URL path and store in ""(.*)"" veriable")]
-		[When(@"I read the ""(.*)""st element of the URL path and store in ""(.*)"" veriable")]
-		[Then(@"I read the ""(.*)""st element of the URL path and store in ""(.*)"" veriable")]
-		[Given(@"read the ""(.*)""st element of the URL path and store in ""(.*)"" veriable")]
-		[When(@"read the ""(.*)""st element of the URL path and store in ""(.*)"" veriable")]
-		[Then(@"read the ""(.*)""st element of the URL path and store in ""(.*)"" veriable")]
-		[Given(@"I read the ""(.*)""nd element of the URL path and store in ""(.*)"" veriable")]
-		[When(@"I read the ""(.*)""nd element of the URL path and store in ""(.*)"" veriable")]
-		[Then(@"I read the ""(.*)""nd element of the URL path and store in ""(.*)"" veriable")]
-		[Given(@"read the ""(.*)""nd element of the URL path and store in ""(.*)"" veriable")]
-		[When(@"read the ""(.*)""nd element of the URL path and store in ""(.*)"" veriable")]
-		[Then(@"read the ""(.*)""nd element of the URL path and store in ""(.*)"" veriable")]
-		[Given(@"I read the ""(.*)""rd element of the URL path and store in ""(.*)"" veriable")]
-		[When(@"I read the ""(.*)""rd element of the URL path and store in ""(.*)"" veriable")]
-		[Then(@"I read the ""(.*)""rd element of the URL path and store in ""(.*)"" veriable")]
-		[Given(@"read the ""(.*)""rd element of the URL path and store in ""(.*)"" veriable")]
-		[When(@"read the ""(.*)""rd element of the URL path and store in ""(.*)"" veriable")]
-		[Then(@"read the ""(.*)""rd element of the URL path and store in ""(.*)"" veriable")]
-		[Given(@"I read the ""(.*)""th element of the URL path and store in ""(.*)"" veriable")]
-		[When(@"I read the ""(.*)""th element of the URL path and store in ""(.*)"" veriable")]
-		[Then(@"I read the ""(.*)""th element of the URL path and store in ""(.*)"" veriable")]
-		[Given(@"read the ""(.*)""th element of the URL path and store in ""(.*)"" veriable")]
-		[When(@"read the ""(.*)""th element of the URL path and store in ""(.*)"" veriable")]
-		[Then(@"read the ""(.*)""th element of the URL path and store in ""(.*)"" veriable")]
+		[Given(@"I read the ""(.*)""st element of the URL path and store in ""(.*)"" variable")]
+		[When(@"I read the ""(.*)""st element of the URL path and store in ""(.*)"" variable")]
+		[Then(@"I read the ""(.*)""st element of the URL path and store in ""(.*)"" variable")]
+		[Given(@"Read the ""(.*)""st element of the URL path and store in ""(.*)"" variable")]
+		[When(@"Read the ""(.*)""st element of the URL path and store in ""(.*)"" variable")]
+		[Then(@"Read the ""(.*)""st element of the URL path and store in ""(.*)"" variable")]
+		[Given(@"I read the ""(.*)""nd element of the URL path and store in ""(.*)"" variable")]
+		[When(@"I read the ""(.*)""nd element of the URL path and store in ""(.*)"" variable")]
+		[Then(@"I read the ""(.*)""nd element of the URL path and store in ""(.*)"" variable")]
+		[Given(@"read the ""(.*)""nd element of the URL path and store in ""(.*)"" variable")]
+		[When(@"read the ""(.*)""nd element of the URL path and store in ""(.*)"" variable")]
+		[Then(@"read the ""(.*)""nd element of the URL path and store in ""(.*)"" variable")]
+		[Given(@"I read the ""(.*)""rd element of the URL path and store in ""(.*)"" variable")]
+		[When(@"I read the ""(.*)""rd element of the URL path and store in ""(.*)"" variable")]
+		[Then(@"I read the ""(.*)""rd element of the URL path and store in ""(.*)"" variable")]
+		[Given(@"Read the ""(.*)""rd element of the URL path and store in ""(.*)"" variable")]
+		[When(@"Read the ""(.*)""rd element of the URL path and store in ""(.*)"" variable")]
+		[Then(@"Read the ""(.*)""rd element of the URL path and store in ""(.*)"" variable")]
+		[Given(@"I read the ""(.*)""th element of the URL path and store in ""(.*)"" variable")]
+		[When(@"I read the ""(.*)""th element of the URL path and store in ""(.*)"" variable")]
+		[Then(@"I read the ""(.*)""th element of the URL path and store in ""(.*)"" variable")]
+		[Given(@"Read the ""(.*)""th element of the URL path and store in ""(.*)"" variable")]
+		[When(@"Read the ""(.*)""th element of the URL path and store in ""(.*)"" variable")]
+		[Then(@"Read the ""(.*)""th element of the URL path and store in ""(.*)"" variable")]
 		public void ReadTheElementOfTheUrlPathAndStoreInVeriable(string index, string veriable)
 		{
 			var urlTosplit = UiFeatureTestsHelper.ReadURL().Replace("http://", "");
@@ -434,12 +411,36 @@ namespace CodeBySpecification.Core
 
 		#region veriable manipulation
 
-		[Given(@"The value of veriable ""(.*)"" is equal to ""(.*)""")]
-		[When(@"The value of veriable ""(.*)"" is equal to ""(.*)""")]
-		[Then(@"The value of veriable ""(.*)"" is equal to ""(.*)""")]
-		[Given(@"Value of veriable ""(.*)"" is equal to ""(.*)""")]
-		[When(@"Value of veriable ""(.*)"" is equal to ""(.*)""")]
-		[Then(@"Value of veriable ""(.*)"" is equal to ""(.*)""")]
+		[Given(@"I enter value of variable ""(.*)"" to the ""(.*)""")]
+		[When(@"I enter value of variable ""(.*)"" to the ""(.*)""")]
+		[Then(@"I enter value of variable ""(.*)"" to the ""(.*)""")]
+		[Given(@"Enter value of variable ""(.*)"" to the ""(.*)""")]
+		[When(@"Enter value of variable ""(.*)"" to the ""(.*)""")]
+		[Then(@"Enter value of variable ""(.*)"" to the ""(.*)""")]
+		public void IEnterContentOfVeriableToThe(string veriable, string elementKey)
+		{
+			if (!dataShare.ContainsKey(veriable.ToUpper())) throw new Exception("Veriable \"" + veriable + "\" is not defined.");
+			UiFeatureTestsHelper.EnterTextTo(elementKey, dataShare[veriable.ToUpper()]);
+		}
+
+		[Given(@"I enter value of variable ""(.*)"" to the ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
+		[When(@"I enter value of variable ""(.*)"" to the ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
+		[Then(@"I enter value of variable ""(.*)"" to the ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
+		[Given(@"Enter value of variable ""(.*)"" to the ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
+		[When(@"Enter value of variable ""(.*)"" to the ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
+		[Then(@"Enter value of variable ""(.*)"" to the ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
+		public void IEnterContentOfVeriableToTheWithTheOf(string veriable, string elementKey, string selectionMethod, string selection)
+		{
+			if (!dataShare.ContainsKey(veriable.ToUpper())) throw new Exception("Veriable \"" + veriable + "\" is not defined.");
+			UiFeatureTestsHelper.EnterTextTo(elementKey, dataShare[veriable.ToUpper()], selectionMethod, selection);
+		}
+
+		[Given(@"The value of variable ""(.*)"" is equal to ""(.*)""")]
+		[When(@"The value of variable ""(.*)"" is equal to ""(.*)""")]
+		[Then(@"The value of variable ""(.*)"" is equal to ""(.*)""")]
+		[Given(@"Value of variable ""(.*)"" is equal to ""(.*)""")]
+		[When(@"Value of variable ""(.*)"" is equal to ""(.*)""")]
+		[Then(@"Value of variable ""(.*)"" is equal to ""(.*)""")]
 		public void ValueOfVeriableIsEqualTo(string veriable, string value)
 		{
 			if (!dataShare.ContainsKey(veriable.ToUpper())) throw new Exception("Veriable \"" + veriable + "\" is not defined.");
