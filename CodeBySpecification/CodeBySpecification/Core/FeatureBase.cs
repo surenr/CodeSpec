@@ -10,7 +10,7 @@ namespace CodeBySpecification.Core
 	[Binding]
 	public class FeatureBase
 	{
-		private static readonly IUIAutomationService UiFeatureTestsHelper = new SeleniumUIAutomationService();
+		private static readonly IUIAutomationService UiAutomationService = new SeleniumUIAutomationService();
 		private static IDictionary<string, string> dataShare = new Dictionary<string, string>();
 		private static string objectRepoResource = null;
 
@@ -22,7 +22,7 @@ namespace CodeBySpecification.Core
 			var browserName = ConfigurationManager.AppSettings["UI.Tests.Target.Browser"];
 			objectRepoResource = ConfigurationManager.AppSettings["UI.Tests.Object.Definitions.Path"];
 
-			UiFeatureTestsHelper.InitilizeTests(browserName, objectRepoResource);
+			UiAutomationService.InitilizeTests(browserName, objectRepoResource);
 		}
 
 		#region Read the content of <element>
@@ -32,7 +32,7 @@ namespace CodeBySpecification.Core
 		[Then(@"Read the content of ""(.*)""")]
 		public void ReadTheContentOf(string elementKey)
 		{
-			FeatureContext.Current[elementKey] = UiFeatureTestsHelper.GetElementText(elementKey);
+			FeatureContext.Current[elementKey] = UiAutomationService.GetElementText(elementKey);
 		}
 
 		[Given(@"Get the content of ""(.*)"" with the ""(.*)"" of ""(.*)""")]
@@ -40,7 +40,7 @@ namespace CodeBySpecification.Core
 		[Then(@"Get the content of ""(.*)"" with the ""(.*)"" of ""(.*)""")]
 		public void ReadTheContentOfWithTheOf(string elementKey, string selectionType, string selection)
 		{
-			FeatureContext.Current[elementKey] = UiFeatureTestsHelper.GetElementText(elementKey, selectionType, selection);
+			FeatureContext.Current[elementKey] = UiAutomationService.GetElementText(elementKey, selectionType, selection);
 		}
 
 		#endregion
@@ -55,7 +55,7 @@ namespace CodeBySpecification.Core
 		[Then(@"The content of ""(.*)"" contains text ""(.*)""")]
 		public void TheConentOfIsEqualTo(string elementKey, string expectedContent)
 		{
-			UiFeatureTestsHelper.IsElementContentEqual(elementKey, expectedContent);
+			UiAutomationService.IsElementContentEqual(elementKey, expectedContent);
 		}
 
 		[Given(@"The content of ""(.*)"" with the ""(.*)"" of ""(.*)"" has text ""(.*)""")]
@@ -66,7 +66,7 @@ namespace CodeBySpecification.Core
 		[Then(@"Content of ""(.*)"" with the ""(.*)"" of ""(.*)"" has text ""(.*)""")]
 		public void TheConentOfWithTheOfIsEqualTo(string elementKey, string selectionMethod, string selection, string expectedContent)
 		{
-			UiFeatureTestsHelper.IsElementContentEqual(elementKey, selectionMethod, selection, expectedContent);
+			UiAutomationService.IsElementContentEqual(elementKey, selectionMethod, selection, expectedContent);
 		}
 
 		#endregion
@@ -84,7 +84,7 @@ namespace CodeBySpecification.Core
 		[Then(@"The content of the page contains text pattern ""(.*)""")]
 		public void ThePageContainsTextPattern(string textPattern)
 		{
-			UiFeatureTestsHelper.IsPageContainsTextPattern(textPattern);
+			UiAutomationService.IsPageContainsTextPattern(textPattern);
 		}
 
 		[Given(@"""(.*)"" contains the text pattern ""(.*)""")]
@@ -98,7 +98,7 @@ namespace CodeBySpecification.Core
 		[Then(@"The content of the ""(.*)"" contains text pattern ""(.*)""")]
 		public void TheContainsTextPattern(string elementKey, string textPattern)
 		{
-			UiFeatureTestsHelper.IsElementContainsTextPattern(elementKey, textPattern);
+			UiAutomationService.IsElementContainsTextPattern(elementKey, textPattern);
 		}
 
 		#endregion
@@ -113,7 +113,7 @@ namespace CodeBySpecification.Core
 		[Then(@"Click on ""(.*)""")]
 		public void IClickOn(string elementKey)
 		{
-			UiFeatureTestsHelper.ClickOn(elementKey);
+			UiAutomationService.ClickOn(elementKey);
 		}
 
 		[Given(@"I click on element ""(.*)"" with the ""(.*)"" of ""(.*)""")]
@@ -124,7 +124,7 @@ namespace CodeBySpecification.Core
 		[Then(@"Click on element ""(.*)"" with the ""(.*)"" of ""(.*)""")]
 		public void IClickOnWithTheOf(string elementKey, string selectionMethod, string selection)
 		{
-			UiFeatureTestsHelper.ClickOn(elementKey, selectionMethod, selection);
+			UiAutomationService.ClickOn(elementKey, selectionMethod, selection);
 		}
 
 		[Given(@"I click on ""(.*)"" and wait ""(.*)"" seconds")]
@@ -138,7 +138,7 @@ namespace CodeBySpecification.Core
 			int timeout;
 			if (int.TryParse(waitTime, out timeout))
 			{
-				UiFeatureTestsHelper.ClickOn(elementKey, timeout);
+				UiAutomationService.ClickOn(elementKey, timeout);
 			}
 			else
 			{
@@ -157,7 +157,7 @@ namespace CodeBySpecification.Core
 			int timeout;
 			if (int.TryParse(waitTime, out timeout))
 			{
-				UiFeatureTestsHelper.ClickOn(elementKey, timeout, selectionMethod, selection);
+				UiAutomationService.ClickOn(elementKey, timeout, selectionMethod, selection);
 			}
 			else
 			{
@@ -177,7 +177,7 @@ namespace CodeBySpecification.Core
 		[Then(@"drag ""(.*)"" and drop on to ""(.*)""")]
 		public void DragAndDropOnTo(string elementToDrag, string elementToDrop)
 		{
-			UiFeatureTestsHelper.DragAndDrop(elementToDrag, elementToDrop);
+			UiAutomationService.DragAndDrop(elementToDrag, elementToDrop);
 		}
 
 		[Given(@"I drag ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) and drop on to ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
@@ -188,7 +188,7 @@ namespace CodeBySpecification.Core
 		[Then(@"drag ""(.*)"" \(with the ""(.*)"" of ""(.*)""\) and drop on to ""(.*)"" \(with the ""(.*)"" of ""(.*)""\)")]
 		public void DragAndDropOnTo(string elementToDrag, string elementToDragSelectionMethod, string elementToDragSelection, string elementToDrop, string elementToDropSelectionMethod, string elementToDropSelection)
 		{
-			UiFeatureTestsHelper.DragAndDrop(elementToDrag, elementToDrop);
+			UiAutomationService.DragAndDrop(elementToDrag, elementToDrop);
 		}
 
 		#endregion
@@ -203,7 +203,7 @@ namespace CodeBySpecification.Core
 		[Then(@"Enter ""(.*)"" to the ""(.*)""")]
 		public void IEnterToThe(string value, string elementKey)
 		{
-			UiFeatureTestsHelper.EnterTextTo(elementKey, value);
+			UiAutomationService.EnterTextTo(elementKey, value);
 		}
 
 		[Given(@"I enter value ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
@@ -214,7 +214,7 @@ namespace CodeBySpecification.Core
 		[Then(@"Enter value ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
 		public void IEnterToTheWithTheOf(string value, string elementKey, string selectionMethod, string selection)
 		{
-			UiFeatureTestsHelper.EnterTextTo(elementKey, value, selectionMethod, selection);
+			UiAutomationService.EnterTextTo(elementKey, value, selectionMethod, selection);
 		}
 
 		#endregion
@@ -235,7 +235,7 @@ namespace CodeBySpecification.Core
 		[Then(@"Navigate to SUT")]
 		public void INavigateToSut()
 		{
-			UiFeatureTestsHelper.GotoUrl(UiFeatureTestsHelper.SutUrl);
+			UiAutomationService.GotoUrl(UiAutomationService.SutUrl);
 		}
 
 		#endregion
@@ -250,7 +250,7 @@ namespace CodeBySpecification.Core
 		[Then(@"Navigate to ""(.*)""")]
 		public void INavigateTo(string url)
 		{
-			UiFeatureTestsHelper.GotoUrl(url);
+			UiAutomationService.GotoUrl(url);
 		}
 
 		[Given(@"I navigate to URL stored in ""(.*)""")]
@@ -262,7 +262,7 @@ namespace CodeBySpecification.Core
 		public void INavigateToUrlStoredIn(string veriable)
 		{
 			if (dataShare.ContainsKey(veriable.ToUpper()))
-				UiFeatureTestsHelper.GotoUrl(dataShare[veriable.ToUpper()]);
+				UiAutomationService.GotoUrl(dataShare[veriable.ToUpper()]);
 			else
 			{
 				throw new Exception("Veriable \"" + veriable + "\" not found.");
@@ -287,7 +287,7 @@ namespace CodeBySpecification.Core
 		[Then(@"Wait for the ""(.*)"" to appear")]
 		public void TheElementIsVisible(string elementKey)
 		{
-			UiFeatureTestsHelper.IsElementVisible(elementKey);
+			UiAutomationService.IsElementVisible(elementKey);
 		}
 
 		[Given(@"The ""(.*)"" with the ""(.*)"" of ""(.*)"" is shown")]
@@ -304,7 +304,7 @@ namespace CodeBySpecification.Core
 		[Then(@"Wait for the ""(.*)"" with the ""(.*)"" of ""(.*)"" to show")]
 		public void TheElementWithTheOfIsVisible(string elementKey, string selectionMethod, string selection)
 		{
-			UiFeatureTestsHelper.IsElementVisible(elementKey, selectionMethod, selection);
+			UiAutomationService.IsElementVisible(elementKey, selectionMethod, selection);
 		}
 
 		#endregion
@@ -325,7 +325,7 @@ namespace CodeBySpecification.Core
 		[When(@"Accept the confirmation alert")]
 		public void IAcceptTheConfirmation()
 		{
-			UiFeatureTestsHelper.AcceptTheConfirmation();
+			UiAutomationService.AcceptTheConfirmation();
 		}
 
 		#endregion
@@ -341,9 +341,9 @@ namespace CodeBySpecification.Core
 		public void ReadTheUrlAndStoreIn(string veriable)
 		{
 			if (dataShare.ContainsKey(veriable.ToUpper()))
-				dataShare[veriable.ToUpper()] = UiFeatureTestsHelper.ReadURL();
+				dataShare[veriable.ToUpper()] = UiAutomationService.ReadURL();
 			else
-				dataShare.Add(veriable.ToUpper(), UiFeatureTestsHelper.ReadURL());
+				dataShare.Add(veriable.ToUpper(), UiAutomationService.ReadURL());
 		}
 
 		[Given(@"I read the content of element ""(.*)"" and store in variable ""(.*)""")]
@@ -354,7 +354,7 @@ namespace CodeBySpecification.Core
 		[Then(@"Read the content of element ""(.*)"" and store in variable ""(.*)""")]
 		public void ReadTheContentOfElementAndStoreInVeriable(string elementKey, string veriable)
 		{
-			var elementContent = UiFeatureTestsHelper.GetElementText(elementKey);
+			var elementContent = UiAutomationService.GetElementText(elementKey);
 			if (dataShare.ContainsKey(veriable.ToUpper()))
 				dataShare[veriable.ToUpper()] = elementContent;
 			else
@@ -387,7 +387,7 @@ namespace CodeBySpecification.Core
 		[Then(@"Read the ""(.*)""th element of the URL path and store in ""(.*)"" variable")]
 		public void ReadTheElementOfTheUrlPathAndStoreInVeriable(string index, string veriable)
 		{
-			var urlTosplit = UiFeatureTestsHelper.ReadURL().Replace("http://", "");
+			var urlTosplit = UiAutomationService.ReadURL().Replace("http://", "");
 			var urlArray = urlTosplit.Split('/');
 			var elementInex = -1;
 			if (!int.TryParse(index, out elementInex)) throw new Exception("\"" + index + "\" is not a valid integer.");
@@ -411,7 +411,7 @@ namespace CodeBySpecification.Core
 		public void IEnterContentOfVeriableToThe(string veriable, string elementKey)
 		{
 			if (!dataShare.ContainsKey(veriable.ToUpper())) throw new Exception("Veriable \"" + veriable + "\" is not defined.");
-			UiFeatureTestsHelper.EnterTextTo(elementKey, dataShare[veriable.ToUpper()]);
+			UiAutomationService.EnterTextTo(elementKey, dataShare[veriable.ToUpper()]);
 		}
 
 		[Given(@"I enter variable value ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
@@ -423,7 +423,7 @@ namespace CodeBySpecification.Core
 		public void IEnterContentOfVeriableToTheWithTheOf(string veriable, string elementKey, string selectionMethod, string selection)
 		{
 			if (!dataShare.ContainsKey(veriable.ToUpper())) throw new Exception("Veriable \"" + veriable + "\" is not defined.");
-			UiFeatureTestsHelper.EnterTextTo(elementKey, dataShare[veriable.ToUpper()], selectionMethod, selection);
+			UiAutomationService.EnterTextTo(elementKey, dataShare[veriable.ToUpper()], selectionMethod, selection);
 		}
 
 		[Given(@"The value of variable ""(.*)"" is equal to ""(.*)""")]
@@ -435,7 +435,7 @@ namespace CodeBySpecification.Core
 		public void ValueOfVeriableIsEqualTo(string veriable, string value)
 		{
 			if (!dataShare.ContainsKey(veriable.ToUpper())) throw new Exception("Veriable \"" + veriable + "\" is not defined.");
-			UiFeatureTestsHelper.AreValuesEqual(dataShare[veriable.ToUpper()], value);
+			UiAutomationService.AreValuesEqual(dataShare[veriable.ToUpper()], value);
 		}
 
 		#endregion
