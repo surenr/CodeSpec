@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeBySpecification.API", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestFramework.Base", "TestFramework.Base\TestFramework.Base.csproj", "{C186C184-1376-4DEC-85DE-180609C73619}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleTestProject", "SampleTestProject\SampleTestProject.csproj", "{BAB15277-F464-4598-B59E-C8DA5EF35079}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObjectRepository.Base", "ObjectRepository.Base\ObjectRepository.Base.csproj", "{AF521C77-3AE2-43BA-B1F6-9CEEC71A55EB}"
 EndProject
 Global
@@ -37,10 +35,6 @@ Global
 		{C186C184-1376-4DEC-85DE-180609C73619}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C186C184-1376-4DEC-85DE-180609C73619}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C186C184-1376-4DEC-85DE-180609C73619}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BAB15277-F464-4598-B59E-C8DA5EF35079}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BAB15277-F464-4598-B59E-C8DA5EF35079}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BAB15277-F464-4598-B59E-C8DA5EF35079}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BAB15277-F464-4598-B59E-C8DA5EF35079}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AF521C77-3AE2-43BA-B1F6-9CEEC71A55EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AF521C77-3AE2-43BA-B1F6-9CEEC71A55EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF521C77-3AE2-43BA-B1F6-9CEEC71A55EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
