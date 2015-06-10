@@ -211,10 +211,5 @@ namespace Selenium.Base.Service
 			var match = Regex.Match(element.Text, @textPattern, RegexOptions.IgnoreCase);
 			assert.IsTrue(match.Success);
 		}
-
-		public void Dispose()
-		{
-			objectRepoManager.Save(objectRepoResource);
-		}
 	}
 }

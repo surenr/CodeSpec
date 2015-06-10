@@ -29,8 +29,6 @@ namespace CodeBySpecification.API.Service.Api
 
 		void InitilizeTests(string browserType, string objectRepoResource);
 
-		void Dispose();
-
 		string ReadURL();
 
 		void AreValuesEqual(string value1, string value2);

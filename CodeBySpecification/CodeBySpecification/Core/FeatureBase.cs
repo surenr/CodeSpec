@@ -25,12 +25,6 @@ namespace CodeBySpecification.Core
 			UiFeatureTestsHelper.InitilizeTests(browserName, objectRepoResource);
 		}
 
-		[AfterFeature("UIAutomationTest")]
-		public static void AfterSeleniumTestFeature()
-		{
-			UiFeatureTestsHelper.Dispose();
-		}
-
 		#region Read the content of <element>
 
 		[Given(@"Read the content of ""(.*)""")]
