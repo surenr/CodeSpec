@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using CodeBySpecification.API.Domain;
-
-namespace CodeBySpecification.API.Service.Api
+﻿namespace CodeBySpecification.API.Service.Api
 {
 	public interface IUIAutomationService
 	{

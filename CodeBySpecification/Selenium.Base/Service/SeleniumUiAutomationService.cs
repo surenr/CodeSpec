@@ -30,7 +30,7 @@ namespace Selenium.Base.Service
 
 		public void AcceptTheConfirmation()
 		{
-			((IWebDriver) GetBrowser).SwitchTo().Alert().Accept();
+			((IWebDriver)GetBrowser).SwitchTo().Alert().Accept();
 		}
 
 		public IWebElement GetElement(string key, string selectionMethod, string selection)
@@ -78,7 +78,7 @@ namespace Selenium.Base.Service
 
 		public void GotoUrl(string url)
 		{
-			((IWebDriver) GetBrowser).Navigate().GoToUrl(new Uri(url));
+			((IWebDriver)GetBrowser).Navigate().GoToUrl(new Uri(url));
 		}
 
 		private IWebElement GetElementByKey(string key)
@@ -101,7 +101,7 @@ namespace Selenium.Base.Service
 
 		private IWebElement WaitAndCreateElement(By selction)
 		{
-			return new WebDriverWait(((IWebDriver) GetBrowser), TimeSpan.FromSeconds(timeOut)).Until(ExpectedConditions.ElementExists((selction)));
+			return new WebDriverWait(((IWebDriver)GetBrowser), TimeSpan.FromSeconds(timeOut)).Until(ExpectedConditions.ElementExists((selction)));
 		}
 
 		private bool WaitForElementContentToLoad(string key, string content, string selectionMethod = null, string selection = null)
@@ -114,10 +114,10 @@ namespace Selenium.Base.Service
 			switch (objectRepoManager.GetObject(key).SelectionMethod.ToUpper())
 			{
 				case "ID":
-					return new WebDriverWait(((IWebDriver) GetBrowser), TimeSpan.FromSeconds(timeOut)).Until(d => d.FindElement(By.Id(objectRepoManager.GetObject(key).Selection)).Text.Trim().Contains(content));
+					return new WebDriverWait(((IWebDriver)GetBrowser), TimeSpan.FromSeconds(timeOut)).Until(d => d.FindElement(By.Id(objectRepoManager.GetObject(key).Selection)).Text.Trim().Contains(content));
 
 				case "XPATH":
-					return new WebDriverWait(((IWebDriver) GetBrowser), TimeSpan.FromSeconds(timeOut)).Until(d => d.FindElement(By.XPath(objectRepoManager.GetObject(key).Selection)).Text.Trim().Contains(content));
+					return new WebDriverWait(((IWebDriver)GetBrowser), TimeSpan.FromSeconds(timeOut)).Until(d => d.FindElement(By.XPath(objectRepoManager.GetObject(key).Selection)).Text.Trim().Contains(content));
 			}
 			return false;
 		}
@@ -146,7 +146,7 @@ namespace Selenium.Base.Service
 
 		public void InitilizeTests(string browserType, string objectRepoResource)
 		{
-			var browser = (IWebDriver) GetBrowser;
+			var browser = (IWebDriver)GetBrowser;
 			this.objectRepoResource = objectRepoResource;
 			if (browser == null)
 			{
@@ -174,7 +174,7 @@ namespace Selenium.Base.Service
 		{
 			if (locatorFrom == null) assert.Fail("\"" + dragElementKey + "\" is not avilable to drag.");
 			if (locatorTo == null) assert.Fail("\"" + dropElementKey + "\" is not avilable to drop \"" + dropElementKey + "\".");
-			var driver = (IWebDriver) GetBrowser;
+			var driver = (IWebDriver)GetBrowser;
 			var action = new Actions(driver);
 			action.DragAndDrop(locatorFrom, locatorTo);
 		}
@@ -188,7 +188,7 @@ namespace Selenium.Base.Service
 
 		public string ReadURL()
 		{
-			var driver = (IWebDriver) GetBrowser;
+			var driver = (IWebDriver)GetBrowser;
 			return driver.Url;
 		}
 
@@ -199,7 +199,7 @@ namespace Selenium.Base.Service
 
 		public void IsPageContainsTextPattern(string textPattern)
 		{
-			var pageSource = ((IWebDriver) GetBrowser).PageSource;
+			var pageSource = ((IWebDriver)GetBrowser).PageSource;
 			var match = Regex.Match(pageSource, @textPattern, RegexOptions.IgnoreCase);
 			assert.IsTrue(match.Success);
 		}

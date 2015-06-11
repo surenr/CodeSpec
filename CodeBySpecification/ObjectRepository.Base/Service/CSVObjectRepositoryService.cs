@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 using CodeBySpecification.API.Domain;
 using CodeBySpecification.API.Service.Api;
 
@@ -12,7 +9,7 @@ namespace ObjectRepository.Base.Service
 {
 	public class CSVObjectRepositoryService : IObjectRepoService
 	{
-		private IDictionary<string, UiElement> objectRepo = new Dictionary<string, UiElement>();
+		private readonly IDictionary<string, UiElement> objectRepo = new Dictionary<string, UiElement>();
 
 		public void Populate(string objectRepoResource)
 		{
