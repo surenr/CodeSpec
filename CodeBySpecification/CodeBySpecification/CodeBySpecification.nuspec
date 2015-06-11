@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>CodeSpec</id>
+    <version>1.0</version>
+    <title>Zero Code UI Testing For .NET</title>
+    <authors>Suren Rodrigo</authors>
+    <owners>Suren Rodrigo</owners>
+    <licenseUrl>https://github.com/surenr/CodeSpec/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/surenr/CodeSpec</projectUrl>
+    <iconUrl></iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>CodeSpec is a framework that is created to allow users to write UI tests without writing a single line of test code.</description>
+    <releaseNotes>Initial Release</releaseNotes>
+    <copyright>Copyright 2015</copyright>
+    <tags></tags>
+  </metadata>
+</package>
