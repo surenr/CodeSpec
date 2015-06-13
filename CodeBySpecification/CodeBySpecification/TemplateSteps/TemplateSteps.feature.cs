@@ -89,6 +89,10 @@ this.ScenarioSetup(scenarioInfo);
  testRunner.And("I navigate to URL stored in \"<variable_name>\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 13
  testRunner.And("Navigate to URL stored in \"<variable_name>\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 14
+ testRunner.And("I switch to tab \"<tab_number>\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 15
+ testRunner.And("I close tab \"<tab_number>\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -98,24 +102,24 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void TemplateStepsForElementVisibility()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Template Steps for Element Visibility", ((string[])(null)));
-#line 15
-this.ScenarioSetup(scenarioInfo);
-#line 16
- testRunner.Given("\"<element_key>\" is visible", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 17
- testRunner.And("The \"<element_key>\" is visible", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+this.ScenarioSetup(scenarioInfo);
 #line 18
- testRunner.And("I wait for the \"<element_key>\" to appear", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.Given("\"<element_key>\" is visible", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 19
- testRunner.And("Wait for the \"<element_key>\" to appear", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("The \"<element_key>\" is visible", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 20
- testRunner.And("The \"<element_key>\" with the \"<selection_method>\" of \"<XPATH or ID>\" is shown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I wait for the \"<element_key>\" to appear", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 21
- testRunner.And("\"<element_key>\" with the \"<selection_method>\" of \"<XPATH or ID>\" is shown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("Wait for the \"<element_key>\" to appear", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 22
+ testRunner.And("The \"<element_key>\" with the \"<selection_method>\" of \"<XPATH or ID>\" is shown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 23
+ testRunner.And("\"<element_key>\" with the \"<selection_method>\" of \"<XPATH or ID>\" is shown", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 24
  testRunner.And("I wait for the \"<element_key>\" with the \"<selection_method>\" of \"<XPATH or ID>\" t" +
                     "o show", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 23
+#line 25
  testRunner.And("Wait for the \"<element_key>\" with the \"<selection_method>\" of \"<XPATH or ID>\" to " +
                     "show", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
@@ -127,28 +131,28 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void TemplateStepsForReadingContentFromElements()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Template Steps for Reading content from elements", ((string[])(null)));
-#line 25
-this.ScenarioSetup(scenarioInfo);
-#line 26
- testRunner.Given("Read the content of \"<element_key>\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 27
+this.ScenarioSetup(scenarioInfo);
+#line 28
+ testRunner.Given("Read the content of \"<element_key>\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 29
  testRunner.And("Get the content of \"<element_key>\" with the \"<selection_method>\" of \"<XPATH or ID" +
                     ">\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 28
- testRunner.And("Content of \"<element_key>\" contains text \"<expected_string>\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 29
- testRunner.And("The content of \"<element_key>\" contains text \"<expected_string>\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 30
+ testRunner.And("Content of \"<element_key>\" contains text \"<expected_string>\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 31
+ testRunner.And("The content of \"<element_key>\" contains text \"<expected_string>\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 32
  testRunner.And("Content of \"<element_key>\" with the \"<selection_method>\" of \"<XPATH or ID>\" has t" +
                     "ext \"<expected_string>\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 31
+#line 33
  testRunner.And("The content of \"<element_key>\" with the \"<selection_method>\" of \"<XPATH or ID>\" h" +
                     "as text \"<expected_string>\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 32
- testRunner.And("\"<element_key>\" contains the text pattern \"<Regx Pattern>\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 33
- testRunner.And("The \"<element_key>\" contains text pattern \"<Regx Pattern>\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 34
+ testRunner.And("\"<element_key>\" contains the text pattern \"<Regx Pattern>\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 35
+ testRunner.And("The \"<element_key>\" contains text pattern \"<Regx Pattern>\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 36
  testRunner.And("The content of the \"<element_key>\" contains text pattern \"<Regx Pattern>\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -159,32 +163,32 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void TemplateStepsForElementClicks()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Template Steps for Element Clicks", ((string[])(null)));
-#line 36
-this.ScenarioSetup(scenarioInfo);
-#line 37
- testRunner.Given("\"<element_key>\" contains the text pattern \"<Regx Pattern>\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 38
- testRunner.And("The \"<element_key>\" contains text pattern \"<Regx Pattern>\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+this.ScenarioSetup(scenarioInfo);
 #line 39
- testRunner.And("The content of the \"<element_key>\" contains text pattern \"<Regx Pattern>\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.Given("\"<element_key>\" contains the text pattern \"<Regx Pattern>\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 40
- testRunner.And("I click on \"<element_key>\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("The \"<element_key>\" contains text pattern \"<Regx Pattern>\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 41
- testRunner.And("Click on \"<element_key>\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("The content of the \"<element_key>\" contains text pattern \"<Regx Pattern>\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 42
+ testRunner.And("I click on \"<element_key>\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 43
+ testRunner.And("Click on \"<element_key>\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 44
  testRunner.And("I click on element \"<element_key>\" with the \"<selection_method>\" of \"<XPATH or ID" +
                     ">\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 43
+#line 45
  testRunner.And("Click on element \"<element_key>\" with the \"<selection_method>\" of \"<XPATH or ID>\"" +
                     "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 44
- testRunner.And("I click on \"<element_key>\" and wait \"<seconds>\" seconds", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 45
- testRunner.And("Click on \"<element_key>\" and wait \"<seconds>\" seconds", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 46
+ testRunner.And("I click on \"<element_key>\" and wait \"<seconds>\" seconds", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 47
+ testRunner.And("Click on \"<element_key>\" and wait \"<seconds>\" seconds", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 48
  testRunner.And("I click on element \"<element_key>\" with the \"<selection_method>\" of \"<XPATH or ID" +
                     ">\" and wait \"<seconds>\" seconds", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 47
+#line 49
  testRunner.And("Click on element \"<element_key>\" with the \"<selection_method>\" of \"<XPATH or ID>\"" +
                     " and wait \"<seconds>\" seconds", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
@@ -196,16 +200,16 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void TemplateStepsForEnteringTextToElement()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Template Steps for Entering text to element", ((string[])(null)));
-#line 49
-this.ScenarioSetup(scenarioInfo);
-#line 50
- testRunner.Given("I enter \"<string>\" to the \"<element_key>\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 51
- testRunner.And("Enter \"<string>\" to the \"<element_key>\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+this.ScenarioSetup(scenarioInfo);
 #line 52
+ testRunner.Given("I enter \"<string>\" to the \"<element_key>\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 53
+ testRunner.And("Enter \"<string>\" to the \"<element_key>\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 54
  testRunner.And("I enter value \"<string>\" to the \"<element_key>\" with the \"<selection_method>\" of " +
                     "\"<XPATH or ID>\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 53
+#line 55
  testRunner.And("Enter value \"<string>\" to the \"<element_key>\" with the \"<selection_method>\" of \"<" +
                     "XPATH or ID>\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
@@ -217,16 +221,34 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void TemplateStepsForConfirmingBrowserGeneratedAlerts()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Template Steps for Confirming browser generated alerts", ((string[])(null)));
-#line 55
-this.ScenarioSetup(scenarioInfo);
-#line 56
- testRunner.Given("I accept the confirmation", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 57
- testRunner.And("I accept the confirmation alert", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+this.ScenarioSetup(scenarioInfo);
 #line 58
- testRunner.And("Accept the confirmation", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.Given("I accept the confirmation", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 59
+ testRunner.And("I accept the confirmation alert", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 60
+ testRunner.And("Accept the confirmation", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 61
  testRunner.And("Accept the confirmation alert", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Tempalte Steps for Table manipulation")]
+        public virtual void TempalteStepsForTableManipulation()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Tempalte Steps for Table manipulation", ((string[])(null)));
+#line 63
+this.ScenarioSetup(scenarioInfo);
+#line 64
+ testRunner.Given("Table \"<element_key>\" has \"<number>\" of rows", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 65
+ testRunner.And("Row in table \"<element_key>\" has \"<number>\" coloums", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 66
+ testRunner.And("\"<number>\"st row, \"<number>\"st column of table \"<element_key>\" contains value \"<v" +
+                    "alue>\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -236,49 +258,49 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void TemplateStepsForVariableManipulation()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Template Steps for Variable manipulation", ((string[])(null)));
-#line 61
+#line 68
 this.ScenarioSetup(scenarioInfo);
-#line 62
+#line 69
  testRunner.Given("I enter value of variable \"<variable_name>\" to the \"<element_key>\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 63
+#line 70
  testRunner.And("Enter value of variable \"<variable_name>\" to the \"<element_key>\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 64
+#line 71
  testRunner.And("I enter variable value \"<variable_name>\" to the \"<element_key>\" with the \"<select" +
                     "ion_method>\" of \"<XPATH or ID>\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 65
+#line 72
  testRunner.And("Enter variable value \"<variable_name>\" to the \"<element_key>\" with the \"<selectio" +
                     "n_method>\" of \"<XPATH or ID>\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 66
+#line 73
  testRunner.And("I read the URL and store in \"<variable_name>\" variable", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 67
+#line 74
  testRunner.And("Read the URL and store in \"<variable_name>\" variable", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 68
+#line 75
  testRunner.And("I read the content of element \"<element_key>\" and store in variable \"<variable_na" +
                     "me>\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 69
+#line 76
  testRunner.And("Read the content of element \"<element_key>\" and store in variable \"<variable_name" +
                     ">\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 70
+#line 77
  testRunner.And("I read the \"<URL_Param_Numbrer>\"st element of the URL path and store in \"<variabl" +
                     "e_name>\" variable", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 71
+#line 78
  testRunner.And("Read the \"<URL_Param_Numbrer>\"st element of the URL path and store in \"<variable_" +
                     "name>\" variable", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 72
+#line 79
  testRunner.And("I read the \"<URL_Param_Numbrer>\"nd element of the URL path and store in \"<variabl" +
                     "e_name>\" variable", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 73
+#line 80
  testRunner.And("Read the \"<URL_Param_Numbrer>\"nd element of the URL path and store in \"<variable_" +
                     "name>\" variable", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 74
+#line 81
  testRunner.And("I read the \"<URL_Param_Numbrer>\"th element of the URL path and store in \"<variabl" +
                     "e_name>\" variable", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 75
+#line 82
  testRunner.And("Read the \"<URL_Param_Numbrer>\"th element of the URL path and store in \"<variable_" +
                     "name>\" variable", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 76
+#line 83
  testRunner.And("The value of variable \"<variable_name>\" is equal to \"<element_key>\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 77
+#line 84
  testRunner.And("Value of variable \"<variable_name>\" is equal to \"<element_key>\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();

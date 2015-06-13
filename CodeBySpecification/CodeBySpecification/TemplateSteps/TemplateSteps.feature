@@ -11,6 +11,8 @@ Scenario: Template Steps for Navigations
 	And Navigate to "<url>"
 	And I navigate to URL stored in "<variable_name>"
 	And Navigate to URL stored in "<variable_name>"
+	And I switch to tab "<tab_number>"
+	And I close tab "<tab_number>"
 
 Scenario: Template Steps for Element Visibility
 	Given "<element_key>" is visible
@@ -57,6 +59,11 @@ Scenario: Template Steps for Confirming browser generated alerts
 	And I accept the confirmation alert
 	And Accept the confirmation
 	And Accept the confirmation alert
+
+Scenario: Tempalte Steps for Table manipulation
+	Given Table "<element_key>" has "<number>" of rows
+	And Row in table "<element_key>" has "<number>" coloums
+	And "<number>"st row, "<number>"st column of table "<element_key>" contains value "<value>"
 
 Scenario: Template Steps for Variable manipulation
 	Given I enter value of variable "<variable_name>" to the "<element_key>"

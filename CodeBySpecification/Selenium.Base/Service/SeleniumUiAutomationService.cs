@@ -1,5 +1,6 @@
 using System;
 using System.Configuration;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using CodeBySpecification.API.Domain;
@@ -13,7 +14,7 @@ using TestFramework.Base.Service;
 
 namespace Selenium.Base.Service
 {
-	public class SeleniumUIAutomationService : IUIAutomationService
+	public class SeleniumUIAutomationService : IUiAutomationService
 	{
 		private readonly double timeOut = Double.Parse(ConfigurationManager.AppSettings["UI.Tests.Timeout"]);
 		private readonly string SutUrl = ConfigurationManager.AppSettings["UI.Tests.SUT.Url"];
@@ -78,7 +79,10 @@ namespace Selenium.Base.Service
 
 		public void GotoUrl(string url)
 		{
-			((IWebDriver)GetBrowser).Navigate().GoToUrl(new Uri(url));
+			var driver = ((IWebDriver)GetBrowser);
+			driver.Navigate().GoToUrl(new Uri(url));
+			var tabList = driver.WindowHandles.ToArray();
+			driver.SwitchTo().Window(tabList[0]);
 		}
 
 		private IWebElement GetElementByKey(string key)
@@ -139,7 +143,7 @@ namespace Selenium.Base.Service
 			return element.Text;
 		}
 
-		string IUIAutomationService.SutUrl
+		string IUiAutomationService.SutUrl
 		{
 			get { return SutUrl; }
 		}
@@ -186,7 +190,7 @@ namespace Selenium.Base.Service
 			SeleniumDragAndDrop(dragElementKey, dropElementKey, locatorFrom, locatorTo);
 		}
 
-		public string ReadURL()
+		public string ReadUrl()
 		{
 			var driver = (IWebDriver)GetBrowser;
 			return driver.Url;
@@ -210,6 +214,50 @@ namespace Selenium.Base.Service
 			if (element == null) throw new Exception("\"" + elementKey + "\" is not found.");
 			var match = Regex.Match(element.Text, @textPattern, RegexOptions.IgnoreCase);
 			assert.IsTrue(match.Success);
+		}
+
+		public void SwitchToWindow(int tab)
+		{
+			var driver = (IWebDriver)GetBrowser;
+			var tabs = driver.WindowHandles.ToArray();
+			driver.SwitchTo().Window(tabs[tab]);
+		}
+
+		public void CloseWindow(int tab)
+		{
+			var driver = (IWebDriver)GetBrowser;
+			var tabs = driver.WindowHandles.ToArray();
+			if (tab > 0)
+			{
+				driver.SwitchTo().Window(tabs[tab]);
+				driver.Close();
+				driver.SwitchTo().Window(tabs[0]);
+			}
+			else
+			{
+				driver.Close();
+			}
+		}
+
+		public void TableHasRowCountOf(string elementKey, int numberOfRows)
+		{
+			var element = GetElementByKey(elementKey);
+			var rowCount = element.FindElements(By.XPath(".//tbody/tr")).Count;
+			assert.IsEqual(numberOfRows, rowCount);
+		}
+
+		public void TableHasColumnCountOf(string elementKey, int columnCount)
+		{
+			var element = GetElementByKey(elementKey);
+			var count = element.FindElements(By.XPath(".//tbody/tr[1]/td")).Count;
+			assert.IsEqual(columnCount, count);
+		}
+
+		public void ValueOfTableRowColEqualTo(string elementKey, int row, int col, string value)
+		{
+			var element = GetElementByKey(elementKey);
+			var valueElement = element.FindElement(By.XPath(".//tbody/tr[" + row + "]/td[" + col + "]")).Text.Trim();
+			assert.IsEqual(value, valueElement);
 		}
 	}
 }

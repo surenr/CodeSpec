@@ -10,9 +10,9 @@ namespace CodeBySpecification.Core
 	[Binding]
 	public class FeatureBase
 	{
-		private static readonly IUIAutomationService UiAutomationService = new SeleniumUIAutomationService();
-		private static IDictionary<string, string> dataShare = new Dictionary<string, string>();
-		private static string objectRepoResource = null;
+		private static readonly IUiAutomationService UiAutomationService = new SeleniumUIAutomationService();
+		private static readonly IDictionary<string, string> DataShare = new Dictionary<string, string>();
+		private static string objectRepoResource;
 
 		#region Core Step Definition Vocabulary
 
@@ -111,7 +111,7 @@ namespace CodeBySpecification.Core
 		[Given(@"Click on ""(.*)""")]
 		[When(@"Click on ""(.*)""")]
 		[Then(@"Click on ""(.*)""")]
-		public void IClickOn(string elementKey)
+		public void ClickOn(string elementKey)
 		{
 			UiAutomationService.ClickOn(elementKey);
 		}
@@ -122,7 +122,7 @@ namespace CodeBySpecification.Core
 		[Given(@"Click on element ""(.*)"" with the ""(.*)"" of ""(.*)""")]
 		[When(@"Click on element ""(.*)"" with the ""(.*)"" of ""(.*)""")]
 		[Then(@"Click on element ""(.*)"" with the ""(.*)"" of ""(.*)""")]
-		public void IClickOnWithTheOf(string elementKey, string selectionMethod, string selection)
+		public void ClickOnWithTheOf(string elementKey, string selectionMethod, string selection)
 		{
 			UiAutomationService.ClickOn(elementKey, selectionMethod, selection);
 		}
@@ -133,7 +133,7 @@ namespace CodeBySpecification.Core
 		[Given(@"Click on ""(.*)"" and wait ""(.*)"" seconds")]
 		[When(@"Click on ""(.*)"" and wait ""(.*)"" seconds")]
 		[Then(@"Click on ""(.*)"" and wait ""(.*)"" seconds")]
-		public void IClickOnAndWaitSeconds(string elementKey, string waitTime)
+		public void ClickOnAndWaitSeconds(string elementKey, string waitTime)
 		{
 			int timeout;
 			if (int.TryParse(waitTime, out timeout))
@@ -152,7 +152,7 @@ namespace CodeBySpecification.Core
 		[Given(@"Click on element ""(.*)"" with the ""(.*)"" of ""(.*)"" and wait ""(.*)"" seconds")]
 		[When(@"Click on element ""(.*)"" with the ""(.*)"" of ""(.*)"" and wait ""(.*)"" seconds")]
 		[Then(@"Click on element ""(.*)"" with the ""(.*)"" of ""(.*)"" and wait ""(.*)"" seconds")]
-		public void IClickOnWithTheOfAndWaitSeconds(string elementKey, string selectionMethod, string selection, string waitTime)
+		public void ClickOnWithTheOfAndWaitSeconds(string elementKey, string selectionMethod, string selection, string waitTime)
 		{
 			int timeout;
 			if (int.TryParse(waitTime, out timeout))
@@ -201,7 +201,7 @@ namespace CodeBySpecification.Core
 		[Given(@"Enter ""(.*)"" to the ""(.*)""")]
 		[When(@"Enter ""(.*)"" to the ""(.*)""")]
 		[Then(@"Enter ""(.*)"" to the ""(.*)""")]
-		public void IEnterToThe(string value, string elementKey)
+		public void EnterToThe(string value, string elementKey)
 		{
 			UiAutomationService.EnterTextTo(elementKey, value);
 		}
@@ -212,7 +212,7 @@ namespace CodeBySpecification.Core
 		[Given(@"Enter value ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
 		[When(@"Enter value ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
 		[Then(@"Enter value ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
-		public void IEnterToTheWithTheOf(string value, string elementKey, string selectionMethod, string selection)
+		public void EnterToTheWithTheOf(string value, string elementKey, string selectionMethod, string selection)
 		{
 			UiAutomationService.EnterTextTo(elementKey, value, selectionMethod, selection);
 		}
@@ -233,7 +233,7 @@ namespace CodeBySpecification.Core
 		[Given(@"Navigate to SUT")]
 		[When(@"Navigate to SUT")]
 		[Then(@"Navigate to SUT")]
-		public void INavigateToSut()
+		public void NavigateToSut()
 		{
 			UiAutomationService.GotoUrl(UiAutomationService.SutUrl);
 		}
@@ -248,7 +248,7 @@ namespace CodeBySpecification.Core
 		[Given(@"Navigate to ""(.*)""")]
 		[When(@"Navigate to ""(.*)""")]
 		[Then(@"Navigate to ""(.*)""")]
-		public void INavigateTo(string url)
+		public void NavigateTo(string url)
 		{
 			UiAutomationService.GotoUrl(url);
 		}
@@ -259,13 +259,130 @@ namespace CodeBySpecification.Core
 		[Given(@"Navigate to URL stored in ""(.*)""")]
 		[When(@"Navigate to URL stored in ""(.*)""")]
 		[Then(@"Navigate to URL stored in ""(.*)""")]
-		public void INavigateToUrlStoredIn(string veriable)
+		public void NavigateToUrlStoredIn(string veriable)
 		{
-			if (dataShare.ContainsKey(veriable.ToUpper()))
-				UiAutomationService.GotoUrl(dataShare[veriable.ToUpper()]);
+			if (DataShare.ContainsKey(veriable.ToUpper()))
+				UiAutomationService.GotoUrl(DataShare[veriable.ToUpper()]);
 			else
 			{
 				throw new Exception("Veriable \"" + veriable + "\" not found.");
+			}
+		}
+
+		[Given(@"I switch to tab ""(.*)""")]
+		[When(@"I switch to tab ""(.*)""")]
+		[Then(@"I switch to tab ""(.*)""")]
+		[Given(@"Switch to tab ""(.*)""")]
+		[When(@"Switch to tab ""(.*)""")]
+		[Then(@"Switch to tab ""(.*)""")]
+		[Given(@"I switch to window ""(.*)""")]
+		[When(@"I switch to window ""(.*)""")]
+		[Then(@"I switch to window ""(.*)""")]
+		[Given(@"Switch to window ""(.*)""")]
+		[When(@"Switch to window ""(.*)""")]
+		[Then(@"Switch to window ""(.*)""")]
+		public void GivenISwitchToTab(string tabNumber)
+		{
+			int tab;
+			if (int.TryParse(tabNumber, out tab))
+			{
+				if (tab >= 0)
+				{
+					UiAutomationService.SwitchToWindow(tab);
+				}
+			}
+			else
+			{
+				throw new Exception("Tab or window number provided isn't valid");
+			}
+		}
+
+		[Given(@"I close tab ""(.*)""")]
+		[When(@"I close tab ""(.*)""")]
+		[Then(@"I close tab ""(.*)""")]
+		[Given(@"Close tab ""(.*)""")]
+		[When(@"Close tab ""(.*)""")]
+		[Then(@"Close tab ""(.*)""")]
+		[Given(@"I close window ""(.*)""")]
+		[When(@"I close window ""(.*)""")]
+		[Then(@"I close window ""(.*)""")]
+		[Given(@"Close window ""(.*)""")]
+		[When(@"Close window ""(.*)""")]
+		[Then(@"Close window ""(.*)""")]
+		public void GivenICloseTab(string tabNumber)
+		{
+			int tab;
+			if (int.TryParse(tabNumber, out tab))
+			{
+				if (tab >= 0)
+				{
+					UiAutomationService.CloseWindow(tab);
+				}
+			}
+			else
+			{
+				throw new Exception("Tab or window number provided isn't valid");
+			}
+		}
+
+		#endregion
+
+		#region Table Manipulations
+
+		[Given(@"Table ""(.*)"" has ""(.*)"" of rows")]
+		[When(@"Table ""(.*)"" has ""(.*)"" of rows")]
+		[Then(@"Table ""(.*)"" has ""(.*)"" of rows")]
+		public void GivenTableHasOfRows(string elementKey, string numberOfRows)
+		{
+			int rowCount;
+			if (int.TryParse(numberOfRows, out rowCount))
+			{
+				UiAutomationService.TableHasRowCountOf(elementKey, rowCount);
+			}
+			else
+			{
+				throw new Exception("Invalid row number.");
+			}
+		}
+
+		[Given(@"Row in table ""(.*)"" has ""(.*)"" coloums")]
+		[When(@"Row in table ""(.*)"" has ""(.*)"" coloums")]
+		[Then(@"Row in table ""(.*)"" has ""(.*)"" coloums")]
+		public void GivenRowInTableHasColoums(string elementKey, string numberOfColumns)
+		{
+			int columnCount;
+			if (int.TryParse(numberOfColumns, out columnCount))
+			{
+				UiAutomationService.TableHasColumnCountOf(elementKey, columnCount);
+			}
+			else
+			{
+				throw new Exception("Invalid column number.");
+			}
+		}
+
+		[Given(@"""(.*)""st row, ""(.*)""st column of table ""(.*)"" contains value ""(.*)""")]
+		[Given(@"""(.*)""nd row, ""(.*)""nd column of table ""(.*)"" contains value ""(.*)""")]
+		[Given(@"""(.*)""rd row, ""(.*)""rd column of table ""(.*)"" contains value ""(.*)""")]
+		[Given(@"""(.*)""th row, ""(.*)""th column of table ""(.*)"" contains value ""(.*)""")]
+		[When(@"""(.*)""st row, ""(.*)""st column of table ""(.*)"" contains value ""(.*)""")]
+		[When(@"""(.*)""nd row, ""(.*)""nd column of table ""(.*)"" contains value ""(.*)""")]
+		[When(@"""(.*)""rd row, ""(.*)""rd column of table ""(.*)"" contains value ""(.*)""")]
+		[When(@"""(.*)""th row, ""(.*)""th column of table ""(.*)"" contains value ""(.*)""")]
+		[Then(@"""(.*)""st row, ""(.*)""st column of table ""(.*)"" contains value ""(.*)""")]
+		[Then(@"""(.*)""nd row, ""(.*)""nd column of table ""(.*)"" contains value ""(.*)""")]
+		[Then(@"""(.*)""rd row, ""(.*)""rd column of table ""(.*)"" contains value ""(.*)""")]
+		[Then(@"""(.*)""th row, ""(.*)""th column of table ""(.*)"" contains value ""(.*)""")]
+		public void GivenStRowStColumnOfTableContainsValue(string rowNumber, string columnNumber, string elementKey, string value)
+		{
+			int row, col;
+			if (int.TryParse(rowNumber, out row) && int.TryParse(columnNumber, out col))
+			{
+				UiAutomationService.ValueOfTableRowColEqualTo(elementKey, row, col, value);
+			}
+			else
+			{
+				throw new Exception("Invalid row or column number.");
 			}
 		}
 
@@ -323,7 +440,7 @@ namespace CodeBySpecification.Core
 		[Given(@"Accept the confirmation alert")]
 		[Then(@"Accept the confirmation alert")]
 		[When(@"Accept the confirmation alert")]
-		public void IAcceptTheConfirmation()
+		public void AcceptTheConfirmation()
 		{
 			UiAutomationService.AcceptTheConfirmation();
 		}
@@ -340,10 +457,10 @@ namespace CodeBySpecification.Core
 		[Then(@"Read the URL and store in ""(.*)"" variable")]
 		public void ReadTheUrlAndStoreIn(string veriable)
 		{
-			if (dataShare.ContainsKey(veriable.ToUpper()))
-				dataShare[veriable.ToUpper()] = UiAutomationService.ReadURL();
+			if (DataShare.ContainsKey(veriable.ToUpper()))
+				DataShare[veriable.ToUpper()] = UiAutomationService.ReadUrl();
 			else
-				dataShare.Add(veriable.ToUpper(), UiAutomationService.ReadURL());
+				DataShare.Add(veriable.ToUpper(), UiAutomationService.ReadUrl());
 		}
 
 		[Given(@"I read the content of element ""(.*)"" and store in variable ""(.*)""")]
@@ -355,10 +472,10 @@ namespace CodeBySpecification.Core
 		public void ReadTheContentOfElementAndStoreInVeriable(string elementKey, string veriable)
 		{
 			var elementContent = UiAutomationService.GetElementText(elementKey);
-			if (dataShare.ContainsKey(veriable.ToUpper()))
-				dataShare[veriable.ToUpper()] = elementContent;
+			if (DataShare.ContainsKey(veriable.ToUpper()))
+				DataShare[veriable.ToUpper()] = elementContent;
 			else
-				dataShare.Add(veriable.ToUpper(), elementContent);
+				DataShare.Add(veriable.ToUpper(), elementContent);
 		}
 
 		[Given(@"I read the ""(.*)""st element of the URL path and store in ""(.*)"" variable")]
@@ -387,15 +504,15 @@ namespace CodeBySpecification.Core
 		[Then(@"Read the ""(.*)""th element of the URL path and store in ""(.*)"" variable")]
 		public void ReadTheElementOfTheUrlPathAndStoreInVeriable(string index, string veriable)
 		{
-			var urlTosplit = UiAutomationService.ReadURL().Replace("http://", "");
+			var urlTosplit = UiAutomationService.ReadUrl().Replace("http://", "");
 			var urlArray = urlTosplit.Split('/');
-			var elementInex = -1;
+			int elementInex;
 			if (!int.TryParse(index, out elementInex)) throw new Exception("\"" + index + "\" is not a valid integer.");
 			var element = urlArray[elementInex];
-			if (dataShare.ContainsKey(veriable.ToUpper()))
-				dataShare[veriable.ToUpper()] = element;
+			if (DataShare.ContainsKey(veriable.ToUpper()))
+				DataShare[veriable.ToUpper()] = element;
 			else
-				dataShare.Add(veriable.ToUpper(), element);
+				DataShare.Add(veriable.ToUpper(), element);
 		}
 
 		#endregion
@@ -408,10 +525,10 @@ namespace CodeBySpecification.Core
 		[Given(@"Enter value of variable ""(.*)"" to the ""(.*)""")]
 		[When(@"Enter value of variable ""(.*)"" to the ""(.*)""")]
 		[Then(@"Enter value of variable ""(.*)"" to the ""(.*)""")]
-		public void IEnterContentOfVeriableToThe(string veriable, string elementKey)
+		public void EnterContentOfVeriableToThe(string veriable, string elementKey)
 		{
-			if (!dataShare.ContainsKey(veriable.ToUpper())) throw new Exception("Veriable \"" + veriable + "\" is not defined.");
-			UiAutomationService.EnterTextTo(elementKey, dataShare[veriable.ToUpper()]);
+			if (!DataShare.ContainsKey(veriable.ToUpper())) throw new Exception("Veriable \"" + veriable + "\" is not defined.");
+			UiAutomationService.EnterTextTo(elementKey, DataShare[veriable.ToUpper()]);
 		}
 
 		[Given(@"I enter variable value ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
@@ -420,10 +537,10 @@ namespace CodeBySpecification.Core
 		[Given(@"Enter variable value ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
 		[When(@"Enter variable value ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
 		[Then(@"Enter variable value ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
-		public void IEnterContentOfVeriableToTheWithTheOf(string veriable, string elementKey, string selectionMethod, string selection)
+		public void EnterContentOfVeriableToTheWithTheOf(string veriable, string elementKey, string selectionMethod, string selection)
 		{
-			if (!dataShare.ContainsKey(veriable.ToUpper())) throw new Exception("Veriable \"" + veriable + "\" is not defined.");
-			UiAutomationService.EnterTextTo(elementKey, dataShare[veriable.ToUpper()], selectionMethod, selection);
+			if (!DataShare.ContainsKey(veriable.ToUpper())) throw new Exception("Veriable \"" + veriable + "\" is not defined.");
+			UiAutomationService.EnterTextTo(elementKey, DataShare[veriable.ToUpper()], selectionMethod, selection);
 		}
 
 		[Given(@"The value of variable ""(.*)"" is equal to ""(.*)""")]
@@ -434,8 +551,8 @@ namespace CodeBySpecification.Core
 		[Then(@"Value of variable ""(.*)"" is equal to ""(.*)""")]
 		public void ValueOfVeriableIsEqualTo(string veriable, string value)
 		{
-			if (!dataShare.ContainsKey(veriable.ToUpper())) throw new Exception("Veriable \"" + veriable + "\" is not defined.");
-			UiAutomationService.AreValuesEqual(dataShare[veriable.ToUpper()], value);
+			if (!DataShare.ContainsKey(veriable.ToUpper())) throw new Exception("Veriable \"" + veriable + "\" is not defined.");
+			UiAutomationService.AreValuesEqual(DataShare[veriable.ToUpper()], value);
 		}
 
 		#endregion

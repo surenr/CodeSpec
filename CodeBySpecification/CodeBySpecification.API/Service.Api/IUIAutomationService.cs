@@ -1,6 +1,6 @@
 ﻿namespace CodeBySpecification.API.Service.Api
 {
-	public interface IUIAutomationService
+	public interface IUiAutomationService
 	{
 		string GetElementText(string elementKey, string selectionType = null, string selection = null);
 
@@ -26,7 +26,7 @@
 
 		void InitilizeTests(string browserType, string objectRepoResource);
 
-		string ReadURL();
+		string ReadUrl();
 
 		void AreValuesEqual(string value1, string value2);
 
@@ -35,5 +35,15 @@
 		void IsElementContainsTextPattern(string elementKey, string selectionMethod, string selection = null, string textPattern = null);
 
 		void ClickOn(string elementKey, int timeout, string selectionMethod = null, string selection = null);
+
+		void SwitchToWindow(int tab);
+
+		void CloseWindow(int tab);
+
+		void TableHasRowCountOf(string elementKey, int numberOfRows);
+
+		void TableHasColumnCountOf(string elementKey, int columnCount);
+
+		void ValueOfTableRowColEqualTo(string elementKey, int row, int col, string value);
 	}
 }
