@@ -1,3 +1,4 @@
+Current Build Status: ![alt tag](https://ci.appveyor.com/api/projects/status/twqd501t5gc2xn04/branch/master?svg=true)
 # CodeSpec
 Code by Specification
 
