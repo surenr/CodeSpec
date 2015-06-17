@@ -21,7 +21,7 @@ namespace ObjectRepository.Base.Service
 				while (!reader.EndOfStream)
 				{
 					var line = reader.ReadLine();
-					if (line == null) continue;
+					if (string.IsNullOrEmpty(line)) continue;
 					var values = line.Split(',');
 					if (objectRepo.ContainsKey(values[0].Trim().ToUpper())) continue;
 					objectRepo.Add(values[0].Trim().ToUpper(), new UiElement
