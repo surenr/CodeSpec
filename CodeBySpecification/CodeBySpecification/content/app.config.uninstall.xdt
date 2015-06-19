@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+	<specFlow xdt:Transform="Remove" />
+	
+	<!-- <appSettings xdt:Transform="Remove" /> -->
+    <!-- Will not enable removing App settings becuase can remove all the app settings -->
+</configuration>
