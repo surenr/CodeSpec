@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -7,9 +8,13 @@ using CodeBySpecification.API.Domain;
 using CodeBySpecification.API.Service.Api;
 using ObjectRepository.Base.Service;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.IE;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
+using Selenium.Base.Api;
+using Selenium.Base.Browsers;
 using TestFramework.Base.Service;
 
 namespace Selenium.Base.Service
@@ -152,18 +157,21 @@ namespace Selenium.Base.Service
 		{
 			var browser = (IWebDriver)GetBrowser;
 			this.objectRepoResource = objectRepoResource;
+			var candidateBrowsers = new List<IBrowser>
+			{
+				new FireFoxBrowser(browserType),
+				new IEBrowser(browserType),
+				new ChromeBrowser(browserType),
+			};
+
 			if (browser == null)
 			{
-				switch (browserType)
+				foreach (var candiateBrowser in candidateBrowsers)
 				{
-					case "FireFox":
-
-						var profile = new FirefoxProfile();
-						profile.EnableNativeEvents = true;
-						profile.AcceptUntrustedCertificates = true;
-						browser = new FirefoxDriver(profile);
-						break;
+					browser = candiateBrowser.Create();
+					if (browser != null) break;
 				}
+
 				if (browser == null) throw new Exception("Browser driver initilization error. Please ensure you have set the \"UI.Tests.Target.Browser\" setting correctly in the App.Config file.");
 				browser.Manage().Window.Maximize();
 				browser.Manage().Cookies.DeleteAllCookies();

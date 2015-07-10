@@ -63,6 +63,10 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Api\IBrowser.cs" />
+    <Compile Include="Browsers\ChromeBrowser.cs" />
+    <Compile Include="Browsers\IEBrowser.cs" />
+    <Compile Include="Browsers\FireFoxBrowser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\SeleniumUiAutomationService.cs" />
   </ItemGroup>
