@@ -189,7 +189,7 @@ namespace Selenium.Base.Service
 			var driver = (IWebDriver)GetBrowser;
 			var action = new Actions(driver);
 			action.DragAndDrop(locatorFrom, locatorTo);
-		}
+        }
 
 		public void DragAndDrop(string dragElementKey, string dropElementKey, string dragElementSelectionMethod = null, string dragElementSelection = null, string dropElementKeySelectionMethod = null, string dropElementKeySelection = null)
 		{
@@ -267,5 +267,17 @@ namespace Selenium.Base.Service
 			var valueElement = element.FindElement(By.XPath(".//tbody/tr[" + row + "]/td[" + col + "]")).Text.Trim();
 			assert.IsEqual(value, valueElement);
 		}
-	}
+
+        public void switchToFrame(string selectionMethod, string selection)
+        {
+            var driver = ((IWebDriver)GetBrowser);
+            driver.SwitchTo().Frame(GetElementBy(selectionMethod, selection));
+        }
+
+        public void switchToDefaultContent()
+        {
+            var driver = ((IWebDriver)GetBrowser);
+            driver.SwitchTo().DefaultContent();
+        }
+    }
 }

@@ -555,8 +555,41 @@ namespace CodeBySpecification.Core
 			UiAutomationService.AreValuesEqual(DataShare[veriable.ToUpper()], value);
 		}
 
-		#endregion
+        #endregion
 
-		#endregion
-	}
+        #region Frame manipulation 
+
+        [Given(@"I switched to iframe with the ""(.*)"" of ""(.*)""")]
+        [When(@"I switched to iframe with the ""(.*)"" of ""(.*)""")]
+        [Then(@"I switched to iframe with the ""(.*)"" of ""(.*)""")]
+        [Given(@"switched to iframe with the ""(.*)"" of ""(.*)""")]
+        [When(@"switched to iframe with the ""(.*)"" of ""(.*)""")]
+        [Then(@"switched to iframe with the ""(.*)"" of ""(.*)""")]
+        [Given(@"I switched to frame with the ""(.*)"" of ""(.*)""")]
+        [When(@"I switched to frame with the ""(.*)"" of ""(.*)""")]
+        [Then(@"I switched to frame with the ""(.*)"" of ""(.*)""")]
+        [Given(@"switched to frame with the ""(.*)"" of ""(.*)""")]
+        [When(@"switched to frame with the ""(.*)"" of ""(.*)""")]
+        [Then(@"switched to frame with the ""(.*)"" of ""(.*)""")]
+        public void switchedToFrame(string selectionMethod, string selection)
+        {
+            UiAutomationService.switchToFrame(selectionMethod, selection);
+        }
+
+        [Given(@"I switched to default content")]
+        [When(@"I switched to default content")]
+        [Then(@"I switched to default content")]
+        [Given(@"switched to default content")]
+        [When(@"switched to default content")]
+        [Then(@"switched to default content")]
+        public void SwitchedToDefaultContent()
+        {
+            UiAutomationService.switchToDefaultContent();
+        }
+
+
+        #endregion
+
+        #endregion
+    }
 }
