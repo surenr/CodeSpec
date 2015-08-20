@@ -1,6 +1,6 @@
 ﻿@{
     Layout = "~/_SiteLayout.cshtml";
-    Page.Title = "IFrames testing";
+    Page.Title = "Drag and Drop testing";
 }
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
@@ -37,7 +37,11 @@
 		});
 	});
 </script>
-
+<hgroup class="title">
+    <h1>@Page.Title</h1>
+    <h2>Let's try dragging and droppting elements</h2>
+</hgroup>
+<br />
 <div id="draggable" class="ui-widget-content">
     <p>Drag me to my target</p>
 </div>

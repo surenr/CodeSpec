@@ -104,11 +104,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 14
  testRunner.And("Wait for the \"droppable\" with the \"id\" of \"droppable\" to show", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 15
- testRunner.And("Content of \"droppableP\" with the \"id\" of \"droppableP\" has text \"Drop here\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 16
  testRunner.When("I drag \"draggable\" and drop on to \"droppable\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 17
- testRunner.And("The page contains text pattern \"Drodpped!\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

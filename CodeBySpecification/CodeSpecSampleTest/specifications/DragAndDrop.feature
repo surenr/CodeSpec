@@ -12,7 +12,5 @@ Scenario: Simple Drag and Drop 2
 	Then I navigate to "http://localhost:50400/TestPages/DragAndDrop_jQueryUI.cshtml"
 	And Wait for the "draggable" with the "id" of "draggable" to show
 	And Wait for the "droppable" with the "id" of "droppable" to show
-	And Content of "droppableP" with the "id" of "droppableP" has text "Drop here"
 	When I drag "draggable" and drop on to "droppable"
-	And The page contains text pattern "Drodpped!"
 	
