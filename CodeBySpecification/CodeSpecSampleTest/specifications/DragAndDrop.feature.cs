@@ -80,31 +80,34 @@ namespace CodeSpecSampleTest.Specifications
 #line 6
 this.ScenarioSetup(scenarioInfo);
 #line 7
- testRunner.Then("I navigate to \"http://html5demos.com/drag\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("I navigate to \"TestPages/DragAndDrop_jQueryUI.cshtml\" of SUT", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 8
- testRunner.When("I drag \"one\"  \\with the \"id\" of \"one\" and drop on to \"bin\" \\with the \"id\" of \"bin" +
-                    "\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.And("Wait for the \"draggable\" with the \"id\" of \"draggable\" to show", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 9
+ testRunner.And("Wait for the \"droppable\" with the \"id\" of \"droppable\" to show", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 10
+ testRunner.When("I drag \"draggable\" and drop on to \"droppable\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Simple Drag and Drop 2")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Simple Drag and Drop with HTML5")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "SampleWebProject Tests on Drag and Drop")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("UIAutomationTest")]
-        public virtual void SimpleDragAndDrop2()
+        public virtual void SimpleDragAndDropWithHTML5()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Simple Drag and Drop 2", ((string[])(null)));
-#line 11
-this.ScenarioSetup(scenarioInfo);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Simple Drag and Drop with HTML5", ((string[])(null)));
 #line 12
- testRunner.Then("I navigate to \"http://localhost:50400/TestPages/DragAndDrop_jQueryUI.cshtml\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+this.ScenarioSetup(scenarioInfo);
 #line 13
- testRunner.And("Wait for the \"draggable\" with the \"id\" of \"draggable\" to show", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.Given("I navigate to \"http://html5demos.com/drag\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 14
- testRunner.And("Wait for the \"droppable\" with the \"id\" of \"droppable\" to show", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("Wait for the \"one\" with the \"id\" of \"one\" to show", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 15
- testRunner.When("I drag \"draggable\" and drop on to \"droppable\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.And("Wait for the \"bin\" with the \"id\" of \"bin\" to show", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 16
+ testRunner.Then("I drag \"one\" and drop on to \"bin\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
