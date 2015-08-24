@@ -25,9 +25,18 @@ namespace CodeBySpecification.Core
 			UiAutomationService.InitilizeTests(browserName, objectRepoResource);
 		}
 
-		#region Read the content of <element>
+        [BeforeFeature("MobileUIAutomationTest")]
+        public static void BeforeAppiumTestFeature()
+        {
+            var browserName = ConfigurationManager.AppSettings["UI.Tests.Target.Browser"];
+            objectRepoResource = ConfigurationManager.AppSettings["UI.Tests.Object.Definitions.Path"];
 
-		[Given(@"Read the content of ""(.*)""")]
+            UiAutomationService.InitilizeTests(browserName, objectRepoResource);
+        }
+
+        #region Read the content of <element>
+
+        [Given(@"Read the content of ""(.*)""")]
 		[When(@"Read the content of ""(.*)""")]
 		[Then(@"Read the content of ""(.*)""")]
 		public void ReadTheContentOf(string elementKey)
