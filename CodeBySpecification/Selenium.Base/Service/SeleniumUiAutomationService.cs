@@ -16,6 +16,8 @@ using OpenQA.Selenium.Support.UI;
 using Selenium.Base.Api;
 using Selenium.Base.Browsers;
 using TestFramework.Base.Service;
+using OpenQA.Selenium.Appium.Android;
+using OpenQA.Selenium.Appium;
 
 namespace Selenium.Base.Service
 {
@@ -162,6 +164,7 @@ namespace Selenium.Base.Service
 				new FireFoxBrowser(browserType),
 				new IEBrowser(browserType),
 				new ChromeBrowser(browserType),
+                new AndroidBrowser(browserType),
 			};
 
 			if (browser == null)
@@ -174,7 +177,9 @@ namespace Selenium.Base.Service
 
 				if (browser == null) throw new Exception("Browser driver initilization error. Please ensure you have set the \"UI.Tests.Target.Browser\" setting correctly in the App.Config file.");
 				browser.Manage().Window.Maximize();
-				browser.Manage().Cookies.DeleteAllCookies();
+                if(browserType != "Android") {
+                    browser.Manage().Cookies.DeleteAllCookies();
+                }
 				GetBrowser = browser;
 			}
 			if (objectRepoManager.ObjectCount() == 0)
@@ -188,7 +193,7 @@ namespace Selenium.Base.Service
 			if (locatorTo == null) assert.Fail("\"" + dropElementKey + "\" is not avilable to drop \"" + dropElementKey + "\".");
 			var driver = (IWebDriver)GetBrowser;
 			var action = new Actions(driver);
-			action.DragAndDrop(locatorFrom, locatorTo);
+			action.DragAndDrop(locatorFrom, locatorTo).Perform();
         }
 
 		public void DragAndDrop(string dragElementKey, string dropElementKey, string dragElementSelectionMethod = null, string dragElementSelection = null, string dropElementKeySelectionMethod = null, string dropElementKeySelection = null)

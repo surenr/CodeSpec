@@ -25,9 +25,18 @@ namespace CodeBySpecification.Core
 			UiAutomationService.InitilizeTests(browserName, objectRepoResource);
 		}
 
-		#region Read the content of <element>
+        [BeforeFeature("MobileUIAutomationTest")]
+        public static void BeforeAppiumTestFeature()
+        {
+            var browserName = ConfigurationManager.AppSettings["UI.Tests.Target.Browser"];
+            objectRepoResource = ConfigurationManager.AppSettings["UI.Tests.Object.Definitions.Path"];
 
-		[Given(@"Read the content of ""(.*)""")]
+            UiAutomationService.InitilizeTests(browserName, objectRepoResource);
+        }
+
+        #region Read the content of <element>
+
+        [Given(@"Read the content of ""(.*)""")]
 		[When(@"Read the content of ""(.*)""")]
 		[Then(@"Read the content of ""(.*)""")]
 		public void ReadTheContentOf(string elementKey)
@@ -221,28 +230,50 @@ namespace CodeBySpecification.Core
 
 		#region Navigate to SUT
 
-		[Given(@"I navigate to System Under Test")]
-		[When(@"I navigate to System Under Test")]
-		[Then(@"I navigate to System Under Test")]
-		[Given(@"I navigate to SUT")]
-		[When(@"I navigate to SUT")]
-		[Then(@"I navigate to SUT")]
-		[Given(@"Navigate to System Under Test")]
-		[When(@"Navigate to System Under Test")]
-		[Then(@"Navigate to System Under Test")]
-		[Given(@"Navigate to SUT")]
-		[When(@"Navigate to SUT")]
-		[Then(@"Navigate to SUT")]
-		public void NavigateToSut()
+
+        [Given(@"I navigate to System Under Test")]
+        [When(@"I navigate to System Under Test")]
+        [Then(@"I navigate to System Under Test")]
+        [Given(@"I navigate to SUT")]
+        [When(@"I navigate to SUT")]
+        [Then(@"I navigate to SUT")]
+        [Given(@"Navigate to System Under Test")]
+        [When(@"Navigate to System Under Test")]
+        [Then(@"Navigate to System Under Test")]
+        [Given(@"Navigate to SUT")]
+        [When(@"Navigate to SUT")]
+        [Then(@"Navigate to SUT")]
+        public void NavigateToSut()
 		{
 			UiAutomationService.GotoUrl(UiAutomationService.SutUrl);
 		}
 
-		#endregion
+        #endregion
 
-		#region Navigate to <URL>
+        #region Navigate to a sub link under the SUT
 
-		[Given(@"I navigate to ""(.*)""")]
+        [Given(@"I navigate to  ""(.*)"" of System Under Test")]
+        [When(@"I navigate to ""(.*)"" of System Under Test")]
+        [Then(@"I navigate to ""(.*)"" of System Under Test")]
+        [Given(@"I navigate to ""(.*)"" of SUT")]
+        [When(@"I navigate to ""(.*)"" of SUT")]
+        [Then(@"I navigate to ""(.*)"" of SUT")]
+        [Given(@"Navigate to ""(.*)"" of System Under Test")]
+        [When(@"Navigate to ""(.*)"" of System Under Test")]
+        [Then(@"Navigate to ""(.*)"" of System Under Test")]
+        [Given(@"Navigate to ""(.*)"" of SUT")]
+        [When(@"Navigate to ""(.*)"" of SUT")]
+        [Then(@"Navigate to ""(.*)"" of SUT")]
+        public void NavigateToSubLinkUnderSut(string subURL)
+        {
+            UiAutomationService.GotoUrl(UiAutomationService.SutUrl+"/"+subURL);
+        }
+
+        #endregion
+
+        #region Navigate to <URL>
+
+        [Given(@"I navigate to ""(.*)""")]
 		[When(@"I navigate to ""(.*)""")]
 		[Then(@"I navigate to ""(.*)""")]
 		[Given(@"Navigate to ""(.*)""")]
