@@ -69,7 +69,7 @@ namespace Selenium.Base.Service
 			Thread.Sleep(timeout * 1000);
 		}
 
-		public void EnterTextTo(string elementKey, string text, string selectionMethod = null, string selection = null)
+		public virtual void EnterTextTo(string elementKey, string text, string selectionMethod = null, string selection = null)
 		{
 			var element = selectionMethod != null ? GetElement(elementKey, selectionMethod, selection) : GetElementByKey(elementKey);
 			if (element == null) assert.Fail("\"" + elementKey + "\" is not avilable to input the value \"" + text + "\"");
