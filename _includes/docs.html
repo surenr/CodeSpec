@@ -1,0 +1,47 @@
+    <!-- ******DOCS****** --> 
+    <section id="docs" class="docs section">
+        <div class="container">
+            <div class="docs-inner">
+            <h2 class="title text-center">Get Started</h2>            
+            <div class="block">
+                <h3 class="sub-title text-center">Web Application testing</h3>
+                <p>Below is a sample feature file for testing loggin in feature of your web app.</p>
+                <div class="code-block">
+                    <!--//Use Prismjs - http://prismjs.com/index.html#basic-usage -->
+                    <pre><code class="language-gherkin">
+@UIAutomationTest
+Feature: Log into Web App
+    As an admin of the system
+    I want to goggin into the system providing my credentials
+
+Scenario: Navigate to SUT
+    Given I navigate to SUT
+    And I enter value "admin" to the "Username" with the "id" of "username"
+    And I enter value "abc123" to the "Password" with the "id" of "password"
+    And I click on element "submitButton" with the "id" of "btnLogin"
+                     </code></pre>
+                </div><!--//code-block-->
+            </div><!--//block-->
+
+            <div class="block">
+                <h3 class="sub-title text-center">Mobile Application testing</h3>
+                <p>Below is a sample feature file for testing loggin in feature of your mobile app.</p>
+                <div class="code-block">
+                    <!--//Use Prismjs - http://prismjs.com/index.html#basic-usage -->
+                    <pre><code class="language-gherkin">
+@MobileUIAutomationTest
+Feature: Log into Android App
+    As an admin of the system
+    I want to goggin into the system providing my credentials
+
+Scenario: Logging with correct credentials
+    Given I enter value "admin" to the "Username" with the "id" of "example.com.mobile:id/username"
+    And I enter value "abc123" to the "Password" with the "id" of "example.com.mobile:id/password"
+    And I click on element "submitButton" with the "id" of "example.com.mobile:id/btnLogin"
+                     </code></pre>
+                </div><!--//code-block-->
+            </div><!--//block-->
+            
+            </div><!--//docs-inner-->         
+        </div><!--//container-->
+    </section><!--//docs->
