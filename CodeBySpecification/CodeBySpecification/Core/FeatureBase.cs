@@ -10,7 +10,7 @@ namespace CodeBySpecification.Core
 	[Binding]
 	public class FeatureBase
 	{
-		private static readonly IUiAutomationService UiAutomationService = new SeleniumUIAutomationService();
+		private static  IUiAutomationService UiAutomationService;
 		private static readonly IDictionary<string, string> DataShare = new Dictionary<string, string>();
 		private static string objectRepoResource;
 
@@ -21,16 +21,16 @@ namespace CodeBySpecification.Core
 		{
 			var browserName = ConfigurationManager.AppSettings["UI.Tests.Target.Browser"];
 			objectRepoResource = ConfigurationManager.AppSettings["UI.Tests.Object.Definitions.Path"];
-
-			UiAutomationService.InitilizeTests(browserName, objectRepoResource);
+            UiAutomationService = new SeleniumUIAutomationService();
+            UiAutomationService.InitilizeTests(browserName, objectRepoResource);
 		}
 
         [BeforeFeature("MobileUIAutomationTest")]
         public static void BeforeAppiumTestFeature()
         {
-            var browserName = ConfigurationManager.AppSettings["UI.Tests.Target.Browser"];
+            var browserName = ConfigurationManager.AppSettings["UI.Tests.Appium.Platform"];
             objectRepoResource = ConfigurationManager.AppSettings["UI.Tests.Object.Definitions.Path"];
-
+            UiAutomationService = new AppiumUiAutomationServices();
             UiAutomationService.InitilizeTests(browserName, objectRepoResource);
         }
 
