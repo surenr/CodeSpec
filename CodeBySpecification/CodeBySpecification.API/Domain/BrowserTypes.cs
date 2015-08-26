@@ -11,5 +11,6 @@ namespace CodeBySpecification.API.Domain
 		public const string FIRE_FOX = "FireFox";
 		public const string IE = "InternetExplorer";
 		public const string CHROME = "Chrome";
-	}
+        public const string ANDROID = "Android";
+    }
 }

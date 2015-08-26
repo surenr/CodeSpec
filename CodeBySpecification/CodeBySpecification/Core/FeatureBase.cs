@@ -25,9 +25,18 @@ namespace CodeBySpecification.Core
 			UiAutomationService.InitilizeTests(browserName, objectRepoResource);
 		}
 
-		#region Read the content of <element>
+        [BeforeFeature("MobileUIAutomationTest")]
+        public static void BeforeAppiumTestFeature()
+        {
+            var browserName = ConfigurationManager.AppSettings["UI.Tests.Target.Browser"];
+            objectRepoResource = ConfigurationManager.AppSettings["UI.Tests.Object.Definitions.Path"];
 
-		[Given(@"Read the content of ""(.*)""")]
+            UiAutomationService.InitilizeTests(browserName, objectRepoResource);
+        }
+
+        #region Read the content of <element>
+
+        [Given(@"Read the content of ""(.*)""")]
 		[When(@"Read the content of ""(.*)""")]
 		[Then(@"Read the content of ""(.*)""")]
 		public void ReadTheContentOf(string elementKey)
@@ -221,28 +230,50 @@ namespace CodeBySpecification.Core
 
 		#region Navigate to SUT
 
-		[Given(@"I navigate to System Under Test")]
-		[When(@"I navigate to System Under Test")]
-		[Then(@"I navigate to System Under Test")]
-		[Given(@"I navigate to SUT")]
-		[When(@"I navigate to SUT")]
-		[Then(@"I navigate to SUT")]
-		[Given(@"Navigate to System Under Test")]
-		[When(@"Navigate to System Under Test")]
-		[Then(@"Navigate to System Under Test")]
-		[Given(@"Navigate to SUT")]
-		[When(@"Navigate to SUT")]
-		[Then(@"Navigate to SUT")]
-		public void NavigateToSut()
+
+        [Given(@"I navigate to System Under Test")]
+        [When(@"I navigate to System Under Test")]
+        [Then(@"I navigate to System Under Test")]
+        [Given(@"I navigate to SUT")]
+        [When(@"I navigate to SUT")]
+        [Then(@"I navigate to SUT")]
+        [Given(@"Navigate to System Under Test")]
+        [When(@"Navigate to System Under Test")]
+        [Then(@"Navigate to System Under Test")]
+        [Given(@"Navigate to SUT")]
+        [When(@"Navigate to SUT")]
+        [Then(@"Navigate to SUT")]
+        public void NavigateToSut()
 		{
 			UiAutomationService.GotoUrl(UiAutomationService.SutUrl);
 		}
 
-		#endregion
+        #endregion
 
-		#region Navigate to <URL>
+        #region Navigate to a sub link under the SUT
 
-		[Given(@"I navigate to ""(.*)""")]
+        [Given(@"I navigate to  ""(.*)"" of System Under Test")]
+        [When(@"I navigate to ""(.*)"" of System Under Test")]
+        [Then(@"I navigate to ""(.*)"" of System Under Test")]
+        [Given(@"I navigate to ""(.*)"" of SUT")]
+        [When(@"I navigate to ""(.*)"" of SUT")]
+        [Then(@"I navigate to ""(.*)"" of SUT")]
+        [Given(@"Navigate to ""(.*)"" of System Under Test")]
+        [When(@"Navigate to ""(.*)"" of System Under Test")]
+        [Then(@"Navigate to ""(.*)"" of System Under Test")]
+        [Given(@"Navigate to ""(.*)"" of SUT")]
+        [When(@"Navigate to ""(.*)"" of SUT")]
+        [Then(@"Navigate to ""(.*)"" of SUT")]
+        public void NavigateToSubLinkUnderSut(string subURL)
+        {
+            UiAutomationService.GotoUrl(UiAutomationService.SutUrl+"/"+subURL);
+        }
+
+        #endregion
+
+        #region Navigate to <URL>
+
+        [Given(@"I navigate to ""(.*)""")]
 		[When(@"I navigate to ""(.*)""")]
 		[Then(@"I navigate to ""(.*)""")]
 		[Given(@"Navigate to ""(.*)""")]
@@ -555,8 +586,41 @@ namespace CodeBySpecification.Core
 			UiAutomationService.AreValuesEqual(DataShare[veriable.ToUpper()], value);
 		}
 
-		#endregion
+        #endregion
 
-		#endregion
-	}
+        #region Frame manipulation 
+
+        [Given(@"I switched to iframe with the ""(.*)"" of ""(.*)""")]
+        [When(@"I switched to iframe with the ""(.*)"" of ""(.*)""")]
+        [Then(@"I switched to iframe with the ""(.*)"" of ""(.*)""")]
+        [Given(@"switched to iframe with the ""(.*)"" of ""(.*)""")]
+        [When(@"switched to iframe with the ""(.*)"" of ""(.*)""")]
+        [Then(@"switched to iframe with the ""(.*)"" of ""(.*)""")]
+        [Given(@"I switched to frame with the ""(.*)"" of ""(.*)""")]
+        [When(@"I switched to frame with the ""(.*)"" of ""(.*)""")]
+        [Then(@"I switched to frame with the ""(.*)"" of ""(.*)""")]
+        [Given(@"switched to frame with the ""(.*)"" of ""(.*)""")]
+        [When(@"switched to frame with the ""(.*)"" of ""(.*)""")]
+        [Then(@"switched to frame with the ""(.*)"" of ""(.*)""")]
+        public void switchedToFrame(string selectionMethod, string selection)
+        {
+            UiAutomationService.switchToFrame(selectionMethod, selection);
+        }
+
+        [Given(@"I switched to default content")]
+        [When(@"I switched to default content")]
+        [Then(@"I switched to default content")]
+        [Given(@"switched to default content")]
+        [When(@"switched to default content")]
+        [Then(@"switched to default content")]
+        public void SwitchedToDefaultContent()
+        {
+            UiAutomationService.switchToDefaultContent();
+        }
+
+
+        #endregion
+
+        #endregion
+    }
 }
