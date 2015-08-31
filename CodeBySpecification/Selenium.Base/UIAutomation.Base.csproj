@@ -82,6 +82,7 @@
     <Compile Include="Browsers\IEBrowser.cs" />
     <Compile Include="Browsers\FireFoxBrowser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\AppiumUiAutomationServices.cs" />
     <Compile Include="Service\SeleniumUiAutomationService.cs" />
   </ItemGroup>
   <ItemGroup />
