@@ -10,9 +10,9 @@ title: Home
 2. [Content comparison](#content-comparison)
     1. [Content contains](#content-contains)
     2. [Content contains pattern](#content-contains-pattern)
-3. Click
-    1. Click on
-    2. Click and wait
+3. [Click](#click)
+    1. [Click on](#click-on)
+    2. [Click and wait](#click-and-wait)
 4. Drag and drop
 5. Enter value
 6. Navigation
@@ -110,4 +110,61 @@ The content of the page contains text pattern "You have no messages to show"
 "messagesBox" contains the text pattern "You have no messages to show"
 The "messagesBox" contains text pattern "You have no messages to show"
 The content of the "messagesBox" contains text pattern "You have no messages to show"
+ </code></pre>
+
+---
+
+#3. Click
+
+##3.1 Click on
+
+###Grammer
+I click on `<element key>`
+
+I click on `<element key>` with the `<selector type>` of `<selector value>`
+
+#### Parameters  
+
+`<element key>` - identifier defined in the repository which  represents a web element
+
+`<selector type>` - Type of the element selector ( either 'id' or 'xpath')
+
+`<selector value>` - value of the element selecto
+
+#### Example
+<pre><code class="language-gherkin">
+I click on "submitButton"
+Click on "submitButton"
+
+I click on element "submitButton" with the "id" of "submitButton"
+</code></pre>
+
+
+
+
+##3.2 Click and wait
+
+###Grammer
+I click on `<element key>` and wait `<no of seconds>` seconds
+
+I click on element `<element key>` with the `<selector type>` of `<selector value>` and wait `<no of seconds>` seconds
+
+#### Parameters  
+
+`<element key>` - identifier defined in the repository which  represents a web element
+
+`<no of seconds>` - How many seconds to wait
+
+`<selector type>` - Type of the element selector ( either 'id' or 'xpath')
+
+`<selector value>` - value of the element selector
+
+
+#### Example
+<pre><code class="language-gherkin">
+I click on "submitButton" and wait "30" seconds
+Click on "submitButton" and wait "30" seconds
+
+I click on element "submitButton" with the "id" of "submitButton" and wait "30" seconds
+Click on element "submitButton" with the "id" of "submitButton" and wait "30" seconds
  </code></pre>
