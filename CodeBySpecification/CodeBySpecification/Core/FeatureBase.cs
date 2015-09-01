@@ -300,7 +300,11 @@ namespace CodeBySpecification.Core
 			}
 		}
 
-		[Given(@"I switch to tab ""(.*)""")]
+        #endregion
+
+        #region Tabs and Window Manipulations
+
+        [Given(@"I switch to tab ""(.*)""")]
 		[When(@"I switch to tab ""(.*)""")]
 		[Then(@"I switch to tab ""(.*)""")]
 		[Given(@"Switch to tab ""(.*)""")]
@@ -546,11 +550,11 @@ namespace CodeBySpecification.Core
 				DataShare.Add(veriable.ToUpper(), element);
 		}
 
-		#endregion
+        #endregion
 
-		#region veriable manipulation
+        #region variable manipulation
 
-		[Given(@"I enter value of variable ""(.*)"" to the ""(.*)""")]
+        [Given(@"I enter value of variable ""(.*)"" to the ""(.*)""")]
 		[When(@"I enter value of variable ""(.*)"" to the ""(.*)""")]
 		[Then(@"I enter value of variable ""(.*)"" to the ""(.*)""")]
 		[Given(@"Enter value of variable ""(.*)"" to the ""(.*)""")]
