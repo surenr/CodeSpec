@@ -13,8 +13,8 @@ title: Home
 3. [Click](#click)
     1. [Click on](#click-on)
     2. [Click and wait](#click-and-wait)
-5. Enter value
 4. [Drag and drop](#drag-and-drop)
+5. [Enter value](#click-on)
 6. Navigation
     1. Navigate to SUT
     2. Navigate to a sub link under the SUT
@@ -204,3 +204,35 @@ I drag "widget1" with the "id" of "widget1" and drop on to "dashboard" with the 
  </code></pre>
 
  ---
+
+#5. Enter value
+
+Enter `<value>` to `<element1 key>`
+
+###Grammer
+
+I enter `<value>` to the `<element1 key>`
+
+###Alternatives
+
+I enter value `<value>` to the `<element1 key>` with the `<selector type>` of `<selector value>`
+
+### Parameters  
+
+`<value>` - the value  to be put
+
+`<element key>` - identifier defined in the repository which  represents a web element
+
+`<selector type>` - Type of the element selector ( either 'id' or 'xpath')
+
+`<selector value>` - value of the element selector
+
+### Example
+<pre><code class="language-gherkin">
+I enter "Sri Lanka" to the "countryField"
+
+I enter value "Sri Lanka" to the "countryField" with the "id" of "countryTextField"
+
+</code></pre>
+
+---
