@@ -15,8 +15,8 @@ title: Home
     2. [Click and wait](#click-and-wait)
 4. [Drag and drop](#drag-and-drop)
 5. [Enter value](#click-on)
-6. Navigation
-    1. Navigate to SUT
+6. [Navigation](#navigation)
+    1. [Navigate to SUT](#navigate-to-sut)
     2. Navigate to a sub link under the SUT
     3. Navigate to URL
 7. Tabs and Window Manipulations
@@ -233,6 +233,37 @@ I enter "Sri Lanka" to the "countryField"
 
 I enter value "Sri Lanka" to the "countryField" with the "id" of "countryTextField"
 
+</code></pre>
+
+---
+
+#6. Navigation
+
+##6.1 Navigate to SUT
+
+###Grammer
+
+I navigate to System Under Test
+
+###Alternatives
+
+I navigate to SUT
+
+Navigate to System Under Test
+
+Navigate to SUT
+
+Navigate to a sub link under the SUT
+
+### Example
+<pre><code class="language-gherkin">
+I navigate to SUT
+
+Navigate to System Under Test
+
+Navigate to SUT
+
+Navigate to a sub link under the SUT
 </code></pre>
 
 ---
