@@ -69,12 +69,12 @@ Get the content of "errorMessage" with the "xpath" of "id('errorMessage')/p"
 ###Grammer
 The content of `<element key>` is equal to `<expected value>`
 
-#### Parameters  
+### Parameters  
 `<element key>` - identifier defined in the repository which  represents a web element
 
 `<expected value>` - the value expected to be there
 
-#### Example
+### Example
 
 <pre><code class="language-gherkin">
 Content of "errorMessage" contains text "Invalid username"
@@ -98,13 +98,13 @@ The content of the page contains text pattern  `<text pattern>`
 
 The content of the `<element key>` contains text pattern `<text pattern>`
 
-#### Parameters  
+### Parameters  
 
 `<text pattern>` - the value expected to be there
 
 `<element key>` - identifier defined in the repository which  represents a web element
 
-#### Example
+### Example
 <pre><code class="language-gherkin">
 Page contains the text pattern "You have no messages to show"
 The page contains text pattern "You have no messages to show"
@@ -126,7 +126,7 @@ I click on `<element key>`
 
 I click on `<element key>` with the `<selector type>` of `<selector value>`
 
-#### Parameters  
+### Parameters  
 
 `<element key>` - identifier defined in the repository which  represents a web element
 
@@ -134,7 +134,7 @@ I click on `<element key>` with the `<selector type>` of `<selector value>`
 
 `<selector value>` - value of the element selector
 
-#### Example
+### Example
 <pre><code class="language-gherkin">
 I click on "submitButton"
 Click on "submitButton"
@@ -152,7 +152,7 @@ I click on `<element key>` and wait `<no of seconds>` seconds
 
 I click on element `<element key>` with the `<selector type>` of `<selector value>` and wait `<no of seconds>` seconds
 
-#### Parameters  
+### Parameters  
 
 `<element key>` - identifier defined in the repository which  represents a web element
 
@@ -163,7 +163,7 @@ I click on element `<element key>` with the `<selector type>` of `<selector valu
 `<selector value>` - value of the element selector
 
 
-#### Example
+### Example
 <pre><code class="language-gherkin">
 I click on "submitButton" and wait "30" seconds
 Click on "submitButton" and wait "30" seconds
