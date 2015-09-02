@@ -4,6 +4,7 @@ using System.Configuration;
 using CodeBySpecification.API.Service.Api;
 using Selenium.Base.Service;
 using TechTalk.SpecFlow;
+using Microsoft.Expression.Encoder.ScreenCapture;
 
 namespace CodeBySpecification.Core
 {
@@ -13,17 +14,20 @@ namespace CodeBySpecification.Core
 		private static  IUiAutomationService UiAutomationService;
 		private static readonly IDictionary<string, string> DataShare = new Dictionary<string, string>();
 		private static string objectRepoResource;
+        private static ScreenCaptureJob scj;
 
-		#region Core Step Definition Vocabulary
+        #region Core Step Definition Vocabulary
 
-		[BeforeFeature("UIAutomationTest")]
+        [BeforeFeature("UIAutomationTest")]
 		public static void BeforeSeleniumTestFeature()
 		{
 			var browserName = ConfigurationManager.AppSettings["UI.Tests.Target.Browser"];
 			objectRepoResource = ConfigurationManager.AppSettings["UI.Tests.Object.Definitions.Path"];
             UiAutomationService = new SeleniumUIAutomationService();
             UiAutomationService.InitilizeTests(browserName, objectRepoResource);
-		}
+            Console.Out.WriteLine("BeforeSeleniumTestFeature");
+
+        }
 
         [BeforeFeature("MobileUIAutomationTest")]
         public static void BeforeAppiumTestFeature()
@@ -32,7 +36,25 @@ namespace CodeBySpecification.Core
             objectRepoResource = ConfigurationManager.AppSettings["UI.Tests.Object.Definitions.Path"];
             UiAutomationService = new AppiumUiAutomationServices();
             UiAutomationService.InitilizeTests(browserName, objectRepoResource);
+            
         }
+
+        [BeforeScenario("UIAutomationTest")]
+        public static void BeforeSeleniumTestScenario()
+        {
+            //var record = ConfigurationManager.AppSettings["UI.Tests.record"];
+            scj  = new ScreenCaptureJob();
+            scj.OutputScreenCaptureFileName = @"E:\"+ScenarioContext.Current.ScenarioInfo.Title+ ".wmv";
+            scj.Start();
+        }
+
+        [AfterScenario("UIAutomationTest")]
+        public static void AfterSeleniumTestScenario()
+        {
+            //var record = ConfigurationManager.AppSettings["UI.Tests.record"];
+            scj.Stop();
+        }
+
 
         #region Read the content of <element>
 
@@ -42,6 +64,7 @@ namespace CodeBySpecification.Core
 		public void ReadTheContentOf(string elementKey)
 		{
 			FeatureContext.Current[elementKey] = UiAutomationService.GetElementText(elementKey);
+            
 		}
 
 		[Given(@"Get the content of ""(.*)"" with the ""(.*)"" of ""(.*)""")]
