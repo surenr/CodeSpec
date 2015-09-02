@@ -13,8 +13,8 @@ title: Home
 3. [Click](#click)
     1. [Click on](#click-on)
     2. [Click and wait](#click-and-wait)
-4. Drag and drop
 5. Enter value
+4. [Drag and drop](#drag-and-drop)
 6. Navigation
     1. Navigate to SUT
     2. Navigate to a sub link under the SUT
@@ -58,6 +58,7 @@ Get the content of "errorMessage" with the "id" of "errorMessage"
 Get the content of "errorMessage" with the "xpath" of "id('errorMessage')/p"
 
  </code></pre>
+
  ---
 
 
@@ -88,6 +89,8 @@ The content of page/element contains text with pattern `<text pattern>`
 
 ###Grammer
 Page contains the text pattern `<text pattern>`
+
+###Alternatives
 
 The content of the page contains text pattern  `<text pattern>`
 
@@ -129,7 +132,7 @@ I click on `<element key>` with the `<selector type>` of `<selector value>`
 
 `<selector type>` - Type of the element selector ( either 'id' or 'xpath')
 
-`<selector value>` - value of the element selecto
+`<selector value>` - value of the element selector
 
 #### Example
 <pre><code class="language-gherkin">
@@ -168,3 +171,36 @@ Click on "submitButton" and wait "30" seconds
 I click on element "submitButton" with the "id" of "submitButton" and wait "30" seconds
 Click on element "submitButton" with the "id" of "submitButton" and wait "30" seconds
  </code></pre>
+
+ ---
+
+#4. Drag and drop
+
+Drag `<element1 key>` and drop on to `<element2 key>`
+
+###Grammer
+I drag `<element1 key>` and drop on to `<element2 key>`
+
+###Alternatives
+
+I drag `<element1 key>` and drop on to `<element2 key>`
+
+I drag `<element1 key>` with the `<selector type>` of `<selector value>` and drop on to `<element2 key>` with the `<selector type>` of `<selector value>`
+
+### Parameters  
+
+`<element(n) key>` - identifier defined in the repository which  represents a web element
+
+`<selector type>` - Type of the element selector ( either 'id' or 'xpath')
+
+`<selector value>` - value of the element selector
+
+### Example
+<pre><code class="language-gherkin">
+I drag "widget1" and drop on to "dashboard"
+drag "widget1" and drop on to "dashboard"
+
+I drag "widget1" with the "id" of "widget1" and drop on to "dashboard" with the "id" of "dashboard"
+ </code></pre>
+
+ ---
