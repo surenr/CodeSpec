@@ -32,7 +32,7 @@ namespace CodeBySpecification.Core
         [BeforeFeature("MobileUIAutomationTest")]
         public static void BeforeAppiumTestFeature()
         {
-            var browserName = ConfigurationManager.AppSettings["UI.Tests.Appium.Platform"];
+            var browserName = ConfigurationManager.AppSettings["UI.Tests.Appium.capability.platformName"];
             objectRepoResource = ConfigurationManager.AppSettings["UI.Tests.Object.Definitions.Path"];
             UiAutomationService = new AppiumUiAutomationServices();
             UiAutomationService.InitilizeTests(browserName, objectRepoResource);
