@@ -30,9 +30,15 @@ namespace Selenium.Base.Browsers
 			if (browserType == Type)
 			{
                 DesiredCapabilities capabilities = new DesiredCapabilities();
-                capabilities.SetCapability("platformName", "Android");
-                capabilities.SetCapability("deviceName", ConfigurationManager.AppSettings["UI.Tests.Appium.capability.deviceName"]);
-                AppiumDriver<AppiumWebElement> browser = new AndroidDriver<AppiumWebElement>(new Uri(ConfigurationManager.AppSettings["UI.Tests.Target.URI"]), capabilities);
+                var settings = ConfigurationManager.AppSettings;
+                var requriedKeys = settings.AllKeys.Where(t => t.Contains("UI.Tests.Appium.capability"));
+                foreach(var keys in requriedKeys)
+                {
+                    var keyArray = keys.Split('.');
+                    var tempVallue = ConfigurationManager.AppSettings[keys];
+                    capabilities.SetCapability(keyArray[(keyArray.Length-1)], tempVallue);
+                }
+                AppiumDriver<AppiumWebElement> browser = new AndroidDriver<AppiumWebElement>(new Uri(ConfigurationManager.AppSettings["UI.Tests.Appium.URI"]), capabilities);
 				return browser;
 			}
 			return null;
