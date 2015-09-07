@@ -3,14 +3,13 @@
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
 <!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
 {% include head.html %}
-<body data-spy="scroll">
+<body >
 {% include facebook.html %}
 {% include header.html %}
 <section class="section">
 <div class="container">
-{{ page.content | markdownify }}
+{{ page.content }}
 </div>
 </section>
-{% include footer.html %}
 </body>
 </html>
