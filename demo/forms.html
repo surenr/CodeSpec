@@ -3,9 +3,11 @@ layout: demo_default
 title: Form Manupilation
 ---
 
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-<h2>Form Manupilation</h2>
-<hr>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<hgroup class="title">
+    <h2>Form Manupilation <small> Let's play with forms</small></h2>
+</hgroup>
+<section class="iframe_test">
 <form role="form" action="../form-error" id="form">
   <div class="form-group">
     <label for="email">Email address:</label>
@@ -20,6 +22,7 @@ title: Form Manupilation
   </div>
   <button type="submit" class="btn btn-default">Submit</button>
 </form>
+</section>
 <script type="text/javascript">
   $(function(){
     $("#form").submit(function(){
