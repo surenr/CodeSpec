@@ -31,8 +31,8 @@ namespace CodeSpecSampleTest.Specifications
         public static void FeatureSetup(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext testContext)
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "SampleWebProject Tests on IFrames", "In order to check ability to work with IFrams\nI want to switch into Iframes and d" +
-                    "o some work there", ProgrammingLanguage.CSharp, new string[] {
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "SampleWebProject Tests on IFrames", "In order to check ability to work with IFrams\r\nI want to switch into Iframes and " +
+                    "do some work there", ProgrammingLanguage.CSharp, new string[] {
                         "UIAutomationTest"});
             testRunner.OnFeatureStart(featureInfo);
         }

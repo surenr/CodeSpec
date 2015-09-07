@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OrderedTest name="orderedtest1" storage="c:\users\milinduk\documents\codespec\codebyspecification\codespecsampletest\orderedtest1.orderedtest" id="89acf8c8-e7fa-4f6a-8910-8d598a3c7a9b" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestLinks>
+    <TestLink id="27a1eae4-7c74-ad8c-bb6f-57d552045d07" name="NavigateToAURL" storage="bin\debug\codespecsampletest.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="d63a124f-4c67-ccd9-def1-9c6e24befc4e" name="GoogleForCats" storage="bin\debug\codespecsampletest.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="bd7f9e0c-a7ab-c69d-4a34-76a9715d6811" name="GoogleForDogs" storage="bin\debug\codespecsampletest.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  </TestLinks>
+</OrderedTest>

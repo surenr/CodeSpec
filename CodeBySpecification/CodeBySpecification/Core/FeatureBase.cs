@@ -5,6 +5,10 @@ using CodeBySpecification.API.Service.Api;
 using Selenium.Base.Service;
 using TechTalk.SpecFlow;
 using Microsoft.Expression.Encoder.ScreenCapture;
+using SpecResults;
+using SpecResults.Json;
+using System.Diagnostics;
+using System.IO;
 
 namespace CodeBySpecification.Core
 {
@@ -25,7 +29,12 @@ namespace CodeBySpecification.Core
 			objectRepoResource = ConfigurationManager.AppSettings["UI.Tests.Object.Definitions.Path"];
             UiAutomationService = new SeleniumUIAutomationService();
             UiAutomationService.InitilizeTests(browserName, objectRepoResource);
-            Console.Out.WriteLine("BeforeSeleniumTestFeature");
+            //Reporters.Add(new JsonReporter());
+            //Debug.WriteLine("BeforeSeleniumTestFeature");
+            //Reporters.FinishedReport += (sender, args) => {
+            //    Debug.WriteLine(args.Reporter.WriteToString());
+            //    File.WriteAllText(@"E:\" + ScenarioContext.Current.ScenarioInfo.Title + ".wmv", createText);
+            //};
 
         }
 
@@ -43,15 +52,24 @@ namespace CodeBySpecification.Core
         public static void BeforeSeleniumTestScenario()
         {
             //var record = ConfigurationManager.AppSettings["UI.Tests.record"];
+           
             scj  = new ScreenCaptureJob();
             scj.OutputScreenCaptureFileName = @"E:\"+ScenarioContext.Current.ScenarioInfo.Title+ ".wmv";
             scj.Start();
+        }
+
+        [BeforeScenarioBlock]
+        public static void BeforeScenarioBlock()
+        {
+            var a = ScenarioContext.Current.CurrentScenarioBlock;
+            var b = ScenarioContext.Current;
         }
 
         [AfterScenario("UIAutomationTest")]
         public static void AfterSeleniumTestScenario()
         {
             //var record = ConfigurationManager.AppSettings["UI.Tests.record"];
+           
             scj.Stop();
         }
 
