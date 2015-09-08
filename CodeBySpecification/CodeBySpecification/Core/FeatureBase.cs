@@ -7,6 +7,7 @@ using TechTalk.SpecFlow;
 using Microsoft.Expression.Encoder.ScreenCapture;
 using System.Diagnostics;
 using System.IO;
+using Newtonsoft.Json.Linq;
 
 namespace CodeBySpecification.Core
 {
@@ -28,6 +29,13 @@ namespace CodeBySpecification.Core
             UiAutomationService = new SeleniumUIAutomationService();
             UiAutomationService.InitilizeTests(browserName, objectRepoResource);
 
+            JObject currentFeature = new JObject();
+            currentFeature["title"] = FeatureContext.Current.FeatureInfo.Title;
+            currentFeature["description"] = FeatureContext.Current.FeatureInfo.Description;
+            currentFeature["tags"] = new JArray(FeatureContext.Current.FeatureInfo.Tags);
+            currentFeature["scenarios"] = new JArray();
+            FeatureContext.Current["currentFeature"] = currentFeature;
+
         }
 
         [BeforeFeature("MobileUIAutomationTest")]
@@ -46,19 +54,44 @@ namespace CodeBySpecification.Core
             scj  = new ScreenCaptureJob();
             scj.OutputScreenCaptureFileName = @"E:\"+ScenarioContext.Current.ScenarioInfo.Title+ ".wmv";
             scj.Start();
+            
+            FeatureContext.Current["time"] = DateTime.UtcNow;
         }
 
-        [BeforeScenarioBlock]
+        [BeforeStep]
         public static void BeforeScenarioBlock()
         {
+
+        }
+        [AfterScenarioBlock]
+        public static void AfterScenarioBlock()
+        {
+           
         }
 
         [AfterScenario("UIAutomationTest")]
         public static void AfterSeleniumTestScenario()
         {
+            var time = DateTime.UtcNow;
+
+            var currentFeature = (JObject)FeatureContext.Current["currentFeature"];
+            var scenarios = (JArray)currentFeature["scenarios"];
+            var scenario = new JObject();
+            scenario["title"] = ScenarioContext.Current.ScenarioInfo.Title;
+            scenario["startTime"] = FeatureContext.Current["time"].ToString();
+            scenario["endTime"] = time.ToString();
+            scenario["tags"] = new JArray(ScenarioContext.Current.ScenarioInfo.Tags);
+            scenarios.Add(scenario);
+
             scj.Stop();
         }
-
+        [AfterFeature("UIAutomationTest")]
+        public static void AfterSeleniumTestFeature()
+        {
+            var currentFeature = (JObject)FeatureContext.Current["currentFeature"];
+            var outputJSON = currentFeature.ToString();
+            System.IO.File.WriteAllText(@"E:\" + FeatureContext.Current.FeatureInfo.Title + ".json", outputJSON);
+        }
 
         #region Read the content of <element>
 
