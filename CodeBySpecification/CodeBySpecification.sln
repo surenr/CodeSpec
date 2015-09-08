@@ -15,27 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObjectRepository.Base", "Ob
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleWebProjectTest", "CodeSpecSampleTest\SampleWebProjectTest.csproj", "{584B8F4D-20B6-44C6-BCCE-3E3F71158027}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "SampleWebProject", "..\SampleProjects\SampleWebProject\", "{283B460A-08C2-45B8-B31A-75976EB0733C}"
-	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5.2"
-		Debug.AspNetCompiler.VirtualPath = "/localhost_50400"
-		Debug.AspNetCompiler.PhysicalPath = "..\SampleProjects\SampleWebProject\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_50400\"
-		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/localhost_50400"
-		Release.AspNetCompiler.PhysicalPath = "..\SampleProjects\SampleWebProject\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_50400\"
-		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "50400"
-		SlnRelativePath = "..\SampleProjects\SampleWebProject\"
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,10 +45,6 @@ Global
 		{584B8F4D-20B6-44C6-BCCE-3E3F71158027}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{584B8F4D-20B6-44C6-BCCE-3E3F71158027}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{584B8F4D-20B6-44C6-BCCE-3E3F71158027}.Release|Any CPU.Build.0 = Release|Any CPU
-		{283B460A-08C2-45B8-B31A-75976EB0733C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{283B460A-08C2-45B8-B31A-75976EB0733C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{283B460A-08C2-45B8-B31A-75976EB0733C}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{283B460A-08C2-45B8-B31A-75976EB0733C}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
