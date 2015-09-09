@@ -66,7 +66,7 @@ namespace CodeBySpecification.Core
         [AfterScenarioBlock]
         public static void AfterScenarioBlock()
         {
-           
+            var err = ScenarioContext.Current.TestError;
         }
 
         [AfterScenario("UIAutomationTest")]
@@ -81,6 +81,16 @@ namespace CodeBySpecification.Core
             scenario["startTime"] = FeatureContext.Current["time"].ToString();
             scenario["endTime"] = time.ToString();
             scenario["tags"] = new JArray(ScenarioContext.Current.ScenarioInfo.Tags);
+            
+
+            var err = ScenarioContext.Current.TestError;
+            if (err != null) {
+                var error = new JObject();
+                error["message"] = ScenarioContext.Current.TestError.Message;
+                error["stackTrace"] = ScenarioContext.Current.TestError.StackTrace;
+                scenario["error"] = error;
+                scenario["error"] = error;
+            }
             scenarios.Add(scenario);
 
             scj.Stop();
