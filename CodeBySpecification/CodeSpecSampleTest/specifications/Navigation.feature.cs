@@ -80,6 +80,8 @@ namespace CodeSpecSampleTest.Specifications
 this.ScenarioSetup(scenarioInfo);
 #line 7
  testRunner.Given("I navigate to SUT", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 8
+ testRunner.Then("The page contains text pattern \"Available tests\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -88,13 +90,15 @@ this.ScenarioSetup(scenarioInfo);
         [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Navigate to sub-URL under SUT")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "SampleWebProject Tests on Navigation")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("UIAutomationTest")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("record")]
         public virtual void NavigateToSub_URLUnderSUT()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Navigate to sub-URL under SUT", ((string[])(null)));
-#line 9
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Navigate to sub-URL under SUT", new string[] {
+                        "record"});
+#line 11
 this.ScenarioSetup(scenarioInfo);
-#line 10
- testRunner.Given("I navigate to \"TestPages/HTML_Form\" of SUT", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 12
+ testRunner.Given("I navigate to \"forms\" of SUT", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -106,9 +110,9 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void NavigateToAURL()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Navigate to a URL", ((string[])(null)));
-#line 12
+#line 14
 this.ScenarioSetup(scenarioInfo);
-#line 13
+#line 15
  testRunner.Given("I navigate to \"http://google.com\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
             this.ScenarioCleanup();

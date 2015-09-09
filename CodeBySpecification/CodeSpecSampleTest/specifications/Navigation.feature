@@ -5,9 +5,11 @@ Feature: SampleWebProject Tests on Navigation
 
 Scenario: Navigate to SUT
 	Given I navigate to SUT
+	Then The page contains text pattern "Available tests"
 
+@record
 Scenario: Navigate to sub-URL under SUT
-	Given I navigate to "TestPages/HTML_Form" of SUT
+	Given I navigate to "forms" of SUT
 
 Scenario: Navigate to a URL
 	Given I navigate to "http://google.com"
