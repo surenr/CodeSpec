@@ -7,6 +7,10 @@ Scenario: Navigate to SUT
 	Given I navigate to SUT
 	Then The page contains text pattern "Available tests"
 
+Scenario: Navigate to SUT error
+	Given I navigate to SUT
+	Then The page contains text pattern "Available testsdrs"
+
 @record
 Scenario: Navigate to sub-URL under SUT
 	Given I navigate to "forms" of SUT
