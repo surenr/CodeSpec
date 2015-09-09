@@ -55,6 +55,10 @@
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="RazorEngine, Version=3.7.2.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
+      <HintPath>..\packages\RazorEngine.3.7.2\lib\net45\RazorEngine.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="SpecResults, Version=0.1.0.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SpecResults.0.1.0.7\lib\net40\SpecResults.dll</HintPath>
       <Private>True</Private>
