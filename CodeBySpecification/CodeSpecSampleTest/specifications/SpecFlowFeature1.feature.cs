@@ -19,20 +19,20 @@ namespace CodeSpecSampleTest.Specifications
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "1.9.0.77")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [Microsoft.VisualStudio.TestTools.UnitTesting.TestClassAttribute()]
-    public partial class SampleWebProjectTestsOnDragAndDropFeature
+    public partial class TestVideoRecordingAbilityFeature
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-#line 1 "DragAndDrop.feature"
+#line 1 "SpecFlowFeature1.feature"
 #line hidden
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.ClassInitializeAttribute()]
         public static void FeatureSetup(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext testContext)
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "SampleWebProject Tests on Drag and Drop", "In order to check ability to work with Drag and Drop\r\nI want to Drag and Drop som" +
-                    "e elements", ProgrammingLanguage.CSharp, new string[] {
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Test video recording ability", "In order to check ability of vedio capturing\r\nI want to google for some stuffs an" +
+                    "d record them", ProgrammingLanguage.CSharp, new string[] {
                         "UIAutomationTest"});
             testRunner.OnFeatureStart(featureInfo);
         }
@@ -48,9 +48,9 @@ namespace CodeSpecSampleTest.Specifications
         public virtual void TestInitialize()
         {
             if (((TechTalk.SpecFlow.FeatureContext.Current != null) 
-                        && (TechTalk.SpecFlow.FeatureContext.Current.FeatureInfo.Title != "SampleWebProject Tests on Drag and Drop")))
+                        && (TechTalk.SpecFlow.FeatureContext.Current.FeatureInfo.Title != "Test video recording ability")))
             {
-                CodeSpecSampleTest.Specifications.SampleWebProjectTestsOnDragAndDropFeature.FeatureSetup(null);
+                CodeSpecSampleTest.Specifications.TestVideoRecordingAbilityFeature.FeatureSetup(null);
             }
         }
         
@@ -71,43 +71,45 @@ namespace CodeSpecSampleTest.Specifications
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Simple Drag and Drop")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "SampleWebProject Tests on Drag and Drop")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Google for Cats")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Test video recording ability")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("UIAutomationTest")]
-        public virtual void SimpleDragAndDrop()
+        public virtual void GoogleForCats()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Simple Drag and Drop", ((string[])(null)));
-#line 6
-this.ScenarioSetup(scenarioInfo);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Google for Cats", ((string[])(null)));
 #line 7
- testRunner.Then("I navigate to \"TestPages/DragAndDrop_jQueryUI.cshtml\" of SUT", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+this.ScenarioSetup(scenarioInfo);
 #line 8
- testRunner.And("Wait for the \"draggable\" with the \"id\" of \"draggable\" to show", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.Given("I navigate to \"http://google.com\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 9
- testRunner.And("Wait for the \"droppable\" with the \"id\" of \"droppable\" to show", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I enter value \"Cats\" to the \"searchBox\" with the \"id\" of \"lst-ib\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 10
- testRunner.When("I drag \"draggable\" and drop on to \"droppable\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.And("I click on element \"searchButton\" with the \"xpath\" of \"id(\'sblsbb\')/button\" and w" +
+                    "ait \"4\" seconds", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 11
+ testRunner.Then("The page contains text pattern \"The domestic cat is\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Simple Drag and Drop with HTML5")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "SampleWebProject Tests on Drag and Drop")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Google for Dogs")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Test video recording ability")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("UIAutomationTest")]
-        public virtual void SimpleDragAndDropWithHTML5()
+        public virtual void GoogleForDogs()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Simple Drag and Drop with HTML5", ((string[])(null)));
-#line 12
-this.ScenarioSetup(scenarioInfo);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Google for Dogs", ((string[])(null)));
 #line 13
- testRunner.Given("I navigate to \"http://html5demos.com/drag\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+this.ScenarioSetup(scenarioInfo);
 #line 14
- testRunner.And("Wait for the \"one\" with the \"id\" of \"one\" to show", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.Given("I navigate to \"http://google.com\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 15
- testRunner.And("Wait for the \"bin\" with the \"id\" of \"bin\" to show", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I enter value \"Dogs\" to the \"searchBox\" with the \"id\" of \"lst-ib\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 16
- testRunner.Then("I drag \"one\" and drop on to \"bin\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.And("I click on element \"searchButton\" with the \"xpath\" of \"id(\'sblsbb\')/button\" and w" +
+                    "ait \"4\" seconds", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 17
+ testRunner.Then("The page contains text pattern \"The domestic dog is\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
