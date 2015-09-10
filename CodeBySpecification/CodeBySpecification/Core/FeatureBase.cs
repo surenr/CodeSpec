@@ -54,7 +54,7 @@ namespace CodeBySpecification.Core
         public static void BeforeSeleniumTestScenario()
         {
             scj  = new ScreenCaptureJob();
-            scj.OutputScreenCaptureFileName = @"E:\"+ScenarioContext.Current.ScenarioInfo.Title+ ".wmv";
+            scj.OutputScreenCaptureFileName = ConfigurationManager.AppSettings["UI.Tests.Reports.path"] + "\\videos\\" + ScenarioContext.Current.ScenarioInfo.Title + ".wmv";
             scj.Start();
             
             FeatureContext.Current["time"] = DateTime.UtcNow;
@@ -102,18 +102,11 @@ namespace CodeBySpecification.Core
         {
             var currentFeature = (JObject)FeatureContext.Current["currentFeature"];
             var outputJSON = currentFeature.ToString();
-            string template = @"
-<h1>@Model.Feature.title</h1> 
-<p>@Model.Feature.description</p>
-<ul>@foreach (var scenario in @Model.Feature.scenarios)
-{
-    <li> @scenario.title </li>
-}
-</ul>";
+            string template = System.IO.File.ReadAllText(ConfigurationManager.AppSettings["UI.Tests.Reports.path"]+"\\template\\page.html");
             var result =
                 Engine.Razor.RunCompile(template, "feature", null, new { Feature = currentFeature });
-            System.IO.File.WriteAllText(@"E:\" + FeatureContext.Current.FeatureInfo.Title + ".json", outputJSON);
-            System.IO.File.WriteAllText(@"E:\" + FeatureContext.Current.FeatureInfo.Title + ".html", result);
+            System.IO.File.WriteAllText(ConfigurationManager.AppSettings["UI.Tests.Reports.path"] +"\\"+ FeatureContext.Current.FeatureInfo.Title + ".json", outputJSON);
+            System.IO.File.WriteAllText(ConfigurationManager.AppSettings["UI.Tests.Reports.path"] + "\\" + FeatureContext.Current.FeatureInfo.Title + ".html", result);
         }
 
         #region Read the content of <element>
