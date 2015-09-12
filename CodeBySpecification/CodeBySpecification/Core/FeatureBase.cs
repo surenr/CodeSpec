@@ -8,6 +8,8 @@ using Microsoft.Expression.Encoder.ScreenCapture;
 using System.Diagnostics;
 using System.IO;
 using Newtonsoft.Json.Linq;
+using RazorEngine.Templating;
+using RazorEngine;
 
 namespace CodeBySpecification.Core
 {
@@ -100,7 +102,18 @@ namespace CodeBySpecification.Core
         {
             var currentFeature = (JObject)FeatureContext.Current["currentFeature"];
             var outputJSON = currentFeature.ToString();
+            string template = @"
+<h1>@Model.Feature.title</h1> 
+<p>@Model.Feature.description</p>
+<ul>@foreach (var scenario in @Model.Feature.scenarios)
+{
+    <li> @scenario.title </li>
+}
+</ul>";
+            var result =
+                Engine.Razor.RunCompile(template, "feature", null, new { Feature = currentFeature });
             System.IO.File.WriteAllText(@"E:\" + FeatureContext.Current.FeatureInfo.Title + ".json", outputJSON);
+            System.IO.File.WriteAllText(@"E:\" + FeatureContext.Current.FeatureInfo.Title + ".html", result);
         }
 
         #region Read the content of <element>
