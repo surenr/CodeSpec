@@ -1,130 +1,122 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using CodeBySpecification.API;
 using CodeBySpecification.API.Service.Api;
+using Newtonsoft.Json.Linq;
+using Report.Base.Service;
+using ScreenRecorder.Base.Service;
 using Selenium.Base.Service;
 using TechTalk.SpecFlow;
-using Microsoft.Expression.Encoder.ScreenCapture;
-using System.Diagnostics;
-using System.IO;
-using Newtonsoft.Json.Linq;
-using RazorEngine.Templating;
-using RazorEngine;
 
 namespace CodeBySpecification.Core
 {
 	[Binding]
 	public class FeatureBase
 	{
-		private static  IUiAutomationService UiAutomationService;
+		private static IUiAutomationService UiAutomationService;
 		private static readonly IDictionary<string, string> DataShare = new Dictionary<string, string>();
 		private static string objectRepoResource;
-        private static ScreenCaptureJob scj;
+		private static IScreenRecordService recorder;
 
-        #region Core Step Definition Vocabulary
+		#region Core Step Definition Vocabulary
 
-        [BeforeFeature("UIAutomationTest")]
+		[BeforeFeature("UIAutomationTest")]
 		public static void BeforeSeleniumTestFeature()
 		{
 			var browserName = ConfigurationManager.AppSettings["UI.Tests.Target.Browser"];
 			objectRepoResource = ConfigurationManager.AppSettings["UI.Tests.Object.Definitions.Path"];
-            UiAutomationService = new SeleniumUIAutomationService();
-            UiAutomationService.InitilizeTests(browserName, objectRepoResource);
+			UiAutomationService = new SeleniumUIAutomationService();
+			UiAutomationService.InitilizeTests(browserName, objectRepoResource);
 
-            JObject currentFeature = new JObject();
-            currentFeature["title"] = FeatureContext.Current.FeatureInfo.Title;
-            currentFeature["description"] = FeatureContext.Current.FeatureInfo.Description;
-            currentFeature["tags"] = new JArray(FeatureContext.Current.FeatureInfo.Tags);
-            currentFeature["scenarios"] = new JArray();
-            FeatureContext.Current["currentFeature"] = currentFeature;
+			JObject currentFeature = new JObject();
+			currentFeature["title"] = FeatureContext.Current.FeatureInfo.Title;
+			currentFeature["description"] = FeatureContext.Current.FeatureInfo.Description;
+			currentFeature["tags"] = new JArray(FeatureContext.Current.FeatureInfo.Tags);
+			currentFeature["scenarios"] = new JArray();
+			FeatureContext.Current["currentFeature"] = currentFeature;
+		}
 
-        }
+		[BeforeFeature("MobileUIAutomationTest")]
+		public static void BeforeAppiumTestFeature()
+		{
+			var browserName = ConfigurationManager.AppSettings["UI.Tests.Appium.capability.platformName"];
+			objectRepoResource = ConfigurationManager.AppSettings["UI.Tests.Object.Definitions.Path"];
+			UiAutomationService = new AppiumUiAutomationServices();
+			UiAutomationService.InitilizeTests(browserName, objectRepoResource);
+		}
 
-        [BeforeFeature("MobileUIAutomationTest")]
-        public static void BeforeAppiumTestFeature()
-        {
-            var browserName = ConfigurationManager.AppSettings["UI.Tests.Appium.capability.platformName"];
-            objectRepoResource = ConfigurationManager.AppSettings["UI.Tests.Object.Definitions.Path"];
-            UiAutomationService = new AppiumUiAutomationServices();
-            UiAutomationService.InitilizeTests(browserName, objectRepoResource);
-            
-        }
+		[BeforeScenario("record")]
+		public static void BeforeTestScenarioWithRecord()
+		{
+			recorder = new ExpressionEncoderRecorder();
+			recorder.OutputFile = @"E:\" + ScenarioContext.Current.ScenarioInfo.Title + ".wmv";
+			recorder.Start();
+		}
 
-        [BeforeScenario("UIAutomationTest")]
-        public static void BeforeSeleniumTestScenario()
-        {
-            scj  = new ScreenCaptureJob();
-            scj.OutputScreenCaptureFileName = @"E:\"+ScenarioContext.Current.ScenarioInfo.Title+ ".wmv";
-            scj.Start();
-            
-            FeatureContext.Current["time"] = DateTime.UtcNow;
-        }
+		[BeforeScenario("UIAutomationTest")]
+		public static void BeforeSeleniumTestScenario()
+		{
+			FeatureContext.Current["time"] = DateTime.UtcNow;
+		}
 
-        [BeforeStep]
-        public static void BeforeScenarioBlock()
-        {
+		[AfterScenarioBlock]
+		public static void AfterScenarioBlock()
+		{
+			var err = ScenarioContext.Current.TestError;
+		}
 
-        }
-        [AfterScenarioBlock]
-        public static void AfterScenarioBlock()
-        {
-            var err = ScenarioContext.Current.TestError;
-        }
+		[AfterScenario("UIAutomationTest")]
+		public static void AfterSeleniumTestScenario()
+		{
+			var time = DateTime.UtcNow;
 
-        [AfterScenario("UIAutomationTest")]
-        public static void AfterSeleniumTestScenario()
-        {
-            var time = DateTime.UtcNow;
+			var currentFeature = (JObject) FeatureContext.Current["currentFeature"];
+			var scenarios = (JArray) currentFeature["scenarios"];
+			var scenario = new JObject();
+			scenario["title"] = ScenarioContext.Current.ScenarioInfo.Title;
+			scenario["startTime"] = FeatureContext.Current["time"].ToString();
+			scenario["endTime"] = time.ToString();
+			scenario["tags"] = new JArray(ScenarioContext.Current.ScenarioInfo.Tags);
 
-            var currentFeature = (JObject)FeatureContext.Current["currentFeature"];
-            var scenarios = (JArray)currentFeature["scenarios"];
-            var scenario = new JObject();
-            scenario["title"] = ScenarioContext.Current.ScenarioInfo.Title;
-            scenario["startTime"] = FeatureContext.Current["time"].ToString();
-            scenario["endTime"] = time.ToString();
-            scenario["tags"] = new JArray(ScenarioContext.Current.ScenarioInfo.Tags);
-            
+			var err = ScenarioContext.Current.TestError;
+			if (err != null)
+			{
+				var error = new JObject();
+				error["message"] = ScenarioContext.Current.TestError.Message;
+				error["stackTrace"] = ScenarioContext.Current.TestError.StackTrace;
+				scenario["error"] = error;
+				scenario["error"] = error;
+			}
+			scenarios.Add(scenario);
+		}
 
-            var err = ScenarioContext.Current.TestError;
-            if (err != null) {
-                var error = new JObject();
-                error["message"] = ScenarioContext.Current.TestError.Message;
-                error["stackTrace"] = ScenarioContext.Current.TestError.StackTrace;
-                scenario["error"] = error;
-                scenario["error"] = error;
-            }
-            scenarios.Add(scenario);
+		[AfterScenario("record")]
+		public static void AfterTestScenarioWithRecord()
+		{
+			recorder.Stop();
+		}
 
-            scj.Stop();
-        }
-        [AfterFeature("UIAutomationTest")]
-        public static void AfterSeleniumTestFeature()
-        {
-            var currentFeature = (JObject)FeatureContext.Current["currentFeature"];
-            var outputJSON = currentFeature.ToString();
-            string template = @"
-<h1>@Model.Feature.title</h1> 
-<p>@Model.Feature.description</p>
-<ul>@foreach (var scenario in @Model.Feature.scenarios)
-{
-    <li> @scenario.title </li>
-}
-</ul>";
-            var result =
-                Engine.Razor.RunCompile(template, "feature", null, new { Feature = currentFeature });
-            System.IO.File.WriteAllText(@"E:\" + FeatureContext.Current.FeatureInfo.Title + ".json", outputJSON);
-            System.IO.File.WriteAllText(@"E:\" + FeatureContext.Current.FeatureInfo.Title + ".html", result);
-        }
+		[AfterFeature("UIAutomationTest")]
+		public static void AfterSeleniumTestFeature()
+		{
+			var currentFeature = (JObject) FeatureContext.Current["currentFeature"];
+			var outputJSON = currentFeature.ToString();
 
-        #region Read the content of <element>
+			IReportService report = new HtmlReportService();
+			var ouput = report.Generate(currentFeature);
+			System.IO.File.WriteAllText(@"E:\" + FeatureContext.Current.FeatureInfo.Title + ".json", outputJSON);
+			System.IO.File.WriteAllText(@"E:\" + FeatureContext.Current.FeatureInfo.Title + ".html", ouput);
+		}
 
-        [Given(@"Read the content of ""(.*)""")]
+		#region Read the content of <element>
+
+		[Given(@"Read the content of ""(.*)""")]
 		[When(@"Read the content of ""(.*)""")]
 		[Then(@"Read the content of ""(.*)""")]
 		public void ReadTheContentOf(string elementKey)
 		{
 			FeatureContext.Current[elementKey] = UiAutomationService.GetElementText(elementKey);
-            
 		}
 
 		[Given(@"Get the content of ""(.*)"" with the ""(.*)"" of ""(.*)""")]
@@ -313,50 +305,49 @@ namespace CodeBySpecification.Core
 
 		#region Navigate to SUT
 
-
-        [Given(@"I navigate to System Under Test")]
-        [When(@"I navigate to System Under Test")]
-        [Then(@"I navigate to System Under Test")]
-        [Given(@"I navigate to SUT")]
-        [When(@"I navigate to SUT")]
-        [Then(@"I navigate to SUT")]
-        [Given(@"Navigate to System Under Test")]
-        [When(@"Navigate to System Under Test")]
-        [Then(@"Navigate to System Under Test")]
-        [Given(@"Navigate to SUT")]
-        [When(@"Navigate to SUT")]
-        [Then(@"Navigate to SUT")]
-        public void NavigateToSut()
+		[Given(@"I navigate to System Under Test")]
+		[When(@"I navigate to System Under Test")]
+		[Then(@"I navigate to System Under Test")]
+		[Given(@"I navigate to SUT")]
+		[When(@"I navigate to SUT")]
+		[Then(@"I navigate to SUT")]
+		[Given(@"Navigate to System Under Test")]
+		[When(@"Navigate to System Under Test")]
+		[Then(@"Navigate to System Under Test")]
+		[Given(@"Navigate to SUT")]
+		[When(@"Navigate to SUT")]
+		[Then(@"Navigate to SUT")]
+		public void NavigateToSut()
 		{
 			UiAutomationService.GotoUrl(UiAutomationService.SutUrl);
 		}
 
-        #endregion
+		#endregion
 
-        #region Navigate to a sub link under the SUT
+		#region Navigate to a sub link under the SUT
 
-        [Given(@"I navigate to  ""(.*)"" of System Under Test")]
-        [When(@"I navigate to ""(.*)"" of System Under Test")]
-        [Then(@"I navigate to ""(.*)"" of System Under Test")]
-        [Given(@"I navigate to ""(.*)"" of SUT")]
-        [When(@"I navigate to ""(.*)"" of SUT")]
-        [Then(@"I navigate to ""(.*)"" of SUT")]
-        [Given(@"Navigate to ""(.*)"" of System Under Test")]
-        [When(@"Navigate to ""(.*)"" of System Under Test")]
-        [Then(@"Navigate to ""(.*)"" of System Under Test")]
-        [Given(@"Navigate to ""(.*)"" of SUT")]
-        [When(@"Navigate to ""(.*)"" of SUT")]
-        [Then(@"Navigate to ""(.*)"" of SUT")]
-        public void NavigateToSubLinkUnderSut(string subURL)
-        {
-            UiAutomationService.GotoUrl(UiAutomationService.SutUrl+"/"+subURL);
-        }
+		[Given(@"I navigate to  ""(.*)"" of System Under Test")]
+		[When(@"I navigate to ""(.*)"" of System Under Test")]
+		[Then(@"I navigate to ""(.*)"" of System Under Test")]
+		[Given(@"I navigate to ""(.*)"" of SUT")]
+		[When(@"I navigate to ""(.*)"" of SUT")]
+		[Then(@"I navigate to ""(.*)"" of SUT")]
+		[Given(@"Navigate to ""(.*)"" of System Under Test")]
+		[When(@"Navigate to ""(.*)"" of System Under Test")]
+		[Then(@"Navigate to ""(.*)"" of System Under Test")]
+		[Given(@"Navigate to ""(.*)"" of SUT")]
+		[When(@"Navigate to ""(.*)"" of SUT")]
+		[Then(@"Navigate to ""(.*)"" of SUT")]
+		public void NavigateToSubLinkUnderSut(string subURL)
+		{
+			UiAutomationService.GotoUrl(UiAutomationService.SutUrl + "/" + subURL);
+		}
 
-        #endregion
+		#endregion
 
-        #region Navigate to <URL>
+		#region Navigate to <URL>
 
-        [Given(@"I navigate to ""(.*)""")]
+		[Given(@"I navigate to ""(.*)""")]
 		[When(@"I navigate to ""(.*)""")]
 		[Then(@"I navigate to ""(.*)""")]
 		[Given(@"Navigate to ""(.*)""")]
@@ -383,11 +374,11 @@ namespace CodeBySpecification.Core
 			}
 		}
 
-        #endregion
+		#endregion
 
-        #region Tabs and Window Manipulations
+		#region Tabs and Window Manipulations
 
-        [Given(@"I switch to tab ""(.*)""")]
+		[Given(@"I switch to tab ""(.*)""")]
 		[When(@"I switch to tab ""(.*)""")]
 		[Then(@"I switch to tab ""(.*)""")]
 		[Given(@"Switch to tab ""(.*)""")]
@@ -633,11 +624,11 @@ namespace CodeBySpecification.Core
 				DataShare.Add(veriable.ToUpper(), element);
 		}
 
-        #endregion
+		#endregion
 
-        #region variable manipulation
+		#region variable manipulation
 
-        [Given(@"I enter value of variable ""(.*)"" to the ""(.*)""")]
+		[Given(@"I enter value of variable ""(.*)"" to the ""(.*)""")]
 		[When(@"I enter value of variable ""(.*)"" to the ""(.*)""")]
 		[Then(@"I enter value of variable ""(.*)"" to the ""(.*)""")]
 		[Given(@"Enter value of variable ""(.*)"" to the ""(.*)""")]
@@ -673,41 +664,40 @@ namespace CodeBySpecification.Core
 			UiAutomationService.AreValuesEqual(DataShare[veriable.ToUpper()], value);
 		}
 
-        #endregion
+		#endregion
 
-        #region Frame manipulation 
+		#region Frame manipulation
 
-        [Given(@"I switched to iframe with the ""(.*)"" of ""(.*)""")]
-        [When(@"I switched to iframe with the ""(.*)"" of ""(.*)""")]
-        [Then(@"I switched to iframe with the ""(.*)"" of ""(.*)""")]
-        [Given(@"switched to iframe with the ""(.*)"" of ""(.*)""")]
-        [When(@"switched to iframe with the ""(.*)"" of ""(.*)""")]
-        [Then(@"switched to iframe with the ""(.*)"" of ""(.*)""")]
-        [Given(@"I switched to frame with the ""(.*)"" of ""(.*)""")]
-        [When(@"I switched to frame with the ""(.*)"" of ""(.*)""")]
-        [Then(@"I switched to frame with the ""(.*)"" of ""(.*)""")]
-        [Given(@"switched to frame with the ""(.*)"" of ""(.*)""")]
-        [When(@"switched to frame with the ""(.*)"" of ""(.*)""")]
-        [Then(@"switched to frame with the ""(.*)"" of ""(.*)""")]
-        public void switchedToFrame(string selectionMethod, string selection)
-        {
-            UiAutomationService.switchToFrame(selectionMethod, selection);
-        }
+		[Given(@"I switched to iframe with the ""(.*)"" of ""(.*)""")]
+		[When(@"I switched to iframe with the ""(.*)"" of ""(.*)""")]
+		[Then(@"I switched to iframe with the ""(.*)"" of ""(.*)""")]
+		[Given(@"switched to iframe with the ""(.*)"" of ""(.*)""")]
+		[When(@"switched to iframe with the ""(.*)"" of ""(.*)""")]
+		[Then(@"switched to iframe with the ""(.*)"" of ""(.*)""")]
+		[Given(@"I switched to frame with the ""(.*)"" of ""(.*)""")]
+		[When(@"I switched to frame with the ""(.*)"" of ""(.*)""")]
+		[Then(@"I switched to frame with the ""(.*)"" of ""(.*)""")]
+		[Given(@"switched to frame with the ""(.*)"" of ""(.*)""")]
+		[When(@"switched to frame with the ""(.*)"" of ""(.*)""")]
+		[Then(@"switched to frame with the ""(.*)"" of ""(.*)""")]
+		public void switchedToFrame(string selectionMethod, string selection)
+		{
+			UiAutomationService.switchToFrame(selectionMethod, selection);
+		}
 
-        [Given(@"I switched to default content")]
-        [When(@"I switched to default content")]
-        [Then(@"I switched to default content")]
-        [Given(@"switched to default content")]
-        [When(@"switched to default content")]
-        [Then(@"switched to default content")]
-        public void SwitchedToDefaultContent()
-        {
-            UiAutomationService.switchToDefaultContent();
-        }
+		[Given(@"I switched to default content")]
+		[When(@"I switched to default content")]
+		[Then(@"I switched to default content")]
+		[Given(@"switched to default content")]
+		[When(@"switched to default content")]
+		[Then(@"switched to default content")]
+		public void SwitchedToDefaultContent()
+		{
+			UiAutomationService.switchToDefaultContent();
+		}
 
+		#endregion
 
-        #endregion
-
-        #endregion
-    }
+		#endregion
+	}
 }

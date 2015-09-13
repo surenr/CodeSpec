@@ -31,8 +31,8 @@ namespace CodeSpecSampleTest.Specifications
         public static void FeatureSetup(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext testContext)
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "SampleWebProject Tests on Drag and Drop", "In order to check ability to work with Drag and Drop\r\nI want to Drag and Drop som" +
-                    "e elements", ProgrammingLanguage.CSharp, new string[] {
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "SampleWebProject Tests on Drag and Drop", "In order to check ability to work with Drag and Drop\nI want to Drag and Drop some" +
+                    " elements", ProgrammingLanguage.CSharp, new string[] {
                         "UIAutomationTest"});
             testRunner.OnFeatureStart(featureInfo);
         }

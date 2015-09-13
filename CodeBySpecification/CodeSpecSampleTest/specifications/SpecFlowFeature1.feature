@@ -10,6 +10,7 @@ Scenario: Google for Cats
 	And I click on element "searchButton" with the "xpath" of "id('sblsbb')/button" and wait "4" seconds
 	Then The page contains text pattern "The domestic cat is"
 
+@record
 Scenario: Google for Dogs
 	Given I navigate to "http://google.com"
 	And I enter value "Dogs" to the "searchBox" with the "id" of "lst-ib"

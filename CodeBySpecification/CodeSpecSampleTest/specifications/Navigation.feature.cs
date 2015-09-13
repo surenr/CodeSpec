@@ -31,7 +31,7 @@ namespace CodeSpecSampleTest.Specifications
         public static void FeatureSetup(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext testContext)
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "SampleWebProject Tests on Navigation", "In order to check ability of Navigating\r\nI want to navigate here and there", ProgrammingLanguage.CSharp, new string[] {
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "SampleWebProject Tests on Navigation", "In order to check ability of Navigating\nI want to navigate here and there", ProgrammingLanguage.CSharp, new string[] {
                         "UIAutomationTest"});
             testRunner.OnFeatureStart(featureInfo);
         }

@@ -31,8 +31,8 @@ namespace CodeSpecSampleTest.Specifications
         public static void FeatureSetup(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext testContext)
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Android app Tests", "In order to check ability to work with Android apps\r\nI want to do some stuffs on " +
-                    "an Android app", ProgrammingLanguage.CSharp, new string[] {
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Android app Tests", "In order to check ability to work with Android apps\nI want to do some stuffs on a" +
+                    "n Android app", ProgrammingLanguage.CSharp, new string[] {
                         "MobileUIAutomationTest"});
             testRunner.OnFeatureStart(featureInfo);
         }
