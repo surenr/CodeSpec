@@ -17,14 +17,7 @@ namespace Report.Base.Service
 
 		private static string GetReportTemplate()
 		{
-			return @"
-<h1>@Model.Feature.title</h1>
-<p>@Model.Feature.description</p>
-<ul>@foreach (var scenario in @Model.Feature.scenarios)
-{
-    <li> @scenario.title </li>
-}
-</ul>";
-		}
+            return System.IO.File.ReadAllText(".\\Report\\Template\\page.html");
+        }
 	}
 }

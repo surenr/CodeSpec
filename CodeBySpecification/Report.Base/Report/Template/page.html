@@ -1,0 +1,90 @@
+﻿<style media="screen">
+    body {
+        padding: 0;
+        margin: 0;
+        font-family: monospace;
+    }
+
+    h2 {
+        font-family: monospace;
+    }
+
+    h3 {
+        font-family: monospace;
+    }
+
+    hr {
+        border: none;
+        border-top: 1px solid #ccc;
+    }
+
+    ul {
+        padding: 0;
+    }
+
+    .header {
+        background: #E6E6E6;
+        border-bottom: 1px solid #D6D6D6;
+        padding: 1px 15px;
+        color: #717171;
+        font-family: monospace;
+    }
+
+    .container {
+        padding: 20px;
+    }
+
+    .scenario {
+        cursor: pointer;
+        list-style: none;
+        border: 1px solid #eee;
+        padding: 10px;
+        margin: 10px 0;
+    }
+
+    .OK {
+        border: 1px solid #2B9642;
+    }
+
+    .ERROR {
+        border: 1px solid #E0626E;
+    }
+</style>
+<body>
+    <div class="header"><h1>CodeSpec</h1></div>
+    <div class="container">
+        <h2>@Model.Feature.title</h2>
+        <hr>
+
+        <p>@Model.Feature.description</p>
+        <ul>
+            @{int i = 0;}
+            @foreach (var scenario in @Model.Feature.scenarios)
+            {
+            <li id="el-@i" class="scenario @(@scenario.status == " ok" ? "OK"
+                "ERROR" )" onclick="togglePanel(this.id)">
+                <h3> @scenario.title </h3>
+                <div id="panel-el-@i" style="display:none">
+                    Start time : @scenario.startTime <br>
+                    End time : @scenario.endTime <br>
+                    @if (@scenario.status != "ok"){
+                    <p>@scenario.error.message</p>
+                    <p>@scenario.error.stackTrace</p>
+                    }
+                </div>
+            </li>
+
+            i++;
+            }
+        </ul>
+    </div>
+    <script>
+function togglePanel(id)
+{
+
+  scenario =	document.querySelector('#panel-'+id);
+  scenario.style.display = scenario.style.display === 'none' ? '' : 'none';
+}
+
+    </script>
+</body>
