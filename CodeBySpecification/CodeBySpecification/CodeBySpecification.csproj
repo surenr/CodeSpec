@@ -47,24 +47,8 @@
       <HintPath>..\packages\MarkdownSharp.1.13.0.0\lib\35\MarkdownSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Expression.Encoder, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\libs\Microsoft.Expression.Encoder.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="RazorEngine, Version=3.7.2.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
-      <HintPath>..\packages\RazorEngine.3.7.2\lib\net45\RazorEngine.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="SpecResults, Version=0.1.0.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SpecResults.0.1.0.7\lib\net40\SpecResults.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="SpecResults.Json, Version=0.1.0.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SpecResults.Json.0.1.0.7\lib\net40\SpecResults.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -103,10 +87,21 @@
       <Project>{0d000c6f-12e9-4135-bd46-81fe6a1865d4}</Project>
       <Name>CodeBySpecification.API</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Report.Base\Report.Base.csproj">
+      <Project>{4FBFD570-AC63-40B9-ACA9-89C9EDD3C968}</Project>
+      <Name>Report.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ScreenRecorder.Base\ScreenRecorder.Base.csproj">
+      <Project>{faa221c6-be9e-4fc2-9b7d-3fd62536f16c}</Project>
+      <Name>ScreenRecorder.Base</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Selenium.Base\UIAutomation.Base.csproj">
       <Project>{955248c4-00bb-488c-8750-b3d41c0f1aef}</Project>
       <Name>UIAutomation.Base</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

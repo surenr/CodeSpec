@@ -96,19 +96,21 @@ this.ScenarioSetup(scenarioInfo);
         [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Google for Dogs")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Test video recording ability")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("UIAutomationTest")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("record")]
         public virtual void GoogleForDogs()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Google for Dogs", ((string[])(null)));
-#line 13
-this.ScenarioSetup(scenarioInfo);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Google for Dogs", new string[] {
+                        "record"});
 #line 14
- testRunner.Given("I navigate to \"http://google.com\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+this.ScenarioSetup(scenarioInfo);
 #line 15
- testRunner.And("I enter value \"Dogs\" to the \"searchBox\" with the \"id\" of \"lst-ib\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.Given("I navigate to \"http://google.com\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 16
+ testRunner.And("I enter value \"Dogs\" to the \"searchBox\" with the \"id\" of \"lst-ib\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 17
  testRunner.And("I click on element \"searchButton\" with the \"xpath\" of \"id(\'sblsbb\')/button\" and w" +
                     "ait \"4\" seconds", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 17
+#line 18
  testRunner.Then("The page contains text pattern \"The domestic dog is\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();

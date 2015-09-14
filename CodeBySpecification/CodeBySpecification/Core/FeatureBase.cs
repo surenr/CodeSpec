@@ -1,25 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using CodeBySpecification.API;
 using CodeBySpecification.API.Service.Api;
+using Newtonsoft.Json.Linq;
+using Report.Base.Service;
+using ScreenRecorder.Base.Service;
 using Selenium.Base.Service;
 using TechTalk.SpecFlow;
-using Microsoft.Expression.Encoder.ScreenCapture;
-using System.Diagnostics;
-using System.IO;
-using Newtonsoft.Json.Linq;
-using RazorEngine.Templating;
-using RazorEngine;
 
 namespace CodeBySpecification.Core
 {
 	[Binding]
 	public class FeatureBase
 	{
-		private static  IUiAutomationService UiAutomationService;
+		private static IUiAutomationService UiAutomationService;
 		private static readonly IDictionary<string, string> DataShare = new Dictionary<string, string>();
 		private static string objectRepoResource;
-        private static ScreenCaptureJob scj;
+		private static IScreenRecordService recorder;
 
         #region Core Step Definition Vocabulary
 
@@ -37,7 +35,6 @@ namespace CodeBySpecification.Core
             currentFeature["tags"] = new JArray(FeatureContext.Current.FeatureInfo.Tags);
             currentFeature["scenarios"] = new JArray();
             FeatureContext.Current["currentFeature"] = currentFeature;
-
         }
 
         [BeforeFeature("MobileUIAutomationTest")]
@@ -47,24 +44,22 @@ namespace CodeBySpecification.Core
             objectRepoResource = ConfigurationManager.AppSettings["UI.Tests.Object.Definitions.Path"];
             UiAutomationService = new AppiumUiAutomationServices();
             UiAutomationService.InitilizeTests(browserName, objectRepoResource);
+		}
             
+		[BeforeScenario("record")]
+		public static void BeforeTestScenarioWithRecord()
+		{
+			recorder = new ExpressionEncoderRecorder();
+			recorder.OutputFile = @"E:\" + ScenarioContext.Current.ScenarioInfo.Title + ".wmv";
+			recorder.Start();
         }
 
         [BeforeScenario("UIAutomationTest")]
         public static void BeforeSeleniumTestScenario()
         {
-            scj  = new ScreenCaptureJob();
-            scj.OutputScreenCaptureFileName = ConfigurationManager.AppSettings["UI.Tests.Reports.path"] + "\\videos\\" + ScenarioContext.Current.ScenarioInfo.Title + ".wmv";
-            scj.Start();
-            
             FeatureContext.Current["time"] = DateTime.UtcNow;
         }
 
-        [BeforeStep]
-        public static void BeforeScenarioBlock()
-        {
-
-        }
         [AfterScenarioBlock]
         public static void AfterScenarioBlock()
         {
@@ -76,18 +71,17 @@ namespace CodeBySpecification.Core
         {
             var time = DateTime.UtcNow;
 
-            var currentFeature = (JObject)FeatureContext.Current["currentFeature"];
-            var scenarios = (JArray)currentFeature["scenarios"];
+			var currentFeature = (JObject) FeatureContext.Current["currentFeature"];
+			var scenarios = (JArray) currentFeature["scenarios"];
             var scenario = new JObject();
             scenario["title"] = ScenarioContext.Current.ScenarioInfo.Title;
             scenario["startTime"] = FeatureContext.Current["time"].ToString();
             scenario["endTime"] = time.ToString();
             scenario["tags"] = new JArray(ScenarioContext.Current.ScenarioInfo.Tags);
             
-
             var err = ScenarioContext.Current.TestError;
-            if (err != null)
-            {
+			if (err != null)
+			{
                 var error = new JObject();
                 error["message"] = ScenarioContext.Current.TestError.Message;
                 error["stackTrace"] = ScenarioContext.Current.TestError.StackTrace;
@@ -98,19 +92,24 @@ namespace CodeBySpecification.Core
                 scenario["status"] = "ok";
             }
             scenarios.Add(scenario);
+		}
 
-            scj.Stop();
+		[AfterScenario("record")]
+		public static void AfterTestScenarioWithRecord()
+		{
+			recorder.Stop();
         }
+
         [AfterFeature("UIAutomationTest")]
         public static void AfterSeleniumTestFeature()
         {
-            var currentFeature = (JObject)FeatureContext.Current["currentFeature"];
+			var currentFeature = (JObject) FeatureContext.Current["currentFeature"];
             var outputJSON = currentFeature.ToString();
-            string template = System.IO.File.ReadAllText(ConfigurationManager.AppSettings["UI.Tests.Reports.path"]+"\\template\\page.html");
-            var result =
-                Engine.Razor.RunCompile(template, "feature", null, new { Feature = currentFeature });
-            System.IO.File.WriteAllText(ConfigurationManager.AppSettings["UI.Tests.Reports.path"] +"\\"+ FeatureContext.Current.FeatureInfo.Title + ".json", outputJSON);
-            System.IO.File.WriteAllText(ConfigurationManager.AppSettings["UI.Tests.Reports.path"] + "\\" + FeatureContext.Current.FeatureInfo.Title + ".html", result);
+
+			IReportService report = new HtmlReportService();
+			var ouput = report.Generate(currentFeature);
+			System.IO.File.WriteAllText(@"E:\" + FeatureContext.Current.FeatureInfo.Title + ".json", outputJSON);
+			System.IO.File.WriteAllText(@"E:\" + FeatureContext.Current.FeatureInfo.Title + ".html", ouput);
         }
 
         #region Read the content of <element>
@@ -121,7 +120,6 @@ namespace CodeBySpecification.Core
 		public void ReadTheContentOf(string elementKey)
 		{
 			FeatureContext.Current[elementKey] = UiAutomationService.GetElementText(elementKey);
-            
 		}
 
 		[Given(@"Get the content of ""(.*)"" with the ""(.*)"" of ""(.*)""")]
@@ -310,7 +308,6 @@ namespace CodeBySpecification.Core
 
 		#region Navigate to SUT
 
-
         [Given(@"I navigate to System Under Test")]
         [When(@"I navigate to System Under Test")]
         [Then(@"I navigate to System Under Test")]
@@ -346,7 +343,7 @@ namespace CodeBySpecification.Core
         [Then(@"Navigate to ""(.*)"" of SUT")]
         public void NavigateToSubLinkUnderSut(string subURL)
         {
-            UiAutomationService.GotoUrl(UiAutomationService.SutUrl+"/"+subURL);
+			UiAutomationService.GotoUrl(UiAutomationService.SutUrl + "/" + subURL);
         }
 
         #endregion
@@ -701,7 +698,6 @@ namespace CodeBySpecification.Core
         {
             UiAutomationService.switchToDefaultContent();
         }
-
 
         #endregion
 
