@@ -86,12 +86,16 @@ namespace CodeBySpecification.Core
             
 
             var err = ScenarioContext.Current.TestError;
-            if (err != null) {
+            if (err != null)
+            {
                 var error = new JObject();
                 error["message"] = ScenarioContext.Current.TestError.Message;
                 error["stackTrace"] = ScenarioContext.Current.TestError.StackTrace;
                 scenario["error"] = error;
-                scenario["error"] = error;
+                scenario["status"] = "error";
+            }
+            else {
+                scenario["status"] = "ok";
             }
             scenarios.Add(scenario);
 
