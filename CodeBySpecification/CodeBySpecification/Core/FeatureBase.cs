@@ -50,7 +50,7 @@ namespace CodeBySpecification.Core
 		public static void BeforeTestScenarioWithRecord()
 		{
 			recorder = new ExpressionEncoderRecorder();
-			recorder.OutputFile = @"E:\" + ScenarioContext.Current.ScenarioInfo.Title + ".wmv";
+			recorder.OutputFile = ConfigurationManager.AppSettings["UI.Tests.Reports.output.path"] + "\\videos\\" + ScenarioContext.Current.ScenarioInfo.Title + ".wmv";
 			recorder.Start();
         }
 
@@ -108,8 +108,8 @@ namespace CodeBySpecification.Core
 
 			IReportService report = new HtmlReportService();
 			var ouput = report.Generate(currentFeature);
-			System.IO.File.WriteAllText(@"E:\" + FeatureContext.Current.FeatureInfo.Title + ".json", outputJSON);
-			System.IO.File.WriteAllText(@"E:\" + FeatureContext.Current.FeatureInfo.Title + ".html", ouput);
+			System.IO.File.WriteAllText(ConfigurationManager.AppSettings["UI.Tests.Reports.output.path"] + "\\" + FeatureContext.Current.FeatureInfo.Title + ".json", outputJSON);
+			System.IO.File.WriteAllText(ConfigurationManager.AppSettings["UI.Tests.Reports.output.path"] + "\\" + FeatureContext.Current.FeatureInfo.Title + ".html", ouput);
         }
 
         #region Read the content of <element>
