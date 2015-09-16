@@ -18,8 +18,11 @@ namespace CodeBySpecification.Core
 		private static readonly IDictionary<string, string> DataShare = new Dictionary<string, string>();
 		private static string objectRepoResource;
 		private static IScreenRecordService recorder;
+        private static JArray features = new JArray();
 
         #region Core Step Definition Vocabulary
+
+        
 
         [BeforeFeature("UIAutomationTest")]
 		public static void BeforeSeleniumTestFeature()
@@ -104,6 +107,7 @@ namespace CodeBySpecification.Core
         public static void AfterSeleniumTestFeature()
         {
 			var currentFeature = (JObject) FeatureContext.Current["currentFeature"];
+            features.Add(currentFeature);
             var outputJSON = currentFeature.ToString();
 
 			IReportService report = new HtmlReportService();
@@ -112,6 +116,16 @@ namespace CodeBySpecification.Core
 			System.IO.File.WriteAllText(ConfigurationManager.AppSettings["UI.Tests.Reports.output.path"] + "\\" + FeatureContext.Current.FeatureInfo.Title + ".html", ouput);
         }
 
+        [AfterTestRun]
+        public static void AfterSeleniumTest()
+        {
+            var outputJSON = features.ToString();
+            System.IO.File.WriteAllText(ConfigurationManager.AppSettings["UI.Tests.Reports.output.path"] + "\\Featurs.json", outputJSON);
+            IReportService report = new HtmlReportService();
+            //var ouput = report.Generate(features);
+
+
+        }
         #region Read the content of <element>
 
         [Given(@"Read the content of ""(.*)""")]
