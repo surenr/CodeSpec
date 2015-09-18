@@ -110,10 +110,8 @@ namespace CodeBySpecification.Core
             features.Add(currentFeature);
             var outputJSON = currentFeature.ToString();
 
-			IReportService report = new HtmlReportService();
-			var ouput = report.Generate(currentFeature);
 			System.IO.File.WriteAllText(ConfigurationManager.AppSettings["UI.Tests.Reports.output.path"] + "\\" + FeatureContext.Current.FeatureInfo.Title + ".json", outputJSON);
-			System.IO.File.WriteAllText(ConfigurationManager.AppSettings["UI.Tests.Reports.output.path"] + "\\" + FeatureContext.Current.FeatureInfo.Title + ".html", ouput);
+
         }
 
         [AfterTestRun]
@@ -122,7 +120,11 @@ namespace CodeBySpecification.Core
             var outputJSON = features.ToString();
             System.IO.File.WriteAllText(ConfigurationManager.AppSettings["UI.Tests.Reports.output.path"] + "\\Featurs.json", outputJSON);
             IReportService report = new HtmlReportService();
-            //var ouput = report.Generate(features);
+            JObject testJSON = new JObject();
+            testJSON.Add("features", features);
+            var ouput = report.Generate(testJSON);
+            System.IO.File.WriteAllText(ConfigurationManager.AppSettings["UI.Tests.Reports.output.path"] + "\\Report.html", ouput);
+
 
 
         }

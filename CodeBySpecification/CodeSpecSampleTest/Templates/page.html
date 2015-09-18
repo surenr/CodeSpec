@@ -1,0 +1,115 @@
+<style media="screen">
+body{
+  padding: 0;margin: 0;
+  font-family: monospace;
+}
+h2{
+  font-family: monospace;
+}
+h3{
+  font-family: monospace;
+}
+hr{
+  border: none;
+  border-top: 1px solid #ccc;
+}
+ul{
+  padding: 0;
+}
+.header{
+  background: #E6E6E6;
+  border-bottom: 1px solid #D6D6D6;
+  padding: 1px 15px;
+  color: #717171;
+  font-family: monospace;
+}
+.container{
+  padding: 20px;
+}
+.feature{
+  border: 1px solid #CECECE;
+  padding: 30px;
+  box-shadow: 1px 1px 1px 1px #E0E0E0;
+  margin-bottom: 10px;
+  padding-top: 40px;
+}
+.scenario{
+  cursor: pointer;
+  list-style: none;
+  border: 1px solid #eee;
+  padding: 10px;
+  margin: 10px 0;
+}
+.scenario h3{
+  margin: 5px;
+  line-height: 32px;
+  height: 32px;
+}
+
+.scenario h3 img{
+  height: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: normal;
+}
+
+.OK{
+  border: 1px solid #2B9642;
+}
+.ERROR{
+  border: 1px solid #E0626E;
+}
+</style>
+<body>
+  <div class="header"><h1>CodeSpec</h1></div>
+  <div class="container">
+    @{int j = 0;}
+    @foreach (var feature in @Model.test.features)
+    {
+      <div class="feature">
+        <h2>@feature.title</h2>
+        <hr>
+
+        <p>@feature.description</p>
+        <ul>
+          @{int i = 0;}
+          @foreach (var scenario in feature.scenarios)
+          {
+            <li id="el-@j-@i" class="scenario @(@scenario.status == "ok" ? "OK": "ERROR")" onclick="togglePanel(this.id)">
+              <h3>
+                @if(@scenario.status == "ok"){
+                  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAA3NCSVQICAjb4U/gAAAACXBIWXMAAAoDAAAKAwHuO+1RAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAAGxQTFRF////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAfHZfwQAAACR0Uk5TAAQGBw0XJCgtNzxJVFtiaHp9h5aYmZ/BxNfa3N7i7e7w8vP6Z2glwAAAAOJJREFUOMuFk91igyAMhY86EAE7RRRhtVX2/u+4i62d4k/OVeBLIIEEeKtQ1oUYg7OqwF6sW7zRknOpjV86luC8nYfyf1kOc5tvwkcnthHCjatDxNRn6ZVZP71j2NQcJIVm+jsjH3scqh9/82hdduyQuRYA2CxwIjEzAN2AUw0dUCzluUO5FFB+v1/dX5ZXsGbPn7eXaSycvuDQDkFecMiAyC84eFw5fFU7Dh5XV9SPKuWQYZ1k/fhMOLTblFl/JxzGbh/qIy3ZK/qpyc+iv5tsGLrlyKal254eHHr06OE9H/8f0/IQa1PiOegAAAAASUVORK5CYII="/>
+                }
+                else{
+                  <img  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAA3NCSVQICAjb4U/gAAAACXBIWXMAAAoDAAAKAwHuO+1RAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAAHVQTFRF////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANuvKZAAAACZ0Uk5TAAQGBwoLFyQoLTxDSVReYGl6fYeJlZaYmZ+0trjBxNfa3+Lw8vNbAf9zAAAA4klEQVQ4y41T2xaCMAwLoOMiU2G6gVpABv7/J/qgB0dFZt56SNbQpsCEKDfUjWNHJo/wDaGHVsksjjOp2kEL9jksbZ18yqS2ZTiTN5TOFSk1ziNpXwW8ZVD1k0b0xYIpFP37jbCpsIiqefkoKVgmBFQCgLCuv03iOrUCgK5d1f7qVrUGosHV4HBzq2SIkLf4TUCbw6g1gjIguUaQhC5bI2QdxniNEI9+Amux07wFM8kgif8mgzJ8UKfLlg2Kjfr+kGzUbFnHc8iWxdY9D6YV/wTGHzlvaP2x9x+O//T8x/v7/J+6vBJCHCEWaQAAAABJRU5ErkJggg==" />
+                }
+
+                @scenario.title
+              </h3>
+              <div  id="panel-el-@j-@i" style="display:none">
+                Start time : @scenario.startTime <br>
+                End time : @scenario.endTime <br>
+                @if(@scenario.status != "ok"){
+                  <p>@scenario.error.message</p>
+                  <p>@scenario.error.stackTrace</p>
+                }
+              </div>
+            </li>
+
+            i++;
+          }
+        </ul>
+      </div>
+      j++;
+    }
+  </div>
+  <script>
+  function togglePanel(id)
+  {
+
+    scenario =	document.querySelector('#panel-'+id);
+    scenario.style.display = scenario.style.display === 'none' ? '' : 'none';
+  }
+
+  </script>
+</body>
