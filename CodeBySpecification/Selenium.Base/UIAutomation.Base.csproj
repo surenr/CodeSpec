@@ -85,6 +85,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Api\IBrowser.cs" />
+    <Compile Include="Browsers\iOSBrowser.cs" />
     <Compile Include="Browsers\AndroidBrowser.cs" />
     <Compile Include="Browsers\ChromeBrowser.cs" />
     <Compile Include="Browsers\IEBrowser.cs" />

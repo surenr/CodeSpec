@@ -165,7 +165,8 @@ namespace Selenium.Base.Service
 				new IEBrowser(browserType),
 				new ChromeBrowser(browserType),
                 new AndroidBrowser(browserType),
-			};
+                new iOSBrowser(browserType),
+            };
 
 			if (browser == null)
 			{
@@ -177,7 +178,7 @@ namespace Selenium.Base.Service
 
 				if (browser == null) throw new Exception("Browser driver initilization error. Please ensure you have set the \"UI.Tests.Target.Browser\" setting correctly in the App.Config file.");
 				browser.Manage().Window.Maximize();
-                if(browserType != "Android") {
+                if(browserType != "Android" && browserType != "iOS") {
                     browser.Manage().Cookies.DeleteAllCookies();
                 }
 				GetBrowser = browser;
