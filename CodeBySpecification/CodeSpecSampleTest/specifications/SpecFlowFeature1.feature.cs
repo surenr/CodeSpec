@@ -31,8 +31,8 @@ namespace CodeSpecSampleTest.Specifications
         public static void FeatureSetup(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext testContext)
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Test video recording ability", "In order to check ability of vedio capturing\nI want to google for some stuffs and" +
-                    " record them", ProgrammingLanguage.CSharp, new string[] {
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Test video recording ability", "In order to check ability of vedio capturing\r\nI want to google for some stuffs an" +
+                    "d record them", ProgrammingLanguage.CSharp, new string[] {
                         "UIAutomationTest"});
             testRunner.OnFeatureStart(featureInfo);
         }
