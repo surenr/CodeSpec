@@ -12,5 +12,6 @@ namespace CodeBySpecification.API.Domain
 		public const string IE = "InternetExplorer";
 		public const string CHROME = "Chrome";
         public const string ANDROID = "Android";
+        public const string IOS = "iOS";
     }
 }
