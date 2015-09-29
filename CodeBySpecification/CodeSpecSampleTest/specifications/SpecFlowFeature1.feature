@@ -3,7 +3,7 @@ Feature: Test video recording ability
 	In order to check ability of vedio capturing
 	I want to google for some stuffs and record them
 
-
+@record
 Scenario: Google for Cats
 	Given I navigate to "http://google.com"
 	And I enter value "Cats" to the "searchBox" with the "id" of "lst-ib"

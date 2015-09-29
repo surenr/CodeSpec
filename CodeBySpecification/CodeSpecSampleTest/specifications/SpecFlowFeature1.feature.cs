@@ -74,9 +74,11 @@ namespace CodeSpecSampleTest.Specifications
         [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Google for Cats")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Test video recording ability")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("UIAutomationTest")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("record")]
         public virtual void GoogleForCats()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Google for Cats", ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Google for Cats", new string[] {
+                        "record"});
 #line 7
 this.ScenarioSetup(scenarioInfo);
 #line 8
