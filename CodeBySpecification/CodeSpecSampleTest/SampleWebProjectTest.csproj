@@ -126,7 +126,6 @@
     </None>
     <None Include="specifications\DragAndDrop.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>DragAndDrop.feature.cs</LastGenOutput>
     </None>
     <None Include="specifications\Navigation.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
@@ -159,9 +158,11 @@
       <Name>TestFramework.Base</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Content Include="Reports\page.html" />
+    <Folder Include="Reports\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Templates\html_template.html" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

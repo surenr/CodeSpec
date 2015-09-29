@@ -23,7 +23,6 @@ namespace CodeBySpecification.Core
         #region Core Step Definition Vocabulary
 
         
-
         [BeforeFeature("UIAutomationTest")]
 		public static void BeforeSeleniumTestFeature()
 		{
@@ -38,6 +37,8 @@ namespace CodeBySpecification.Core
             currentFeature["tags"] = new JArray(FeatureContext.Current.FeatureInfo.Tags);
             currentFeature["scenarios"] = new JArray();
             FeatureContext.Current["currentFeature"] = currentFeature;
+            //System.IO.Directory.CreateDirectory(ConfigurationManager.AppSettings["UI.Tests.Reports.output.path"] + "\\videos\\");
+
         }
 
         [BeforeFeature("MobileUIAutomationTest")]
@@ -53,7 +54,7 @@ namespace CodeBySpecification.Core
 		public static void BeforeTestScenarioWithRecord()
 		{
 			recorder = new ExpressionEncoderRecorder();
-			recorder.OutputFile = ConfigurationManager.AppSettings["UI.Tests.Reports.output.path"] + "\\videos\\" + ScenarioContext.Current.ScenarioInfo.Title + ".wmv";
+            recorder.OutputFile = ConfigurationManager.AppSettings["UI.Tests.Reports.output.path"] + "\\videos\\" + ScenarioContext.Current.ScenarioInfo.Title + ".wmv";
 			recorder.Start();
         }
 
