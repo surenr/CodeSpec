@@ -38,6 +38,8 @@ namespace CodeBySpecification.Core
             currentFeature["tags"] = new JArray(FeatureContext.Current.FeatureInfo.Tags);
             currentFeature["scenarios"] = new JArray();
             FeatureContext.Current["currentFeature"] = currentFeature;
+            //System.IO.Directory.CreateDirectory(ConfigurationManager.AppSettings["UI.Tests.Reports.output.path"] + "\\videos\\");
+
         }
 
         [BeforeFeature("MobileUIAutomationTest")]
