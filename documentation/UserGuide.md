@@ -43,22 +43,20 @@ This document guides you how to write UI testing using CodeSpec UI testing frame
 
 1. Create a new project or you can use your existing MS Test project on Jenkins.
 2. We have to download the dependencies, you can use the following for that.
-
 Add a new build step of "Execute Windows batch command" and give the following the command
-
 ```
 path\to\nuget.exe restore SolutionName\ProjectName.sln
 ```
-
 An example would be,
-
 ```
+
 tools\nuget.exe restore CodeBySpecification\CodeBySpecification.sln
-```
 
+```
 3. We can now build the solution, you can use the following for that.
 
 Add a new build step of "Build a Visual Studio project or solution using MSBuild" and give the following the params.
+```
 
 MSBuild Version : Whatever the version you set in the Jenkins configurations for MSBuild plugin.
 
@@ -66,14 +64,12 @@ MSBuild Build File : ${WORKSPACE}\SolutionName\ProjectName.sln
 
 Command Line Arguments : /p:VisualStudioVersion=12.0 /p:DefineConstants=DEBUG
 
+```
 4. Add a new build step of "Execute Windows batch command" and give the following the command
-
 ```
 "path\to\MSTest.exe" /testcontainer:SolutionName\ProjectName\TestsFolder\TestFile.orderedtest
 ```
-
 An example would be,
-
 ```
 "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\mstest" /testcontainer:CodeBySpecification\CodeSpecSampleTest\OrderedTests\GoogleCatsAndDogs.orderedtest
 ```
