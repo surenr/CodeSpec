@@ -8,16 +8,11 @@ using CodeBySpecification.API.Domain;
 using CodeBySpecification.API.Service.Api;
 using ObjectRepository.Base.Service;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.IE;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 using Selenium.Base.Api;
 using Selenium.Base.Browsers;
 using TestFramework.Base.Service;
-using OpenQA.Selenium.Appium.Android;
-using OpenQA.Selenium.Appium;
 
 namespace Selenium.Base.Service
 {
@@ -38,7 +33,7 @@ namespace Selenium.Base.Service
 
 		public void AcceptTheConfirmation()
 		{
-			((IWebDriver)GetBrowser).SwitchTo().Alert().Accept();
+			((IWebDriver) GetBrowser).SwitchTo().Alert().Accept();
 		}
 
 		public IWebElement GetElement(string key, string selectionMethod, string selection)
@@ -86,7 +81,7 @@ namespace Selenium.Base.Service
 
 		public void GotoUrl(string url)
 		{
-			var driver = ((IWebDriver)GetBrowser);
+			var driver = ((IWebDriver) GetBrowser);
 			driver.Navigate().GoToUrl(new Uri(url));
 			var tabList = driver.WindowHandles.ToArray();
 			driver.SwitchTo().Window(tabList[0]);
@@ -112,7 +107,7 @@ namespace Selenium.Base.Service
 
 		private IWebElement WaitAndCreateElement(By selction)
 		{
-			return new WebDriverWait(((IWebDriver)GetBrowser), TimeSpan.FromSeconds(timeOut)).Until(ExpectedConditions.ElementExists((selction)));
+			return new WebDriverWait(((IWebDriver) GetBrowser), TimeSpan.FromSeconds(timeOut)).Until(ExpectedConditions.ElementExists((selction)));
 		}
 
 		private bool WaitForElementContentToLoad(string key, string content, string selectionMethod = null, string selection = null)
@@ -125,10 +120,10 @@ namespace Selenium.Base.Service
 			switch (objectRepoManager.GetObject(key).SelectionMethod.ToUpper())
 			{
 				case "ID":
-					return new WebDriverWait(((IWebDriver)GetBrowser), TimeSpan.FromSeconds(timeOut)).Until(d => d.FindElement(By.Id(objectRepoManager.GetObject(key).Selection)).Text.Trim().Contains(content));
+					return new WebDriverWait(((IWebDriver) GetBrowser), TimeSpan.FromSeconds(timeOut)).Until(d => d.FindElement(By.Id(objectRepoManager.GetObject(key).Selection)).Text.Trim().Contains(content));
 
 				case "XPATH":
-					return new WebDriverWait(((IWebDriver)GetBrowser), TimeSpan.FromSeconds(timeOut)).Until(d => d.FindElement(By.XPath(objectRepoManager.GetObject(key).Selection)).Text.Trim().Contains(content));
+					return new WebDriverWait(((IWebDriver) GetBrowser), TimeSpan.FromSeconds(timeOut)).Until(d => d.FindElement(By.XPath(objectRepoManager.GetObject(key).Selection)).Text.Trim().Contains(content));
 			}
 			return false;
 		}
@@ -157,16 +152,16 @@ namespace Selenium.Base.Service
 
 		public void InitilizeTests(string browserType, string objectRepoResource)
 		{
-			var browser = (IWebDriver)GetBrowser;
+			var browser = (IWebDriver) GetBrowser;
 			this.objectRepoResource = objectRepoResource;
 			var candidateBrowsers = new List<IBrowser>
 			{
 				new FireFoxBrowser(browserType),
 				new IEBrowser(browserType),
 				new ChromeBrowser(browserType),
-                new AndroidBrowser(browserType),
-                new iOSBrowser(browserType),
-            };
+					 new AndroidBrowser(browserType),
+					 new iOSBrowser(browserType),
+				};
 
 			if (browser == null)
 			{
@@ -178,9 +173,10 @@ namespace Selenium.Base.Service
 
 				if (browser == null) throw new Exception("Browser driver initilization error. Please ensure you have set the \"UI.Tests.Target.Browser\" setting correctly in the App.Config file.");
 				browser.Manage().Window.Maximize();
-                if(browserType != "Android" && browserType != "iOS") {
-                    browser.Manage().Cookies.DeleteAllCookies();
-                }
+				if (browserType != "Android" && browserType != "iOS")
+				{
+					browser.Manage().Cookies.DeleteAllCookies();
+				}
 				GetBrowser = browser;
 			}
 			if (objectRepoManager.ObjectCount() == 0)
@@ -192,10 +188,10 @@ namespace Selenium.Base.Service
 		{
 			if (locatorFrom == null) assert.Fail("\"" + dragElementKey + "\" is not avilable to drag.");
 			if (locatorTo == null) assert.Fail("\"" + dropElementKey + "\" is not avilable to drop \"" + dropElementKey + "\".");
-			var driver = (IWebDriver)GetBrowser;
+			var driver = (IWebDriver) GetBrowser;
 			var action = new Actions(driver);
 			action.DragAndDrop(locatorFrom, locatorTo).Perform();
-        }
+		}
 
 		public void DragAndDrop(string dragElementKey, string dropElementKey, string dragElementSelectionMethod = null, string dragElementSelection = null, string dropElementKeySelectionMethod = null, string dropElementKeySelection = null)
 		{
@@ -206,7 +202,7 @@ namespace Selenium.Base.Service
 
 		public string ReadUrl()
 		{
-			var driver = (IWebDriver)GetBrowser;
+			var driver = (IWebDriver) GetBrowser;
 			return driver.Url;
 		}
 
@@ -217,7 +213,7 @@ namespace Selenium.Base.Service
 
 		public void IsPageContainsTextPattern(string textPattern)
 		{
-			var pageSource = ((IWebDriver)GetBrowser).PageSource;
+			var pageSource = ((IWebDriver) GetBrowser).PageSource;
 			var match = Regex.Match(pageSource, @textPattern, RegexOptions.IgnoreCase);
 			assert.IsTrue(match.Success);
 		}
@@ -232,14 +228,14 @@ namespace Selenium.Base.Service
 
 		public void SwitchToWindow(int tab)
 		{
-			var driver = (IWebDriver)GetBrowser;
+			var driver = (IWebDriver) GetBrowser;
 			var tabs = driver.WindowHandles.ToArray();
 			driver.SwitchTo().Window(tabs[tab]);
 		}
 
 		public void CloseWindow(int tab)
 		{
-			var driver = (IWebDriver)GetBrowser;
+			var driver = (IWebDriver) GetBrowser;
 			var tabs = driver.WindowHandles.ToArray();
 			if (tab > 0)
 			{
@@ -274,16 +270,16 @@ namespace Selenium.Base.Service
 			assert.IsEqual(value, valueElement);
 		}
 
-        public void switchToFrame(string selectionMethod, string selection)
-        {
-            var driver = ((IWebDriver)GetBrowser);
-            driver.SwitchTo().Frame(GetElementBy(selectionMethod, selection));
-        }
+		public void switchToFrame(string selectionMethod, string selection)
+		{
+			var driver = ((IWebDriver) GetBrowser);
+			driver.SwitchTo().Frame(GetElementBy(selectionMethod, selection));
+		}
 
-        public void switchToDefaultContent()
-        {
-            var driver = ((IWebDriver)GetBrowser);
-            driver.SwitchTo().DefaultContent();
-        }
-    }
+		public void switchToDefaultContent()
+		{
+			var driver = ((IWebDriver) GetBrowser);
+			driver.SwitchTo().DefaultContent();
+		}
+	}
 }

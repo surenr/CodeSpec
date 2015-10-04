@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CodeBySpecification.API.Domain;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
-using Selenium.Base.Api;
 using OpenQA.Selenium.Remote;
-using System.Configuration;
+using Selenium.Base.Api;
 
 namespace Selenium.Base.Browsers
 {
@@ -29,16 +24,16 @@ namespace Selenium.Base.Browsers
 		{
 			if (browserType == Type)
 			{
-                DesiredCapabilities capabilities = new DesiredCapabilities();
-                var settings = ConfigurationManager.AppSettings;
-                var requriedKeys = settings.AllKeys.Where(t => t.Contains("UI.Tests.Appium.capability"));
-                foreach(var keys in requriedKeys)
-                {
-                    var keyArray = keys.Split('.');
-                    var tempVallue = ConfigurationManager.AppSettings[keys];
-                    capabilities.SetCapability(keyArray[(keyArray.Length-1)], tempVallue);
-                }
-                AppiumDriver<AppiumWebElement> browser = new AndroidDriver<AppiumWebElement>(new Uri(ConfigurationManager.AppSettings["UI.Tests.Appium.URI"]), capabilities);
+				DesiredCapabilities capabilities = new DesiredCapabilities();
+				var settings = ConfigurationManager.AppSettings;
+				var requriedKeys = settings.AllKeys.Where(t => t.Contains("UI.Tests.Appium.capability"));
+				foreach (var keys in requriedKeys)
+				{
+					var keyArray = keys.Split('.');
+					var tempVallue = ConfigurationManager.AppSettings[keys];
+					capabilities.SetCapability(keyArray[(keyArray.Length - 1)], tempVallue);
+				}
+				AppiumDriver<AppiumWebElement> browser = new AndroidDriver<AppiumWebElement>(new Uri(ConfigurationManager.AppSettings["UI.Tests.Appium.URI"]), capabilities);
 				return browser;
 			}
 			return null;

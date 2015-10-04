@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CodeBySpecification.API.Domain;
+﻿using CodeBySpecification.API.Domain;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using Selenium.Base.Api;

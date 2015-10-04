@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.IO;
 using CodeBySpecification.API;
 using Microsoft.Expression.Encoder.ScreenCapture;
 
@@ -12,6 +12,8 @@ namespace ScreenRecorder.Base.Service
 		public void Start()
 		{
 			scj = new ScreenCaptureJob();
+			if (File.Exists(OutputFile))
+				File.Delete(OutputFile);
 			scj.OutputScreenCaptureFileName = OutputFile;
 			scj.Start();
 		}

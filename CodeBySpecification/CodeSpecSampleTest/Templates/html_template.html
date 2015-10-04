@@ -85,7 +85,7 @@
             <ul>
                 @{int i = 0;}
                 @foreach (var scenario in feature.scenarios)
-                { 
+                {
                 <li id="el-@j-@i" class="scenario @(@scenario.status == 'ok' ? 'OK' : 'ERROR' )" onclick="togglePanel(this.id)">
                     <h3>
                         @if(@scenario.status != "ok"){
@@ -97,7 +97,6 @@
 
                         @scenario.title
                         IOGVYVYVLYVLYV
-
                     </h3>
                     <div id="panel-el-@j-@i" style="display:none">
                         Start time : @scenario.startTime <br>
@@ -108,7 +107,6 @@
                         }
                         <hr>
                         tgrhsrthsrth
-
                     </div>
                 </li>
 
@@ -126,7 +124,6 @@
     scenario =	document.querySelector('#panel-'+id);
     scenario.style.display = scenario.style.display === 'none' ? '' : 'none';
   }
-
     </script>
 </body>"<style media="screen">
     body {
@@ -227,7 +224,6 @@
 
                         @scenario.title
                         ;UIOGVYVYVLYVLYV
-
                     </h3>
                     <div id="panel-el-@j-@i" style="display:none">
                         Start time : @scenario.startTime <br>
@@ -238,7 +234,6 @@
                         }
                         <hr>
                         tgrhsrthsrth
-
                     </div>
                 </li>
 
@@ -256,6 +251,5 @@
     scenario =	document.querySelector('#panel-'+id);
     scenario.style.display = scenario.style.display === 'none' ? '' : 'none';
   }
-
     </script>
 </body>
