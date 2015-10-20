@@ -88,7 +88,7 @@ namespace Selenium.Base.Service
         {
             var element = selectionMethod != null ? GetElement(elementKey, selectionMethod, selection) : GetElementByKey(elementKey);
             if (element == null) assert.Fail("\"" + elementKey + "\" is not avilable to input the value \"" + text + "\"");
-            ((SelectElement)element).SelectByText(text);
+            new SelectElement(element).SelectByText(text);
         }
 
         public void GotoUrl(string url)

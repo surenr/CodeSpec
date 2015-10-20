@@ -339,9 +339,9 @@ namespace CodeBySpecification.Core
         [Given(@"I select ""(.*)"" of the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
         [When(@"I select ""(.*)"" of the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
         [Then(@"I select ""(.*)"" of the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
-        [Given(@"select ""(.*)"" of the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
-        [When(@"select ""(.*)"" of the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
-        [Then(@"select ""(.*)"" of the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+        [Given(@"Select ""(.*)"" of the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+        [When(@"Select ""(.*)"" of the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+        [Then(@"Select ""(.*)"" of the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
         public void SelectValuOfWithTheOf(string value, string elementKey, string selectionMethod, string selection)
         {
             UiAutomationService.SelectValueOf(elementKey, value, selectionMethod, selection);
