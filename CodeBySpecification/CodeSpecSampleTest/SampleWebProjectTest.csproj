@@ -106,10 +106,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Navigation.feature</DependentUpon>
     </Compile>
-    <Compile Include="specifications\SpecFlowFeature1.feature.cs">
+    <Compile Include="specifications\GoogleCatsAndDogs.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SpecFlowFeature1.feature</DependentUpon>
+      <DependentUpon>GoogleCatsAndDogs.feature</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -140,9 +140,9 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Navigation.feature.cs</LastGenOutput>
     </None>
-    <None Include="specifications\SpecFlowFeature1.feature">
+    <None Include="specifications\GoogleCatsAndDogs.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>SpecFlowFeature1.feature.cs</LastGenOutput>
+      <LastGenOutput>GoogleCatsAndDogs.feature.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
