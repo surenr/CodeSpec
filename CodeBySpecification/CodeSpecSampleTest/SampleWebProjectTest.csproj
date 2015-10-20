@@ -96,6 +96,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DragAndDrop.feature</DependentUpon>
     </Compile>
+    <Compile Include="specifications\FormElements.feature.cs">
+      <DependentUpon>FormElements.feature</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="specifications\Navigation.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -126,6 +131,10 @@
     </None>
     <None Include="specifications\DragAndDrop.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
+    </None>
+    <None Include="specifications\FormElements.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>FormElements.feature.cs</LastGenOutput>
     </None>
     <None Include="specifications\Navigation.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
