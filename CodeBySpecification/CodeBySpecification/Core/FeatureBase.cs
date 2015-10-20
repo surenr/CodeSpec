@@ -323,7 +323,33 @@ namespace CodeBySpecification.Core
 
 		#endregion
 
-		#region Navigate to SUT
+        #region Select <value> of <element>
+
+        [Given(@"I select ""(.*)"" of the ""(.*)""")]
+        [When(@"I select ""(.*)"" of the ""(.*)""")]
+        [Then(@"I select ""(.*)"" of the ""(.*)""")]
+        [Given(@"select ""(.*)"" of the ""(.*)""")]
+        [When(@"select ""(.*)"" of the ""(.*)""")]
+        [Then(@"select ""(.*)"" of the ""(.*)""")]
+        public void SelectValuOf(string value, string elementKey)
+        {
+            UiAutomationService.SelectValueOf(elementKey, value);
+        }
+
+        [Given(@"I select ""(.*)"" of the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+        [When(@"I select ""(.*)"" of the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+        [Then(@"I select ""(.*)"" of the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+        [Given(@"select ""(.*)"" of the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+        [When(@"select ""(.*)"" of the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+        [Then(@"select ""(.*)"" of the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+        public void SelectValuOfWithTheOf(string value, string elementKey, string selectionMethod, string selection)
+        {
+            UiAutomationService.SelectValueOf(elementKey, value, selectionMethod, selection);
+        }
+
+        #endregion
+
+        #region Navigate to SUT
 
         [Given(@"I navigate to System Under Test")]
         [When(@"I navigate to System Under Test")]
