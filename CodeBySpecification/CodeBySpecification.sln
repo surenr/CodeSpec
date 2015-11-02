@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeBySpecification", "CodeBySpecification\CodeBySpecification.csproj", "{814D506D-78ED-4A55-A1E9-83343C35DE10}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F0069B7E-8A66-4715-B5FD-5BA00BA619B0} = {F0069B7E-8A66-4715-B5FD-5BA00BA619B0}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UIAutomation.Base", "Selenium.Base\UIAutomation.Base.csproj", "{955248C4-00BB-488C-8750-B3D41C0F1AEF}"
 EndProject
@@ -18,6 +21,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenRecorder.Base", "ScreenRecorder.Base\ScreenRecorder.Base.csproj", "{FAA221C6-BE9E-4FC2-9B7D-3FD62536F16C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Report.Base", "Report.Base\Report.Base.csproj", "{4FBFD570-AC63-40B9-ACA9-89C9EDD3C968}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatatRepository.Base", "DatatRepository.Base\DatatRepository.Base.csproj", "{F0069B7E-8A66-4715-B5FD-5BA00BA619B0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0D000C6F-12E9-4135-BD46-81FE6A1865D4} = {0D000C6F-12E9-4135-BD46-81FE6A1865D4}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +65,10 @@ Global
 		{4FBFD570-AC63-40B9-ACA9-89C9EDD3C968}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4FBFD570-AC63-40B9-ACA9-89C9EDD3C968}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4FBFD570-AC63-40B9-ACA9-89C9EDD3C968}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0069B7E-8A66-4715-B5FD-5BA00BA619B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0069B7E-8A66-4715-B5FD-5BA00BA619B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0069B7E-8A66-4715-B5FD-5BA00BA619B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0069B7E-8A66-4715-B5FD-5BA00BA619B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

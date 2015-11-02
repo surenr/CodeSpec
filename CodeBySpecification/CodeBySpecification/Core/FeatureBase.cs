@@ -8,6 +8,7 @@ using Report.Base.Service;
 using ScreenRecorder.Base.Service;
 using Selenium.Base.Service;
 using TechTalk.SpecFlow;
+using DataRepository.Base.Service;
 
 namespace CodeBySpecification.Core
 {
@@ -19,10 +20,11 @@ namespace CodeBySpecification.Core
 		private static string objectRepoResource;
 		private static IScreenRecordService recorder;
         private static JArray features = new JArray();
+        private readonly IDataRepoService dataRepoManager = new CSVDataRepositoryService();
 
         #region Core Step Definition Vocabulary
 
-        
+
         [BeforeFeature("UIAutomationTest")]
 		public static void BeforeSeleniumTestFeature()
 		{
@@ -30,6 +32,12 @@ namespace CodeBySpecification.Core
 			objectRepoResource = ConfigurationManager.AppSettings["UI.Tests.Object.Definitions.Path"];
             UiAutomationService = new SeleniumUIAutomationService();
             UiAutomationService.InitilizeTests(browserName, objectRepoResource);
+
+        }
+
+        [BeforeFeature("UIAutomationReport")]
+        public static void BeforeUIAutomationFeatureReport()
+        {
 
             JObject currentFeature = new JObject();
             currentFeature["title"] = FeatureContext.Current.FeatureInfo.Title;
@@ -58,7 +66,7 @@ namespace CodeBySpecification.Core
 			recorder.Start();
         }
 
-        [BeforeScenario("UIAutomationTest")]
+        [BeforeScenario("UIAutomationReport")]
         public static void BeforeSeleniumTestScenario()
         {
             FeatureContext.Current["time"] = DateTime.UtcNow;
@@ -70,7 +78,7 @@ namespace CodeBySpecification.Core
             var err = ScenarioContext.Current.TestError;
         }
 
-        [AfterScenario("UIAutomationTest")]
+        [AfterScenario("UIAutomationReport")]
         public static void AfterSeleniumTestScenario()
         {
             var time = DateTime.UtcNow;
@@ -104,7 +112,7 @@ namespace CodeBySpecification.Core
 			recorder.Stop();
         }
 
-        [AfterFeature("UIAutomationTest")]
+        [AfterFeature("UIAutomationReport")]
         public static void AfterSeleniumTestFeature()
         {
 			var currentFeature = (JObject) FeatureContext.Current["currentFeature"];
@@ -136,15 +144,37 @@ namespace CodeBySpecification.Core
 		[Then(@"Read the content of ""(.*)""")]
 		public void ReadTheContentOf(string elementKey)
 		{
-			FeatureContext.Current[elementKey] = UiAutomationService.GetElementText(elementKey);
+            dataRepoManager.AddData(elementKey, UiAutomationService.GetElementText(elementKey));
 		}
 
-		[Given(@"Get the content of ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+        [Given(@"Set ""(.*)"" as ""(.*)""")]
+        [When(@"Set ""(.*)"" as ""(.*)""")]
+        [Then(@"Set ""(.*)"" as ""(.*)""")]
+        [Given(@"I set ""(.*)"" as ""(.*)""")]
+        [When(@"I set ""(.*)"" as ""(.*)""")]
+        [Then(@"I set ""(.*)"" as ""(.*)""")]
+        public void SetTheValueOf(string elementKey, string elementValue)
+        {
+            dataRepoManager.AddData(elementKey, elementValue);
+        }
+
+        [Given(@"Get the values from ""(.*)""")]
+        [When(@"Get the values from ""(.*)""")]
+        [Then(@"Get the values from ""(.*)""")]
+        [Given(@"I get the values from ""(.*)""")]
+        [When(@"I get the values from ""(.*)""")]
+        [Then(@"I get the values from ""(.*)""")]
+        public void GetTheValuesFrom(string dataRepo)
+        {
+            UiAutomationService.GetTheValuesFrom(dataRepo);
+        }
+
+        [Given(@"Get the content of ""(.*)"" with the ""(.*)"" of ""(.*)""")]
 		[When(@"Get the content of ""(.*)"" with the ""(.*)"" of ""(.*)""")]
 		[Then(@"Get the content of ""(.*)"" with the ""(.*)"" of ""(.*)""")]
 		public void ReadTheContentOfWithTheOf(string elementKey, string selectionType, string selection)
 		{
-			FeatureContext.Current[elementKey] = UiAutomationService.GetElementText(elementKey, selectionType, selection);
+			dataRepoManager.AddData(elementKey, UiAutomationService.GetElementText(elementKey, selectionType, selection));
 		}
 
 		#endregion
@@ -298,27 +328,54 @@ namespace CodeBySpecification.Core
 		#endregion
 
 		#region Enter <value> to <element>
-
-		[Given(@"I enter ""(.*)"" to the ""(.*)""")]
-		[When(@"I enter ""(.*)"" to the ""(.*)""")]
-		[Then(@"I enter ""(.*)"" to the ""(.*)""")]
-		[Given(@"Enter ""(.*)"" to the ""(.*)""")]
-		[When(@"Enter ""(.*)"" to the ""(.*)""")]
-		[Then(@"Enter ""(.*)"" to the ""(.*)""")]
-		public void EnterToThe(string value, string elementKey)
+        //I enter value from data source with the key 'key' to the element
+		[Given(@"I enter( value of)? ""(.*)"" to the ""(.*)""")]
+		[When(@"I enter( value of)? ""(.*)"" to the ""(.*)""")]
+		[Then(@"I enter( value of)? ""(.*)"" to the ""(.*)""")]
+		[Given(@"Enter( value of)? ""(.*)"" to the ""(.*)""")]
+		[When(@"Enter( value of)? ""(.*)"" to the ""(.*)""")]
+		[Then(@"Enter( value of)? ""(.*)"" to the ""(.*)""")]
+		public void EnterToThe(string valueOf, string value, string elementKey)
 		{
-			UiAutomationService.EnterTextTo(elementKey, value);
+            if(valueOf == "")
+            {
+                UiAutomationService.EnterTextTo(elementKey, value);
+            }
+            else
+            {
+                if (dataRepoManager.DataExists(value))
+                    UiAutomationService.EnterTextTo(elementKey, dataRepoManager.GetData(value));
+                else
+                {
+                    throw new Exception("Veriable \"" + value + "\" not found.");
+                }
+                
+            }
+			
 		}
 
-		[Given(@"I enter value ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
-		[When(@"I enter value ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
-		[Then(@"I enter value ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
-		[Given(@"Enter value ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
-		[When(@"Enter value ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
-		[Then(@"Enter value ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
-		public void EnterToTheWithTheOf(string value, string elementKey, string selectionMethod, string selection)
+		[Given(@"I enter (value|key) ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+		[When(@"I entervalue (of)? ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+		[Then(@"I enter( value of)? ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+		[Given(@"Enter( value of)? ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+		[When(@"Enter( value of)? ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+		[Then(@"Enter( value of)? ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+		public void EnterToTheWithTheOf(string valueOf, string value, string elementKey, string selectionMethod, string selection)
 		{
-			UiAutomationService.EnterTextTo(elementKey, value, selectionMethod, selection);
+            if (valueOf == "value")
+            {
+                UiAutomationService.EnterTextTo(elementKey, value, selectionMethod, selection);
+            }
+            else
+            {
+                if (dataRepoManager.DataExists(value))
+                    UiAutomationService.EnterTextTo(elementKey, dataRepoManager.GetData(value), selectionMethod, selection);
+                else
+                {
+                    throw new Exception("Veriable \"" + value + "\" not found.");
+                }
+
+            }
 		}
 
 		#endregion
@@ -412,8 +469,8 @@ namespace CodeBySpecification.Core
 		[Then(@"Navigate to URL stored in ""(.*)""")]
 		public void NavigateToUrlStoredIn(string veriable)
 		{
-			if (DataShare.ContainsKey(veriable.ToUpper()))
-				UiAutomationService.GotoUrl(DataShare[veriable.ToUpper()]);
+			if (dataRepoManager.DataExists(veriable))
+				UiAutomationService.GotoUrl(dataRepoManager.GetData(veriable));
 			else
 			{
 				throw new Exception("Veriable \"" + veriable + "\" not found.");
@@ -516,19 +573,14 @@ namespace CodeBySpecification.Core
 			}
 		}
 
-		[Given(@"""(.*)""st row, ""(.*)""st column of table ""(.*)"" contains value ""(.*)""")]
-		[Given(@"""(.*)""nd row, ""(.*)""nd column of table ""(.*)"" contains value ""(.*)""")]
-		[Given(@"""(.*)""rd row, ""(.*)""rd column of table ""(.*)"" contains value ""(.*)""")]
-		[Given(@"""(.*)""th row, ""(.*)""th column of table ""(.*)"" contains value ""(.*)""")]
-		[When(@"""(.*)""st row, ""(.*)""st column of table ""(.*)"" contains value ""(.*)""")]
-		[When(@"""(.*)""nd row, ""(.*)""nd column of table ""(.*)"" contains value ""(.*)""")]
-		[When(@"""(.*)""rd row, ""(.*)""rd column of table ""(.*)"" contains value ""(.*)""")]
-		[When(@"""(.*)""th row, ""(.*)""th column of table ""(.*)"" contains value ""(.*)""")]
-		[Then(@"""(.*)""st row, ""(.*)""st column of table ""(.*)"" contains value ""(.*)""")]
-		[Then(@"""(.*)""nd row, ""(.*)""nd column of table ""(.*)"" contains value ""(.*)""")]
-		[Then(@"""(.*)""rd row, ""(.*)""rd column of table ""(.*)"" contains value ""(.*)""")]
-		[Then(@"""(.*)""th row, ""(.*)""th column of table ""(.*)"" contains value ""(.*)""")]
-		public void GivenStRowStColumnOfTableContainsValue(string rowNumber, string columnNumber, string elementKey, string value)
+		[Given(@"""(.*)"".. row, ""(.*)"".. column of table ""(.*)"" contains value ""(.*)""")]
+		[When(@"""(.*)"".. row, ""(.*)"".. column of table ""(.*)"" contains value ""(.*)""")]
+        [Then(@"""(.*)"".. row, ""(.*)"".. column of table ""(.*)"" contains value ""(.*)""")]
+        [Given(@"row ""(.*)"", column ""(.*)"" of table ""(.*)"" contains value ""(.*)""")]
+        [When(@"row ""(.*)"" row, column ""(.*)"" of table ""(.*)"" contains value ""(.*)""")]
+        [Then(@"row ""(.*)"" row, column ""(.*)"" of table ""(.*)"" contains value ""(.*)""")]
+
+        public void GivenStRowStColumnOfTableContainsValue(string rowNumber, string columnNumber, string elementKey, string value)
 		{
 			int row, col;
 			if (int.TryParse(rowNumber, out row) && int.TryParse(columnNumber, out col))
@@ -612,10 +664,7 @@ namespace CodeBySpecification.Core
 		[Then(@"Read the URL and store in ""(.*)"" variable")]
 		public void ReadTheUrlAndStoreIn(string veriable)
 		{
-			if (DataShare.ContainsKey(veriable.ToUpper()))
-				DataShare[veriable.ToUpper()] = UiAutomationService.ReadUrl();
-			else
-				DataShare.Add(veriable.ToUpper(), UiAutomationService.ReadUrl());
+            dataRepoManager.AddData(veriable, UiAutomationService.ReadUrl());
 		}
 
 		[Given(@"I read the content of element ""(.*)"" and store in variable ""(.*)""")]
@@ -627,10 +676,7 @@ namespace CodeBySpecification.Core
 		public void ReadTheContentOfElementAndStoreInVeriable(string elementKey, string veriable)
 		{
 			var elementContent = UiAutomationService.GetElementText(elementKey);
-			if (DataShare.ContainsKey(veriable.ToUpper()))
-				DataShare[veriable.ToUpper()] = elementContent;
-			else
-				DataShare.Add(veriable.ToUpper(), elementContent);
+		    dataRepoManager.AddData(veriable, elementContent);
 		}
 
 		[Given(@"I read the ""(.*)""st element of the URL path and store in ""(.*)"" variable")]
@@ -682,8 +728,8 @@ namespace CodeBySpecification.Core
 		[Then(@"Enter value of variable ""(.*)"" to the ""(.*)""")]
 		public void EnterContentOfVeriableToThe(string veriable, string elementKey)
 		{
-			if (!DataShare.ContainsKey(veriable.ToUpper())) throw new Exception("Veriable \"" + veriable + "\" is not defined.");
-			UiAutomationService.EnterTextTo(elementKey, DataShare[veriable.ToUpper()]);
+			if (!dataRepoManager.DataExists(veriable)) throw new Exception("Veriable \"" + veriable + "\" is not defined.");
+			UiAutomationService.EnterTextTo(elementKey, dataRepoManager.GetData(veriable));
 		}
 
 		[Given(@"I enter variable value ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
@@ -694,8 +740,8 @@ namespace CodeBySpecification.Core
 		[Then(@"Enter variable value ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
 		public void EnterContentOfVeriableToTheWithTheOf(string veriable, string elementKey, string selectionMethod, string selection)
 		{
-			if (!DataShare.ContainsKey(veriable.ToUpper())) throw new Exception("Veriable \"" + veriable + "\" is not defined.");
-			UiAutomationService.EnterTextTo(elementKey, DataShare[veriable.ToUpper()], selectionMethod, selection);
+			if (!dataRepoManager.DataExists(veriable)) throw new Exception("Veriable \"" + veriable + "\" is not defined.");
+			UiAutomationService.EnterTextTo(elementKey, dataRepoManager.GetData(veriable), selectionMethod, selection);
 		}
 
 		[Given(@"The value of variable ""(.*)"" is equal to ""(.*)""")]
@@ -706,8 +752,8 @@ namespace CodeBySpecification.Core
 		[Then(@"Value of variable ""(.*)"" is equal to ""(.*)""")]
 		public void ValueOfVeriableIsEqualTo(string veriable, string value)
 		{
-			if (!DataShare.ContainsKey(veriable.ToUpper())) throw new Exception("Veriable \"" + veriable + "\" is not defined.");
-			UiAutomationService.AreValuesEqual(DataShare[veriable.ToUpper()], value);
+			if (!dataRepoManager.DataExists(veriable)) throw new Exception("Veriable \"" + veriable + "\" is not defined.");
+			UiAutomationService.AreValuesEqual(dataRepoManager.GetData(veriable), value);
 		}
 
         #endregion

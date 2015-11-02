@@ -7,6 +7,7 @@ using System.Threading;
 using CodeBySpecification.API.Domain;
 using CodeBySpecification.API.Service.Api;
 using ObjectRepository.Base.Service;
+using DataRepository.Base.Service;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
@@ -27,7 +28,8 @@ namespace Selenium.Base.Service
 		private readonly string SutUrl = ConfigurationManager.AppSettings["UI.Tests.SUT.Url"];
 		private readonly ITestAssertService assert = new MSTestAssertService();
 		private readonly IObjectRepoService objectRepoManager = new CSVObjectRepositoryService();
-		private string objectRepoResource = null;
+        private readonly IDataRepoService dataRepoManager = new CSVDataRepositoryService();
+        private string objectRepoResource = null;
 
 		public object GetBrowser { get; set; }
 
@@ -291,6 +293,11 @@ namespace Selenium.Base.Service
         {
             var driver = ((IWebDriver)GetBrowser);
             driver.SwitchTo().DefaultContent();
+        }
+
+        public void GetTheValuesFrom(string objectRepoResource)
+        {
+            dataRepoManager.Populate(objectRepoResource);
         }
     }
 }
