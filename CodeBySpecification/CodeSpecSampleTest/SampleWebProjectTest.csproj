@@ -96,15 +96,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DragAndDrop.feature</DependentUpon>
     </Compile>
+    <Compile Include="specifications\FormElements.feature.cs">
+      <DependentUpon>FormElements.feature</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="specifications\Navigation.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Navigation.feature</DependentUpon>
     </Compile>
-    <Compile Include="specifications\SpecFlowFeature1.feature.cs">
+    <Compile Include="specifications\GoogleCatsAndDogs.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SpecFlowFeature1.feature</DependentUpon>
+      <DependentUpon>GoogleCatsAndDogs.feature</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -127,13 +132,17 @@
     <None Include="specifications\DragAndDrop.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
     </None>
+    <None Include="specifications\FormElements.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>FormElements.feature.cs</LastGenOutput>
+    </None>
     <None Include="specifications\Navigation.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Navigation.feature.cs</LastGenOutput>
     </None>
-    <None Include="specifications\SpecFlowFeature1.feature">
+    <None Include="specifications\GoogleCatsAndDogs.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>SpecFlowFeature1.feature.cs</LastGenOutput>
+      <LastGenOutput>GoogleCatsAndDogs.feature.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>

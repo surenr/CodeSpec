@@ -12,7 +12,9 @@
 
 		void EnterTextTo(string elementKey, string value, string selectionMethod = null, string selection = null);
 
-		string SutUrl { get; }
+        void SelectValueOf(string elementKey, string value, string selectionMethod = null, string selection = null);
+
+        string SutUrl { get; }
 
 		object GetBrowser { get; set; }
 

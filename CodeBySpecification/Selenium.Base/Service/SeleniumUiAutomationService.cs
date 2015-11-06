@@ -79,7 +79,14 @@ namespace Selenium.Base.Service
 			element.SendKeys(text);
 		}
 
-		public void GotoUrl(string url)
+        public virtual void SelectValueOf(string elementKey, string text, string selectionMethod = null, string selection = null)
+        {
+            var element = selectionMethod != null ? GetElement(elementKey, selectionMethod, selection) : GetElementByKey(elementKey);
+            if (element == null) assert.Fail("\"" + elementKey + "\" is not avilable to input the value \"" + text + "\"");
+            new SelectElement(element).SelectByText(text);
+        }
+
+        public void GotoUrl(string url)
 		{
 			var driver = ((IWebDriver) GetBrowser);
 			driver.Navigate().GoToUrl(new Uri(url));
