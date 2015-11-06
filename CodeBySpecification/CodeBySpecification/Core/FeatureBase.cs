@@ -318,22 +318,47 @@ namespace CodeBySpecification.Core
 		}
 
 		#endregion
+    #region Select <value> of <element>
 
-		#region Navigate to SUT
+        [Given(@"I select ""(.*)"" of the ""(.*)""")]
+        [When(@"I select ""(.*)"" of the ""(.*)""")]
+        [Then(@"I select ""(.*)"" of the ""(.*)""")]
+        [Given(@"select ""(.*)"" of the ""(.*)""")]
+        [When(@"select ""(.*)"" of the ""(.*)""")]
+        [Then(@"select ""(.*)"" of the ""(.*)""")]
+        public void SelectValuOf(string value, string elementKey)
+        {
+            UiAutomationService.SelectValueOf(elementKey, value);
+        }
 
-		[Given(@"I navigate to System Under Test")]
-		[When(@"I navigate to System Under Test")]
-		[Then(@"I navigate to System Under Test")]
-		[Given(@"I navigate to SUT")]
-		[When(@"I navigate to SUT")]
-		[Then(@"I navigate to SUT")]
-		[Given(@"Navigate to System Under Test")]
-		[When(@"Navigate to System Under Test")]
-		[Then(@"Navigate to System Under Test")]
-		[Given(@"Navigate to SUT")]
-		[When(@"Navigate to SUT")]
-		[Then(@"Navigate to SUT")]
-		public void NavigateToSut()
+        [Given(@"I select ""(.*)"" of the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+        [When(@"I select ""(.*)"" of the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+        [Then(@"I select ""(.*)"" of the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+        [Given(@"Select ""(.*)"" of the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+        [When(@"Select ""(.*)"" of the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+        [Then(@"Select ""(.*)"" of the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+        public void SelectValuOfWithTheOf(string value, string elementKey, string selectionMethod, string selection)
+        {
+            UiAutomationService.SelectValueOf(elementKey, value, selectionMethod, selection);
+        }
+
+        #endregion
+
+        #region Navigate to SUT
+
+        [Given(@"I navigate to System Under Test")]
+        [When(@"I navigate to System Under Test")]
+        [Then(@"I navigate to System Under Test")]
+        [Given(@"I navigate to SUT")]
+        [When(@"I navigate to SUT")]
+        [Then(@"I navigate to SUT")]
+        [Given(@"Navigate to System Under Test")]
+        [When(@"Navigate to System Under Test")]
+        [Then(@"Navigate to System Under Test")]
+        [Given(@"Navigate to SUT")]
+        [When(@"Navigate to SUT")]
+        [Then(@"Navigate to SUT")]
+        public void NavigateToSut()
 		{
 			UiAutomationService.GotoUrl(UiAutomationService.SutUrl);
 		}
