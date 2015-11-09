@@ -47,7 +47,9 @@
 		void TableHasColumnCountOf(string elementKey, int columnCount);
 
 		void ValueOfTableRowColEqualTo(string elementKey, int row, int col, string value);
+
         void switchToFrame(string selectionMethod, string selection);
+
         void switchToDefaultContent();
         void GetTheValuesFrom(string dataRepo);
     }

@@ -24,7 +24,6 @@ namespace CodeBySpecification.Core
 
         #region Core Step Definition Vocabulary
 
-
         [BeforeFeature("UIAutomationTest")]
 		public static void BeforeSeleniumTestFeature()
 		{
@@ -46,7 +45,6 @@ namespace CodeBySpecification.Core
             currentFeature["scenarios"] = new JArray();
             FeatureContext.Current["currentFeature"] = currentFeature;
             //System.IO.Directory.CreateDirectory(ConfigurationManager.AppSettings["UI.Tests.Reports.output.path"] + "\\videos\\");
-
         }
 
         [BeforeFeature("MobileUIAutomationTest")]
@@ -100,7 +98,8 @@ namespace CodeBySpecification.Core
                 scenario["error"] = error;
                 scenario["status"] = "error";
             }
-            else {
+			else
+			{
                 scenario["status"] = "ok";
             }
             scenarios.Add(scenario);
@@ -120,7 +119,6 @@ namespace CodeBySpecification.Core
             var outputJSON = currentFeature.ToString();
 
 			System.IO.File.WriteAllText(ConfigurationManager.AppSettings["UI.Tests.Reports.output.path"] + "\\" + FeatureContext.Current.FeatureInfo.Title + ".json", outputJSON);
-
         }
 
         [AfterTestRun]
@@ -133,10 +131,8 @@ namespace CodeBySpecification.Core
             testJSON.Add("features", features);
             var ouput = report.Generate(testJSON);
             System.IO.File.WriteAllText(ConfigurationManager.AppSettings["UI.Tests.Reports.output.path"] + "\\Report.html", ouput);
+		}
 
-
-
-        }
         #region Read the content of <element>
 
         [Given(@"Read the content of ""(.*)""")]
@@ -169,7 +165,7 @@ namespace CodeBySpecification.Core
             UiAutomationService.GetTheValuesFrom(dataRepo);
         }
 
-        [Given(@"Get the content of ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+		[Given(@"Get the content of ""(.*)"" with the ""(.*)"" of ""(.*)""")]
 		[When(@"Get the content of ""(.*)"" with the ""(.*)"" of ""(.*)""")]
 		[Then(@"Get the content of ""(.*)"" with the ""(.*)"" of ""(.*)""")]
 		public void ReadTheContentOfWithTheOf(string elementKey, string selectionType, string selection)
@@ -339,8 +335,8 @@ namespace CodeBySpecification.Core
 		{
             if(valueOf == "")
             {
-                UiAutomationService.EnterTextTo(elementKey, value);
-            }
+			UiAutomationService.EnterTextTo(elementKey, value);
+		}
             else
             {
                 if (dataRepoManager.DataExists(value))
@@ -349,7 +345,7 @@ namespace CodeBySpecification.Core
                 {
                     throw new Exception("Veriable \"" + value + "\" not found.");
                 }
-                
+
             }
 			
 		}
@@ -363,9 +359,9 @@ namespace CodeBySpecification.Core
 		public void EnterToTheWithTheOf(string valueOf, string value, string elementKey, string selectionMethod, string selection)
 		{
             if (valueOf == "value")
-            {
-                UiAutomationService.EnterTextTo(elementKey, value, selectionMethod, selection);
-            }
+		{
+			UiAutomationService.EnterTextTo(elementKey, value, selectionMethod, selection);
+		}
             else
             {
                 if (dataRepoManager.DataExists(value))
@@ -379,7 +375,6 @@ namespace CodeBySpecification.Core
 		}
 
 		#endregion
-
         #region Select <value> of <element>
 
         [Given(@"I select ""(.*)"" of the ""(.*)""")]
@@ -580,7 +575,7 @@ namespace CodeBySpecification.Core
         [When(@"row ""(.*)"" row, column ""(.*)"" of table ""(.*)"" contains value ""(.*)""")]
         [Then(@"row ""(.*)"" row, column ""(.*)"" of table ""(.*)"" contains value ""(.*)""")]
 
-        public void GivenStRowStColumnOfTableContainsValue(string rowNumber, string columnNumber, string elementKey, string value)
+		public void GivenStRowStColumnOfTableContainsValue(string rowNumber, string columnNumber, string elementKey, string value)
 		{
 			int row, col;
 			if (int.TryParse(rowNumber, out row) && int.TryParse(columnNumber, out col))

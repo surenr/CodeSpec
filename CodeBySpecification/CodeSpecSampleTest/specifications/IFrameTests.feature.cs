@@ -4,148 +4,151 @@
 //      SpecFlow Version:1.9.0.77
 //      SpecFlow Generator Version:1.9.0.0
 //      Runtime Version:4.0.30319.42000
-// 
+//
 //      Changes to this file may cause incorrect behavior and will be lost if
 //      the code is regenerated.
 //  </auto-generated>
 // ------------------------------------------------------------------------------
+
 #region Designer generated code
+
 #pragma warning disable
+
 namespace CodeSpecSampleTest.Specifications
 {
-    using TechTalk.SpecFlow;
-    
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "1.9.0.77")]
-    [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [Microsoft.VisualStudio.TestTools.UnitTesting.TestClassAttribute()]
-    public partial class SampleWebProjectTestsOnIFramesFeature
-    {
-        
-        private static TechTalk.SpecFlow.ITestRunner testRunner;
-        
+	using TechTalk.SpecFlow;
+
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "1.9.0.77")]
+	[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+	[Microsoft.VisualStudio.TestTools.UnitTesting.TestClassAttribute()]
+	public partial class SampleWebProjectTestsOnIFramesFeature
+	{
+		private static TechTalk.SpecFlow.ITestRunner testRunner;
+
 #line 1 "IFrameTests.feature"
 #line hidden
-        
-        [Microsoft.VisualStudio.TestTools.UnitTesting.ClassInitializeAttribute()]
-        public static void FeatureSetup(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext testContext)
-        {
-            testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "SampleWebProject Tests on IFrames", "In order to check ability to work with IFrams\r\nI want to switch into Iframes and " +
-                    "do some work there", ProgrammingLanguage.CSharp, new string[] {
-                        "UIAutomationTest"});
-            testRunner.OnFeatureStart(featureInfo);
-        }
-        
-        [Microsoft.VisualStudio.TestTools.UnitTesting.ClassCleanupAttribute()]
-        public static void FeatureTearDown()
-        {
-            testRunner.OnFeatureEnd();
-            testRunner = null;
-        }
-        
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestInitializeAttribute()]
-        public virtual void TestInitialize()
-        {
-            if (((TechTalk.SpecFlow.FeatureContext.Current != null) 
-                        && (TechTalk.SpecFlow.FeatureContext.Current.FeatureInfo.Title != "SampleWebProject Tests on IFrames")))
-            {
-                CodeSpecSampleTest.Specifications.SampleWebProjectTestsOnIFramesFeature.FeatureSetup(null);
-            }
-        }
-        
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCleanupAttribute()]
-        public virtual void ScenarioTearDown()
-        {
-            testRunner.OnScenarioEnd();
-        }
-        
-        public virtual void ScenarioSetup(TechTalk.SpecFlow.ScenarioInfo scenarioInfo)
-        {
-            testRunner.OnScenarioStart(scenarioInfo);
-        }
-        
-        public virtual void ScenarioCleanup()
-        {
-            testRunner.CollectScenarioErrors();
-        }
-        
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Switch to an IFrame")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "SampleWebProject Tests on IFrames")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("UIAutomationTest")]
-        public virtual void SwitchToAnIFrame()
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Switch to an IFrame", ((string[])(null)));
+
+		[Microsoft.VisualStudio.TestTools.UnitTesting.ClassInitializeAttribute()]
+		public static void FeatureSetup(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext testContext)
+		{
+			testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
+			TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "SampleWebProject Tests on IFrames", "In order to check ability to work with IFrams\r\nI want to switch into Iframes and " +
+					  "do some work there", ProgrammingLanguage.CSharp, new string[] {
+								"UIAutomationTest"});
+			testRunner.OnFeatureStart(featureInfo);
+		}
+
+		[Microsoft.VisualStudio.TestTools.UnitTesting.ClassCleanupAttribute()]
+		public static void FeatureTearDown()
+		{
+			testRunner.OnFeatureEnd();
+			testRunner = null;
+		}
+
+		[Microsoft.VisualStudio.TestTools.UnitTesting.TestInitializeAttribute()]
+		public virtual void TestInitialize()
+		{
+			if (((TechTalk.SpecFlow.FeatureContext.Current != null)
+							&& (TechTalk.SpecFlow.FeatureContext.Current.FeatureInfo.Title != "SampleWebProject Tests on IFrames")))
+			{
+				CodeSpecSampleTest.Specifications.SampleWebProjectTestsOnIFramesFeature.FeatureSetup(null);
+			}
+		}
+
+		[Microsoft.VisualStudio.TestTools.UnitTesting.TestCleanupAttribute()]
+		public virtual void ScenarioTearDown()
+		{
+			testRunner.OnScenarioEnd();
+		}
+
+		public virtual void ScenarioSetup(TechTalk.SpecFlow.ScenarioInfo scenarioInfo)
+		{
+			testRunner.OnScenarioStart(scenarioInfo);
+		}
+
+		public virtual void ScenarioCleanup()
+		{
+			testRunner.CollectScenarioErrors();
+		}
+
+		[Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+		[Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Switch to an IFrame")]
+		[Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "SampleWebProject Tests on IFrames")]
+		[Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("UIAutomationTest")]
+		public virtual void SwitchToAnIFrame()
+		{
+			TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Switch to an IFrame", ((string[]) (null)));
 #line 6
-this.ScenarioSetup(scenarioInfo);
+			this.ScenarioSetup(scenarioInfo);
 #line 7
- testRunner.Given("Navigate to SUT", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+			testRunner.Given("Navigate to SUT", ((string) (null)), ((TechTalk.SpecFlow.Table) (null)), "Given ");
 #line 8
- testRunner.Then("I navigate to \"http://localhost:50400/TestPages/IFrames\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+			testRunner.Then("I navigate to \"http://localhost:50400/TestPages/IFrames\"", ((string) (null)), ((TechTalk.SpecFlow.Table) (null)), "Then ");
 #line 9
- testRunner.And("switched to iframe with the \"id\" of \"iframe_test_one\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+			testRunner.And("switched to iframe with the \"id\" of \"iframe_test_one\"", ((string) (null)), ((TechTalk.SpecFlow.Table) (null)), "And ");
 #line 10
- testRunner.Then("I enter value \"Typing in textbox one\" to the \"Text1\" with the \"id\" of \"Text1\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+			testRunner.Then("I enter value \"Typing in textbox one\" to the \"Text1\" with the \"id\" of \"Text1\"", ((string) (null)), ((TechTalk.SpecFlow.Table) (null)), "Then ");
 #line hidden
-            this.ScenarioCleanup();
-        }
-        
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Switch to an IFrame inside IFrame")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "SampleWebProject Tests on IFrames")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("UIAutomationTest")]
-        public virtual void SwitchToAnIFrameInsideIFrame()
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Switch to an IFrame inside IFrame", ((string[])(null)));
+			this.ScenarioCleanup();
+		}
+
+		[Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+		[Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Switch to an IFrame inside IFrame")]
+		[Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "SampleWebProject Tests on IFrames")]
+		[Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("UIAutomationTest")]
+		public virtual void SwitchToAnIFrameInsideIFrame()
+		{
+			TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Switch to an IFrame inside IFrame", ((string[]) (null)));
 #line 12
-this.ScenarioSetup(scenarioInfo);
+			this.ScenarioSetup(scenarioInfo);
 #line 13
- testRunner.Given("Navigate to SUT", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+			testRunner.Given("Navigate to SUT", ((string) (null)), ((TechTalk.SpecFlow.Table) (null)), "Given ");
 #line 14
- testRunner.Then("I navigate to \"http://localhost:50400/TestPages/IFrames\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+			testRunner.Then("I navigate to \"http://localhost:50400/TestPages/IFrames\"", ((string) (null)), ((TechTalk.SpecFlow.Table) (null)), "Then ");
 #line 15
- testRunner.And("switched to iframe with the \"id\" of \"iframe_test_two\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+			testRunner.And("switched to iframe with the \"id\" of \"iframe_test_two\"", ((string) (null)), ((TechTalk.SpecFlow.Table) (null)), "And ");
 #line 16
- testRunner.Then("I enter value \"Typing in textbox one\" to the \"Text1\" with the \"id\" of \"Text1\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+			testRunner.Then("I enter value \"Typing in textbox one\" to the \"Text1\" with the \"id\" of \"Text1\"", ((string) (null)), ((TechTalk.SpecFlow.Table) (null)), "Then ");
 #line 17
- testRunner.And("switched to iframe with the \"id\" of \"iframe_test_two_2\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+			testRunner.And("switched to iframe with the \"id\" of \"iframe_test_two_2\"", ((string) (null)), ((TechTalk.SpecFlow.Table) (null)), "And ");
 #line 18
- testRunner.Then("I enter value \"Typing in textbox one\" to the \"Text1\" with the \"id\" of \"Text1\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+			testRunner.Then("I enter value \"Typing in textbox one\" to the \"Text1\" with the \"id\" of \"Text1\"", ((string) (null)), ((TechTalk.SpecFlow.Table) (null)), "Then ");
 #line hidden
-            this.ScenarioCleanup();
-        }
-        
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Switch to an IFrame inside IFrame then switch to Default content")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "SampleWebProject Tests on IFrames")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("UIAutomationTest")]
-        public virtual void SwitchToAnIFrameInsideIFrameThenSwitchToDefaultContent()
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Switch to an IFrame inside IFrame then switch to Default content", ((string[])(null)));
+			this.ScenarioCleanup();
+		}
+
+		[Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+		[Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Switch to an IFrame inside IFrame then switch to Default content")]
+		[Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "SampleWebProject Tests on IFrames")]
+		[Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("UIAutomationTest")]
+		public virtual void SwitchToAnIFrameInsideIFrameThenSwitchToDefaultContent()
+		{
+			TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Switch to an IFrame inside IFrame then switch to Default content", ((string[]) (null)));
 #line 20
-this.ScenarioSetup(scenarioInfo);
+			this.ScenarioSetup(scenarioInfo);
 #line 21
- testRunner.Given("Navigate to SUT", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+			testRunner.Given("Navigate to SUT", ((string) (null)), ((TechTalk.SpecFlow.Table) (null)), "Given ");
 #line 22
- testRunner.Then("I navigate to \"http://localhost:50400/TestPages/IFrames\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+			testRunner.Then("I navigate to \"http://localhost:50400/TestPages/IFrames\"", ((string) (null)), ((TechTalk.SpecFlow.Table) (null)), "Then ");
 #line 23
- testRunner.And("switched to iframe with the \"id\" of \"iframe_test_two\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+			testRunner.And("switched to iframe with the \"id\" of \"iframe_test_two\"", ((string) (null)), ((TechTalk.SpecFlow.Table) (null)), "And ");
 #line 24
- testRunner.Then("I enter value \"Typing in textbox one\" to the \"Text1\" with the \"id\" of \"Text1\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+			testRunner.Then("I enter value \"Typing in textbox one\" to the \"Text1\" with the \"id\" of \"Text1\"", ((string) (null)), ((TechTalk.SpecFlow.Table) (null)), "Then ");
 #line 25
- testRunner.And("switched to iframe with the \"id\" of \"iframe_test_two_2\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+			testRunner.And("switched to iframe with the \"id\" of \"iframe_test_two_2\"", ((string) (null)), ((TechTalk.SpecFlow.Table) (null)), "And ");
 #line 26
- testRunner.Then("I enter value \"Typing in textbox one\" to the \"Text1\" with the \"id\" of \"Text1\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+			testRunner.Then("I enter value \"Typing in textbox one\" to the \"Text1\" with the \"id\" of \"Text1\"", ((string) (null)), ((TechTalk.SpecFlow.Table) (null)), "Then ");
 #line 27
- testRunner.And("I switched to default content", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+			testRunner.And("I switched to default content", ((string) (null)), ((TechTalk.SpecFlow.Table) (null)), "And ");
 #line 28
- testRunner.Then("I enter value \"Typed in textbox one in IFrame inside IFrame Two\" to the \"Text1\" w" +
-                    "ith the \"id\" of \"Text1\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+			testRunner.Then("I enter value \"Typed in textbox one in IFrame inside IFrame Two\" to the \"Text1\" w" +
+									 "ith the \"id\" of \"Text1\"", ((string) (null)), ((TechTalk.SpecFlow.Table) (null)), "Then ");
 #line hidden
-            this.ScenarioCleanup();
-        }
-    }
+			this.ScenarioCleanup();
+		}
+	}
 }
+
 #pragma warning restore
+
 #endregion

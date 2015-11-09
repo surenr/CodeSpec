@@ -2,32 +2,28 @@
 using Newtonsoft.Json.Linq;
 using RazorEngine;
 using RazorEngine.Templating;
-using System.Configuration;
-using System.IO;
-using System.Reflection;
 
 namespace Report.Base.Service
 {
 	public class HtmlReportService : IReportService
 	{
+		private static string path;
 
-        private static string path;
-        public HtmlReportService()
-        {
-            
-        }
+		public HtmlReportService()
+		{
+		}
+
 		public string Generate(JObject test)
 		{
 			string template = GetReportTemplate();
 			var result =
-				 Engine.Razor.RunCompile( template, "test", null, new { test = test });
+				 Engine.Razor.RunCompile(template, "test", null, new { test = test });
 			return result;
 		}
 
-        private static string GetReportTemplate()
-        {
-            return Properties.Resources.html_template;
-        }
-
+		private static string GetReportTemplate()
+		{
+			return Properties.Resources.html_template;
+		}
 	}
 }
