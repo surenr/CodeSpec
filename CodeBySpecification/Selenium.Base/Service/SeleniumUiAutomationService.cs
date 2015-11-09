@@ -295,5 +295,20 @@ namespace Selenium.Base.Service
         {
             dataRepoManager.Populate(objectRepoResource);
         }
+
+        public void GetScreenshot()
+        {
+            ITakesScreenshot takesScreenshot = (IWebDriver)GetBrowser as ITakesScreenshot;
+            if (takesScreenshot != null)
+            {
+                var screenshot = takesScreenshot.GetScreenshot();
+
+                string screenshotFilePath =  Path.Combine(ConfigurationManager.AppSettings["UI.Tests.Reports.output.path"] + "\\screenshot\\", string.Format("{0:yyyy-MM-dd_hh-mm-ss-tt}", DateTime.Now) + "_screenshot.png");
+
+                screenshot.SaveAsFile(screenshotFilePath, ImageFormat.Png);
+
+                Console.WriteLine("Screenshot: {0}", new Uri(screenshotFilePath));
+            }
+        }
     }
 }
