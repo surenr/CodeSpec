@@ -9,6 +9,7 @@ using ScreenRecorder.Base.Service;
 using Selenium.Base.Service;
 using TechTalk.SpecFlow;
 using DataRepository.Base.Service;
+using OpenQA.Selenium;
 
 namespace CodeBySpecification.Core
 {
@@ -21,6 +22,7 @@ namespace CodeBySpecification.Core
 		private static IScreenRecordService recorder;
         private static JArray features = new JArray();
         private readonly IDataRepoService dataRepoManager = new CSVDataRepositoryService();
+        private static TechTalk.SpecFlow.ITestRunner testRunner;
 
         #region Core Step Definition Vocabulary
 
@@ -59,7 +61,17 @@ namespace CodeBySpecification.Core
 		[BeforeScenario("record")]
 		public static void BeforeTestScenarioWithRecord()
 		{
-			recorder = new ExpressionEncoderRecorder();
+            
+            if (ConfigurationManager.AppSettings["UI.Tests.recorder"] == "ExpressionEncoder")
+            {
+                recorder = new ExpressionEncoderRecorder();
+            }
+            else
+            {
+                recorder = new BitmapRecorder(UiAutomationService.GetBrowser as ITakesScreenshot);
+
+            }
+
             recorder.OutputFile = ConfigurationManager.AppSettings["UI.Tests.Reports.output.path"] + "\\videos\\" + ScenarioContext.Current.ScenarioInfo.Title + ".wmv";
 			recorder.Start();
         }
@@ -73,7 +85,10 @@ namespace CodeBySpecification.Core
         [AfterScenarioBlock]
         public static void AfterScenarioBlock()
         {
+
             var err = ScenarioContext.Current.TestError;
+            testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
+            //var t = TechTalk.SpecFlow.Table;
         }
 
         [AfterScenario("UIAutomationReport")]
