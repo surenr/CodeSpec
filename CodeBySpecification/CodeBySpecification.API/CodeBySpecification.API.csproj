@@ -71,6 +71,7 @@
     <Compile Include="Domain\BrowserTypes.cs" />
     <Compile Include="Domain\UiElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service.Api\IDataRepoService.cs" />
     <Compile Include="Service.Api\IObjectRepoService.cs" />
     <Compile Include="Service.Api\IReportService.cs" />
     <Compile Include="Service.Api\IScreenRecordService.cs" />

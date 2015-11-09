@@ -7,6 +7,7 @@ using System.Threading;
 using CodeBySpecification.API.Domain;
 using CodeBySpecification.API.Service.Api;
 using ObjectRepository.Base.Service;
+using DataRepository.Base.Service;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
@@ -22,6 +23,7 @@ namespace Selenium.Base.Service
 		private readonly string SutUrl = ConfigurationManager.AppSettings["UI.Tests.SUT.Url"];
 		private readonly ITestAssertService assert = new MSTestAssertService();
 		private readonly IObjectRepoService objectRepoManager = new CSVObjectRepositoryService();
+        private readonly IDataRepoService dataRepoManager = new CSVDataRepositoryService();
 		private string objectRepoResource = null;
 
 		public object GetBrowser { get; set; }
@@ -166,9 +168,9 @@ namespace Selenium.Base.Service
 				new FireFoxBrowser(browserType),
 				new IEBrowser(browserType),
 				new ChromeBrowser(browserType),
-					 new AndroidBrowser(browserType),
-					 new iOSBrowser(browserType),
-				};
+                new AndroidBrowser(browserType),
+                new iOSBrowser(browserType),
+            };
 
 			if (browser == null)
 			{
@@ -182,8 +184,8 @@ namespace Selenium.Base.Service
 				browser.Manage().Window.Maximize();
 				if (browserType != "Android" && browserType != "iOS")
 				{
-					browser.Manage().Cookies.DeleteAllCookies();
-				}
+                    browser.Manage().Cookies.DeleteAllCookies();
+                }
 				GetBrowser = browser;
 			}
 			if (objectRepoManager.ObjectCount() == 0)
@@ -198,7 +200,7 @@ namespace Selenium.Base.Service
 			var driver = (IWebDriver) GetBrowser;
 			var action = new Actions(driver);
 			action.DragAndDrop(locatorFrom, locatorTo).Perform();
-		}
+        }
 
 		public void DragAndDrop(string dragElementKey, string dropElementKey, string dragElementSelectionMethod = null, string dragElementSelection = null, string dropElementKeySelectionMethod = null, string dropElementKeySelection = null)
 		{
@@ -277,16 +279,21 @@ namespace Selenium.Base.Service
 			assert.IsEqual(value, valueElement);
 		}
 
-		public void switchToFrame(string selectionMethod, string selection)
-		{
+        public void switchToFrame(string selectionMethod, string selection)
+        {
 			var driver = ((IWebDriver) GetBrowser);
-			driver.SwitchTo().Frame(GetElementBy(selectionMethod, selection));
-		}
+            driver.SwitchTo().Frame(GetElementBy(selectionMethod, selection));
+        }
 
-		public void switchToDefaultContent()
-		{
+        public void switchToDefaultContent()
+        {
 			var driver = ((IWebDriver) GetBrowser);
-			driver.SwitchTo().DefaultContent();
-		}
-	}
+            driver.SwitchTo().DefaultContent();
+        }
+
+        public void GetTheValuesFrom(string objectRepoResource)
+        {
+            dataRepoManager.Populate(objectRepoResource);
+        }
+    }
 }

@@ -91,6 +91,10 @@
       <Project>{0d000c6f-12e9-4135-bd46-81fe6a1865d4}</Project>
       <Name>CodeBySpecification.API</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DatatRepository.Base\DatatRepository.Base.csproj">
+      <Project>{f0069b7e-8a66-4715-b5fd-5ba00ba619b0}</Project>
+      <Name>DatatRepository.Base</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Report.Base\Report.Base.csproj">
       <Project>{4FBFD570-AC63-40B9-ACA9-89C9EDD3C968}</Project>
       <Name>Report.Base</Name>

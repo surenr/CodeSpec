@@ -8,6 +8,7 @@ using Report.Base.Service;
 using ScreenRecorder.Base.Service;
 using Selenium.Base.Service;
 using TechTalk.SpecFlow;
+using DataRepository.Base.Service;
 
 namespace CodeBySpecification.Core
 {
@@ -18,129 +19,158 @@ namespace CodeBySpecification.Core
 		private static readonly IDictionary<string, string> DataShare = new Dictionary<string, string>();
 		private static string objectRepoResource;
 		private static IScreenRecordService recorder;
-		private static JArray features = new JArray();
+        private static JArray features = new JArray();
+        private readonly IDataRepoService dataRepoManager = new CSVDataRepositoryService();
 
-		#region Core Step Definition Vocabulary
+        #region Core Step Definition Vocabulary
 
-		[BeforeFeature("UIAutomationTest")]
+        [BeforeFeature("UIAutomationTest")]
 		public static void BeforeSeleniumTestFeature()
 		{
 			var browserName = ConfigurationManager.AppSettings["UI.Tests.Target.Browser"];
 			objectRepoResource = ConfigurationManager.AppSettings["UI.Tests.Object.Definitions.Path"];
-			UiAutomationService = new SeleniumUIAutomationService();
-			UiAutomationService.InitilizeTests(browserName, objectRepoResource);
+            UiAutomationService = new SeleniumUIAutomationService();
+            UiAutomationService.InitilizeTests(browserName, objectRepoResource);
 
-			JObject currentFeature = new JObject();
-			currentFeature["title"] = FeatureContext.Current.FeatureInfo.Title;
-			currentFeature["description"] = FeatureContext.Current.FeatureInfo.Description;
-			currentFeature["tags"] = new JArray(FeatureContext.Current.FeatureInfo.Tags);
-			currentFeature["scenarios"] = new JArray();
-			FeatureContext.Current["currentFeature"] = currentFeature;
-			//System.IO.Directory.CreateDirectory(ConfigurationManager.AppSettings["UI.Tests.Reports.output.path"] + "\\videos\\");
+        }
+
+        [BeforeFeature("UIAutomationReport")]
+        public static void BeforeUIAutomationFeatureReport()
+        {
+
+            JObject currentFeature = new JObject();
+            currentFeature["title"] = FeatureContext.Current.FeatureInfo.Title;
+            currentFeature["description"] = FeatureContext.Current.FeatureInfo.Description;
+            currentFeature["tags"] = new JArray(FeatureContext.Current.FeatureInfo.Tags);
+            currentFeature["scenarios"] = new JArray();
+            FeatureContext.Current["currentFeature"] = currentFeature;
+            //System.IO.Directory.CreateDirectory(ConfigurationManager.AppSettings["UI.Tests.Reports.output.path"] + "\\videos\\");
+        }
+
+        [BeforeFeature("MobileUIAutomationTest")]
+        public static void BeforeAppiumTestFeature()
+        {
+            var browserName = ConfigurationManager.AppSettings["UI.Tests.Appium.capability.platformName"];
+            objectRepoResource = ConfigurationManager.AppSettings["UI.Tests.Object.Definitions.Path"];
+            UiAutomationService = new AppiumUiAutomationServices();
+            UiAutomationService.InitilizeTests(browserName, objectRepoResource);
 		}
-
-		[BeforeFeature("MobileUIAutomationTest")]
-		public static void BeforeAppiumTestFeature()
-		{
-			var browserName = ConfigurationManager.AppSettings["UI.Tests.Appium.capability.platformName"];
-			objectRepoResource = ConfigurationManager.AppSettings["UI.Tests.Object.Definitions.Path"];
-			UiAutomationService = new AppiumUiAutomationServices();
-			UiAutomationService.InitilizeTests(browserName, objectRepoResource);
-		}
-
+            
 		[BeforeScenario("record")]
 		public static void BeforeTestScenarioWithRecord()
 		{
 			recorder = new ExpressionEncoderRecorder();
-			recorder.OutputFile = ConfigurationManager.AppSettings["UI.Tests.Reports.output.path"] + "\\videos\\" + ScenarioContext.Current.ScenarioInfo.Title + ".wmv";
+            recorder.OutputFile = ConfigurationManager.AppSettings["UI.Tests.Reports.output.path"] + "\\videos\\" + ScenarioContext.Current.ScenarioInfo.Title + ".wmv";
 			recorder.Start();
-		}
+        }
 
-		[BeforeScenario("UIAutomationTest")]
-		public static void BeforeSeleniumTestScenario()
-		{
-			FeatureContext.Current["time"] = DateTime.UtcNow;
-		}
+        [BeforeScenario("UIAutomationReport")]
+        public static void BeforeSeleniumTestScenario()
+        {
+            FeatureContext.Current["time"] = DateTime.UtcNow;
+        }
 
-		[AfterScenarioBlock]
-		public static void AfterScenarioBlock()
-		{
-			var err = ScenarioContext.Current.TestError;
-		}
+        [AfterScenarioBlock]
+        public static void AfterScenarioBlock()
+        {
+            var err = ScenarioContext.Current.TestError;
+        }
 
-		[AfterScenario("UIAutomationTest")]
-		public static void AfterSeleniumTestScenario()
-		{
-			var time = DateTime.UtcNow;
+        [AfterScenario("UIAutomationReport")]
+        public static void AfterSeleniumTestScenario()
+        {
+            var time = DateTime.UtcNow;
 
 			var currentFeature = (JObject) FeatureContext.Current["currentFeature"];
 			var scenarios = (JArray) currentFeature["scenarios"];
-			var scenario = new JObject();
-			scenario["title"] = ScenarioContext.Current.ScenarioInfo.Title;
-			scenario["startTime"] = FeatureContext.Current["time"].ToString();
-			scenario["endTime"] = time.ToString();
-			scenario["tags"] = new JArray(ScenarioContext.Current.ScenarioInfo.Tags);
-
-			var err = ScenarioContext.Current.TestError;
+            var scenario = new JObject();
+            scenario["title"] = ScenarioContext.Current.ScenarioInfo.Title;
+            scenario["startTime"] = FeatureContext.Current["time"].ToString();
+            scenario["endTime"] = time.ToString();
+            scenario["tags"] = new JArray(ScenarioContext.Current.ScenarioInfo.Tags);
+            
+            var err = ScenarioContext.Current.TestError;
 			if (err != null)
 			{
-				var error = new JObject();
-				error["message"] = ScenarioContext.Current.TestError.Message;
-				error["stackTrace"] = ScenarioContext.Current.TestError.StackTrace;
-				scenario["error"] = error;
-				scenario["status"] = "error";
-			}
+                var error = new JObject();
+                error["message"] = ScenarioContext.Current.TestError.Message;
+                error["stackTrace"] = ScenarioContext.Current.TestError.StackTrace;
+                scenario["error"] = error;
+                scenario["status"] = "error";
+            }
 			else
 			{
-				scenario["status"] = "ok";
-			}
-			scenarios.Add(scenario);
+                scenario["status"] = "ok";
+            }
+            scenarios.Add(scenario);
 		}
 
 		[AfterScenario("record")]
 		public static void AfterTestScenarioWithRecord()
 		{
 			recorder.Stop();
-		}
+        }
 
-		[AfterFeature("UIAutomationTest")]
-		public static void AfterSeleniumTestFeature()
-		{
+        [AfterFeature("UIAutomationReport")]
+        public static void AfterSeleniumTestFeature()
+        {
 			var currentFeature = (JObject) FeatureContext.Current["currentFeature"];
-			features.Add(currentFeature);
-			var outputJSON = currentFeature.ToString();
+            features.Add(currentFeature);
+            var outputJSON = currentFeature.ToString();
 
 			System.IO.File.WriteAllText(ConfigurationManager.AppSettings["UI.Tests.Reports.output.path"] + "\\" + FeatureContext.Current.FeatureInfo.Title + ".json", outputJSON);
+        }
+
+        [AfterTestRun]
+        public static void AfterSeleniumTest()
+        {
+            var outputJSON = features.ToString();
+            System.IO.File.WriteAllText(ConfigurationManager.AppSettings["UI.Tests.Reports.output.path"] + "\\Featurs.json", outputJSON);
+            IReportService report = new HtmlReportService();
+            JObject testJSON = new JObject();
+            testJSON.Add("features", features);
+            var ouput = report.Generate(testJSON);
+            System.IO.File.WriteAllText(ConfigurationManager.AppSettings["UI.Tests.Reports.output.path"] + "\\Report.html", ouput);
 		}
 
-		[AfterTestRun]
-		public static void AfterSeleniumTest()
-		{
-			var outputJSON = features.ToString();
-			System.IO.File.WriteAllText(ConfigurationManager.AppSettings["UI.Tests.Reports.output.path"] + "\\Featurs.json", outputJSON);
-			IReportService report = new HtmlReportService();
-			JObject testJSON = new JObject();
-			testJSON.Add("features", features);
-			var ouput = report.Generate(testJSON);
-			System.IO.File.WriteAllText(ConfigurationManager.AppSettings["UI.Tests.Reports.output.path"] + "\\Report.html", ouput);
-		}
+        #region Read the content of <element>
 
-		#region Read the content of <element>
-
-		[Given(@"Read the content of ""(.*)""")]
+        [Given(@"Read the content of ""(.*)""")]
 		[When(@"Read the content of ""(.*)""")]
 		[Then(@"Read the content of ""(.*)""")]
 		public void ReadTheContentOf(string elementKey)
 		{
-			FeatureContext.Current[elementKey] = UiAutomationService.GetElementText(elementKey);
+            dataRepoManager.AddData(elementKey, UiAutomationService.GetElementText(elementKey));
 		}
+
+        [Given(@"Set ""(.*)"" as ""(.*)""")]
+        [When(@"Set ""(.*)"" as ""(.*)""")]
+        [Then(@"Set ""(.*)"" as ""(.*)""")]
+        [Given(@"I set ""(.*)"" as ""(.*)""")]
+        [When(@"I set ""(.*)"" as ""(.*)""")]
+        [Then(@"I set ""(.*)"" as ""(.*)""")]
+        public void SetTheValueOf(string elementKey, string elementValue)
+        {
+            dataRepoManager.AddData(elementKey, elementValue);
+        }
+
+        [Given(@"Get the values from ""(.*)""")]
+        [When(@"Get the values from ""(.*)""")]
+        [Then(@"Get the values from ""(.*)""")]
+        [Given(@"I get the values from ""(.*)""")]
+        [When(@"I get the values from ""(.*)""")]
+        [Then(@"I get the values from ""(.*)""")]
+        public void GetTheValuesFrom(string dataRepo)
+        {
+            UiAutomationService.GetTheValuesFrom(dataRepo);
+        }
 
 		[Given(@"Get the content of ""(.*)"" with the ""(.*)"" of ""(.*)""")]
 		[When(@"Get the content of ""(.*)"" with the ""(.*)"" of ""(.*)""")]
 		[Then(@"Get the content of ""(.*)"" with the ""(.*)"" of ""(.*)""")]
 		public void ReadTheContentOfWithTheOf(string elementKey, string selectionType, string selection)
 		{
-			FeatureContext.Current[elementKey] = UiAutomationService.GetElementText(elementKey, selectionType, selection);
+			dataRepoManager.AddData(elementKey, UiAutomationService.GetElementText(elementKey, selectionType, selection));
 		}
 
 		#endregion
@@ -294,31 +324,58 @@ namespace CodeBySpecification.Core
 		#endregion
 
 		#region Enter <value> to <element>
-
-		[Given(@"I enter ""(.*)"" to the ""(.*)""")]
-		[When(@"I enter ""(.*)"" to the ""(.*)""")]
-		[Then(@"I enter ""(.*)"" to the ""(.*)""")]
-		[Given(@"Enter ""(.*)"" to the ""(.*)""")]
-		[When(@"Enter ""(.*)"" to the ""(.*)""")]
-		[Then(@"Enter ""(.*)"" to the ""(.*)""")]
-		public void EnterToThe(string value, string elementKey)
+        //I enter value from data source with the key 'key' to the element
+		[Given(@"I enter( value of)? ""(.*)"" to the ""(.*)""")]
+		[When(@"I enter( value of)? ""(.*)"" to the ""(.*)""")]
+		[Then(@"I enter( value of)? ""(.*)"" to the ""(.*)""")]
+		[Given(@"Enter( value of)? ""(.*)"" to the ""(.*)""")]
+		[When(@"Enter( value of)? ""(.*)"" to the ""(.*)""")]
+		[Then(@"Enter( value of)? ""(.*)"" to the ""(.*)""")]
+		public void EnterToThe(string valueOf, string value, string elementKey)
 		{
+            if(valueOf == "")
+            {
 			UiAutomationService.EnterTextTo(elementKey, value);
 		}
+            else
+            {
+                if (dataRepoManager.DataExists(value))
+                    UiAutomationService.EnterTextTo(elementKey, dataRepoManager.GetData(value));
+                else
+                {
+                    throw new Exception("Veriable \"" + value + "\" not found.");
+                }
 
-		[Given(@"I enter value ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
-		[When(@"I enter value ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
-		[Then(@"I enter value ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
-		[Given(@"Enter value ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
-		[When(@"Enter value ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
-		[Then(@"Enter value ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
-		public void EnterToTheWithTheOf(string value, string elementKey, string selectionMethod, string selection)
+            }
+			
+		}
+
+		[Given(@"I enter (value|key) ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+		[When(@"I entervalue (of)? ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+		[Then(@"I enter( value of)? ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+		[Given(@"Enter( value of)? ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+		[When(@"Enter( value of)? ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+		[Then(@"Enter( value of)? ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+		public void EnterToTheWithTheOf(string valueOf, string value, string elementKey, string selectionMethod, string selection)
+		{
+            if (valueOf == "value")
 		{
 			UiAutomationService.EnterTextTo(elementKey, value, selectionMethod, selection);
 		}
+            else
+            {
+                if (dataRepoManager.DataExists(value))
+                    UiAutomationService.EnterTextTo(elementKey, dataRepoManager.GetData(value), selectionMethod, selection);
+                else
+                {
+                    throw new Exception("Veriable \"" + value + "\" not found.");
+                }
+
+            }
+		}
 
 		#endregion
-    #region Select <value> of <element>
+        #region Select <value> of <element>
 
         [Given(@"I select ""(.*)"" of the ""(.*)""")]
         [When(@"I select ""(.*)"" of the ""(.*)""")]
@@ -363,32 +420,32 @@ namespace CodeBySpecification.Core
 			UiAutomationService.GotoUrl(UiAutomationService.SutUrl);
 		}
 
-		#endregion
+        #endregion
 
-		#region Navigate to a sub link under the SUT
+        #region Navigate to a sub link under the SUT
 
-		[Given(@"I navigate to  ""(.*)"" of System Under Test")]
-		[When(@"I navigate to ""(.*)"" of System Under Test")]
-		[Then(@"I navigate to ""(.*)"" of System Under Test")]
-		[Given(@"I navigate to ""(.*)"" of SUT")]
-		[When(@"I navigate to ""(.*)"" of SUT")]
-		[Then(@"I navigate to ""(.*)"" of SUT")]
-		[Given(@"Navigate to ""(.*)"" of System Under Test")]
-		[When(@"Navigate to ""(.*)"" of System Under Test")]
-		[Then(@"Navigate to ""(.*)"" of System Under Test")]
-		[Given(@"Navigate to ""(.*)"" of SUT")]
-		[When(@"Navigate to ""(.*)"" of SUT")]
-		[Then(@"Navigate to ""(.*)"" of SUT")]
-		public void NavigateToSubLinkUnderSut(string subURL)
-		{
+        [Given(@"I navigate to  ""(.*)"" of System Under Test")]
+        [When(@"I navigate to ""(.*)"" of System Under Test")]
+        [Then(@"I navigate to ""(.*)"" of System Under Test")]
+        [Given(@"I navigate to ""(.*)"" of SUT")]
+        [When(@"I navigate to ""(.*)"" of SUT")]
+        [Then(@"I navigate to ""(.*)"" of SUT")]
+        [Given(@"Navigate to ""(.*)"" of System Under Test")]
+        [When(@"Navigate to ""(.*)"" of System Under Test")]
+        [Then(@"Navigate to ""(.*)"" of System Under Test")]
+        [Given(@"Navigate to ""(.*)"" of SUT")]
+        [When(@"Navigate to ""(.*)"" of SUT")]
+        [Then(@"Navigate to ""(.*)"" of SUT")]
+        public void NavigateToSubLinkUnderSut(string subURL)
+        {
 			UiAutomationService.GotoUrl(UiAutomationService.SutUrl + "/" + subURL);
-		}
+        }
 
-		#endregion
+        #endregion
 
-		#region Navigate to <URL>
+        #region Navigate to <URL>
 
-		[Given(@"I navigate to ""(.*)""")]
+        [Given(@"I navigate to ""(.*)""")]
 		[When(@"I navigate to ""(.*)""")]
 		[Then(@"I navigate to ""(.*)""")]
 		[Given(@"Navigate to ""(.*)""")]
@@ -407,19 +464,19 @@ namespace CodeBySpecification.Core
 		[Then(@"Navigate to URL stored in ""(.*)""")]
 		public void NavigateToUrlStoredIn(string veriable)
 		{
-			if (DataShare.ContainsKey(veriable.ToUpper()))
-				UiAutomationService.GotoUrl(DataShare[veriable.ToUpper()]);
+			if (dataRepoManager.DataExists(veriable))
+				UiAutomationService.GotoUrl(dataRepoManager.GetData(veriable));
 			else
 			{
 				throw new Exception("Veriable \"" + veriable + "\" not found.");
 			}
 		}
 
-		#endregion
+        #endregion
 
-		#region Tabs and Window Manipulations
+        #region Tabs and Window Manipulations
 
-		[Given(@"I switch to tab ""(.*)""")]
+        [Given(@"I switch to tab ""(.*)""")]
 		[When(@"I switch to tab ""(.*)""")]
 		[Then(@"I switch to tab ""(.*)""")]
 		[Given(@"Switch to tab ""(.*)""")]
@@ -511,18 +568,13 @@ namespace CodeBySpecification.Core
 			}
 		}
 
-		[Given(@"""(.*)""st row, ""(.*)""st column of table ""(.*)"" contains value ""(.*)""")]
-		[Given(@"""(.*)""nd row, ""(.*)""nd column of table ""(.*)"" contains value ""(.*)""")]
-		[Given(@"""(.*)""rd row, ""(.*)""rd column of table ""(.*)"" contains value ""(.*)""")]
-		[Given(@"""(.*)""th row, ""(.*)""th column of table ""(.*)"" contains value ""(.*)""")]
-		[When(@"""(.*)""st row, ""(.*)""st column of table ""(.*)"" contains value ""(.*)""")]
-		[When(@"""(.*)""nd row, ""(.*)""nd column of table ""(.*)"" contains value ""(.*)""")]
-		[When(@"""(.*)""rd row, ""(.*)""rd column of table ""(.*)"" contains value ""(.*)""")]
-		[When(@"""(.*)""th row, ""(.*)""th column of table ""(.*)"" contains value ""(.*)""")]
-		[Then(@"""(.*)""st row, ""(.*)""st column of table ""(.*)"" contains value ""(.*)""")]
-		[Then(@"""(.*)""nd row, ""(.*)""nd column of table ""(.*)"" contains value ""(.*)""")]
-		[Then(@"""(.*)""rd row, ""(.*)""rd column of table ""(.*)"" contains value ""(.*)""")]
-		[Then(@"""(.*)""th row, ""(.*)""th column of table ""(.*)"" contains value ""(.*)""")]
+		[Given(@"""(.*)"".. row, ""(.*)"".. column of table ""(.*)"" contains value ""(.*)""")]
+		[When(@"""(.*)"".. row, ""(.*)"".. column of table ""(.*)"" contains value ""(.*)""")]
+        [Then(@"""(.*)"".. row, ""(.*)"".. column of table ""(.*)"" contains value ""(.*)""")]
+        [Given(@"row ""(.*)"", column ""(.*)"" of table ""(.*)"" contains value ""(.*)""")]
+        [When(@"row ""(.*)"" row, column ""(.*)"" of table ""(.*)"" contains value ""(.*)""")]
+        [Then(@"row ""(.*)"" row, column ""(.*)"" of table ""(.*)"" contains value ""(.*)""")]
+
 		public void GivenStRowStColumnOfTableContainsValue(string rowNumber, string columnNumber, string elementKey, string value)
 		{
 			int row, col;
@@ -607,10 +659,7 @@ namespace CodeBySpecification.Core
 		[Then(@"Read the URL and store in ""(.*)"" variable")]
 		public void ReadTheUrlAndStoreIn(string veriable)
 		{
-			if (DataShare.ContainsKey(veriable.ToUpper()))
-				DataShare[veriable.ToUpper()] = UiAutomationService.ReadUrl();
-			else
-				DataShare.Add(veriable.ToUpper(), UiAutomationService.ReadUrl());
+            dataRepoManager.AddData(veriable, UiAutomationService.ReadUrl());
 		}
 
 		[Given(@"I read the content of element ""(.*)"" and store in variable ""(.*)""")]
@@ -622,10 +671,7 @@ namespace CodeBySpecification.Core
 		public void ReadTheContentOfElementAndStoreInVeriable(string elementKey, string veriable)
 		{
 			var elementContent = UiAutomationService.GetElementText(elementKey);
-			if (DataShare.ContainsKey(veriable.ToUpper()))
-				DataShare[veriable.ToUpper()] = elementContent;
-			else
-				DataShare.Add(veriable.ToUpper(), elementContent);
+		    dataRepoManager.AddData(veriable, elementContent);
 		}
 
 		[Given(@"I read the ""(.*)""st element of the URL path and store in ""(.*)"" variable")]
@@ -665,11 +711,11 @@ namespace CodeBySpecification.Core
 				DataShare.Add(veriable.ToUpper(), element);
 		}
 
-		#endregion
+        #endregion
 
-		#region variable manipulation
+        #region variable manipulation
 
-		[Given(@"I enter value of variable ""(.*)"" to the ""(.*)""")]
+        [Given(@"I enter value of variable ""(.*)"" to the ""(.*)""")]
 		[When(@"I enter value of variable ""(.*)"" to the ""(.*)""")]
 		[Then(@"I enter value of variable ""(.*)"" to the ""(.*)""")]
 		[Given(@"Enter value of variable ""(.*)"" to the ""(.*)""")]
@@ -677,8 +723,8 @@ namespace CodeBySpecification.Core
 		[Then(@"Enter value of variable ""(.*)"" to the ""(.*)""")]
 		public void EnterContentOfVeriableToThe(string veriable, string elementKey)
 		{
-			if (!DataShare.ContainsKey(veriable.ToUpper())) throw new Exception("Veriable \"" + veriable + "\" is not defined.");
-			UiAutomationService.EnterTextTo(elementKey, DataShare[veriable.ToUpper()]);
+			if (!dataRepoManager.DataExists(veriable)) throw new Exception("Veriable \"" + veriable + "\" is not defined.");
+			UiAutomationService.EnterTextTo(elementKey, dataRepoManager.GetData(veriable));
 		}
 
 		[Given(@"I enter variable value ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
@@ -689,8 +735,8 @@ namespace CodeBySpecification.Core
 		[Then(@"Enter variable value ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
 		public void EnterContentOfVeriableToTheWithTheOf(string veriable, string elementKey, string selectionMethod, string selection)
 		{
-			if (!DataShare.ContainsKey(veriable.ToUpper())) throw new Exception("Veriable \"" + veriable + "\" is not defined.");
-			UiAutomationService.EnterTextTo(elementKey, DataShare[veriable.ToUpper()], selectionMethod, selection);
+			if (!dataRepoManager.DataExists(veriable)) throw new Exception("Veriable \"" + veriable + "\" is not defined.");
+			UiAutomationService.EnterTextTo(elementKey, dataRepoManager.GetData(veriable), selectionMethod, selection);
 		}
 
 		[Given(@"The value of variable ""(.*)"" is equal to ""(.*)""")]
@@ -701,44 +747,44 @@ namespace CodeBySpecification.Core
 		[Then(@"Value of variable ""(.*)"" is equal to ""(.*)""")]
 		public void ValueOfVeriableIsEqualTo(string veriable, string value)
 		{
-			if (!DataShare.ContainsKey(veriable.ToUpper())) throw new Exception("Veriable \"" + veriable + "\" is not defined.");
-			UiAutomationService.AreValuesEqual(DataShare[veriable.ToUpper()], value);
+			if (!dataRepoManager.DataExists(veriable)) throw new Exception("Veriable \"" + veriable + "\" is not defined.");
+			UiAutomationService.AreValuesEqual(dataRepoManager.GetData(veriable), value);
 		}
 
-		#endregion
+        #endregion
 
-		#region Frame manipulation
+        #region Frame manipulation 
 
-		[Given(@"I switched to iframe with the ""(.*)"" of ""(.*)""")]
-		[When(@"I switched to iframe with the ""(.*)"" of ""(.*)""")]
-		[Then(@"I switched to iframe with the ""(.*)"" of ""(.*)""")]
-		[Given(@"switched to iframe with the ""(.*)"" of ""(.*)""")]
-		[When(@"switched to iframe with the ""(.*)"" of ""(.*)""")]
-		[Then(@"switched to iframe with the ""(.*)"" of ""(.*)""")]
-		[Given(@"I switched to frame with the ""(.*)"" of ""(.*)""")]
-		[When(@"I switched to frame with the ""(.*)"" of ""(.*)""")]
-		[Then(@"I switched to frame with the ""(.*)"" of ""(.*)""")]
-		[Given(@"switched to frame with the ""(.*)"" of ""(.*)""")]
-		[When(@"switched to frame with the ""(.*)"" of ""(.*)""")]
-		[Then(@"switched to frame with the ""(.*)"" of ""(.*)""")]
-		public void switchedToFrame(string selectionMethod, string selection)
-		{
-			UiAutomationService.switchToFrame(selectionMethod, selection);
-		}
+        [Given(@"I switched to iframe with the ""(.*)"" of ""(.*)""")]
+        [When(@"I switched to iframe with the ""(.*)"" of ""(.*)""")]
+        [Then(@"I switched to iframe with the ""(.*)"" of ""(.*)""")]
+        [Given(@"switched to iframe with the ""(.*)"" of ""(.*)""")]
+        [When(@"switched to iframe with the ""(.*)"" of ""(.*)""")]
+        [Then(@"switched to iframe with the ""(.*)"" of ""(.*)""")]
+        [Given(@"I switched to frame with the ""(.*)"" of ""(.*)""")]
+        [When(@"I switched to frame with the ""(.*)"" of ""(.*)""")]
+        [Then(@"I switched to frame with the ""(.*)"" of ""(.*)""")]
+        [Given(@"switched to frame with the ""(.*)"" of ""(.*)""")]
+        [When(@"switched to frame with the ""(.*)"" of ""(.*)""")]
+        [Then(@"switched to frame with the ""(.*)"" of ""(.*)""")]
+        public void switchedToFrame(string selectionMethod, string selection)
+        {
+            UiAutomationService.switchToFrame(selectionMethod, selection);
+        }
 
-		[Given(@"I switched to default content")]
-		[When(@"I switched to default content")]
-		[Then(@"I switched to default content")]
-		[Given(@"switched to default content")]
-		[When(@"switched to default content")]
-		[Then(@"switched to default content")]
-		public void SwitchedToDefaultContent()
-		{
-			UiAutomationService.switchToDefaultContent();
-		}
+        [Given(@"I switched to default content")]
+        [When(@"I switched to default content")]
+        [Then(@"I switched to default content")]
+        [Given(@"switched to default content")]
+        [When(@"switched to default content")]
+        [Then(@"switched to default content")]
+        public void SwitchedToDefaultContent()
+        {
+            UiAutomationService.switchToDefaultContent();
+        }
 
-		#endregion
+        #endregion
 
-		#endregion
-	}
+        #endregion
+    }
 }

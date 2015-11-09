@@ -80,6 +80,26 @@
   </Choose>
   <ItemGroup>
     <Compile Include="AssemblyInit.cs" />
+    <Compile Include="specifications\ChangeName.feature.cs">
+      <DependentUpon>ChangeName.feature</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="specifications\UserDashboard.feature.cs">
+      <DependentUpon>UserDashboard.feature</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="specifications\Login.feature.cs">
+      <DependentUpon>Login.feature</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="specifications\Tables.feature.cs">
+      <DependentUpon>Tables.feature</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="specifications\AndroidTest.feature.cs">
       <DependentUpon>AndroidTest.feature</DependentUpon>
@@ -115,6 +135,25 @@
   <ItemGroup>
     <None Include="App.config">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="OrderedTests\UserDashboard.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="specifications\ChangeName.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>ChangeName.feature.cs</LastGenOutput>
+    </None>
+    <None Include="specifications\UserDashboard.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>UserDashboard.feature.cs</LastGenOutput>
+    </None>
+    <None Include="specifications\Login.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Login.feature.cs</LastGenOutput>
+    </None>
+    <None Include="specifications\Tables.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Tables.feature.cs</LastGenOutput>
     </None>
     <None Include="ObjectRepo\repo.csv" />
     <None Include="OrderedTests\GoogleCatsAndDogs.orderedtest">
