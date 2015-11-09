@@ -215,7 +215,12 @@ ul{
                 }
                 @foreach (var tag in @scenario.tags){
                   if(@tag == "record"){
-                    &lt;a href="videos/@(scenario.title).wmv"&gt;Download video&lt;/a&gt;
+                    &lt;video width="320" height="240" controls style="border: 1px solid #ADADAD;"&gt;
+                      &lt;source src="videos/@(scenario.title).mp4" type="video/mp4"&gt;
+                      Your browser does not support the video tag.
+                    &lt;/video&gt;
+                    &lt;a href="videos/@(scenario.title).wmv"&gt;Download video WMV&lt;/a&gt;
+                    &lt;a href="videos/@(scenario.title).mp4"&gt;Download video MP4&lt;/a&gt;
                   }
                   else{
                     @tag
