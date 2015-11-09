@@ -52,5 +52,7 @@
 
         void switchToDefaultContent();
         void GetTheValuesFrom(string dataRepo);
+        void GetScreenshot();
+
     }
 }

@@ -785,6 +785,20 @@ namespace CodeBySpecification.Core
 
         #endregion
 
+        #region Screenshots 
+
+
+        [Then(@"I take a screenshot")]
+        [Then(@"take a screenshot")]
+        public void GetScreenshot()
+        {
+            UiAutomationService.GetScreenshot();
+        }
+
+        #endregion
+
+
+
         #endregion
     }
 }
