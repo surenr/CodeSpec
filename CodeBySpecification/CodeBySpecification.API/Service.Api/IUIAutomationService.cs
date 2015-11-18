@@ -53,6 +53,7 @@
         void switchToDefaultContent();
         void GetTheValuesFrom(string dataRepo);
         void GetScreenshot();
-
+        void typeToPrompt(string text);
+        void textInAlert(string text);
     }
 }

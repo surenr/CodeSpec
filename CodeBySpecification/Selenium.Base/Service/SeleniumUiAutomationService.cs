@@ -314,5 +314,17 @@ namespace Selenium.Base.Service
                 Console.WriteLine("Screenshot: {0}", new Uri(screenshotFilePath));
             }
         }
+
+        public void typeToPrompt(string text)
+        {
+            var driver = ((IWebDriver)GetBrowser);
+            driver.SwitchTo().Alert().SendKeys(text);
+        }
+
+        public void textInAlert(string text)
+        {
+            var driver = ((IWebDriver)GetBrowser);
+            assert.IsEqual(text, driver.SwitchTo().Alert().Text);
+        }
     }
 }

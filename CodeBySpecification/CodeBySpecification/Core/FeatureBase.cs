@@ -13,8 +13,9 @@ using OpenQA.Selenium;
 
 namespace CodeBySpecification.Core
 {
-	[Binding]
-	public class FeatureBase
+
+    [Binding]
+    public class FeatureBase
 	{
 		private static IUiAutomationService UiAutomationService;
 		private static readonly IDictionary<string, string> DataShare = new Dictionary<string, string>();
@@ -796,6 +797,28 @@ namespace CodeBySpecification.Core
         public void SwitchedToDefaultContent()
         {
             UiAutomationService.switchToDefaultContent();
+        }
+
+        [Given(@"I type ""(.*)"" in promopt")]
+        [When(@"I type ""(.*)"" in promopt")]
+        [Then(@"I type ""(.*)"" in promopt")]
+        [Given(@"type ""(.*)"" in promopt")]
+        [When(@"type ""(.*)"" in promopt")]
+        [Then(@"type ""(.*)"" in promopt")]
+        public void SwitchedToAlert(string text)
+        {
+            UiAutomationService.typeToPrompt(text);
+        }
+
+        [Given(@"alert say ""(.*)""")]
+        [When(@"alert say ""(.*)""")]
+        [Then(@"alert say ""(.*)""")]
+        [Given(@"alert say ""(.*)""")]
+        [When(@"alert say ""(.*)""")]
+        [Then(@"alert say ""(.*)""")]
+        public void textInAlert(string text)
+        {
+            UiAutomationService.textInAlert(text);
         }
 
         #endregion
