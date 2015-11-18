@@ -584,9 +584,9 @@ namespace CodeBySpecification.Core
 			}
 		}
 
-		[Given(@"""(.*)"".. row, ""(.*)"".. column of table ""(.*)"" contains value ""(.*)""")]
-		[When(@"""(.*)"".. row, ""(.*)"".. column of table ""(.*)"" contains value ""(.*)""")]
-        [Then(@"""(.*)"".. row, ""(.*)"".. column of table ""(.*)"" contains value ""(.*)""")]
+		[Given(@"""(.*)""(?:st|nd|rd|th) row, ""(.*)""(?:st|nd|rd|th) column of table ""(.*)"" contains value ""(.*)""")]
+		[When(@"""(.*)""(?:st|nd|rd|th) row, ""(.*)""(?:st|nd|rd|th) column of table ""(.*)"" contains value ""(.*)""")]
+        [Then(@"""(.*)""(?:st|nd|rd|th) row, ""(.*)""(?:st|nd|rd|th) column of table ""(.*)"" contains value ""(.*)""")]
         [Given(@"row ""(.*)"", column ""(.*)"" of table ""(.*)"" contains value ""(.*)""")]
         [When(@"row ""(.*)"" row, column ""(.*)"" of table ""(.*)"" contains value ""(.*)""")]
         [Then(@"row ""(.*)"" row, column ""(.*)"" of table ""(.*)"" contains value ""(.*)""")]
