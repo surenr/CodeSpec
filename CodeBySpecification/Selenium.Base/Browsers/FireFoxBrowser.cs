@@ -2,6 +2,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using Selenium.Base.Api;
+using System.Configuration;
 
 namespace Selenium.Base.Browsers
 {
@@ -22,7 +23,11 @@ namespace Selenium.Base.Browsers
 				var profileFF = new FirefoxProfile();
 				profileFF.EnableNativeEvents = true;
 				profileFF.AcceptUntrustedCertificates = true;
-				return new FirefoxDriver(profileFF);
+                if(ConfigurationManager.AppSettings["UI.Tests.Reports.output.path"] != null && ConfigurationManager.AppSettings["UI.Tests.Reports.output.path"].Equals("true"))
+                {
+                    profileFF.SetPreference("security.fileuri.strict_origin_policy", false);
+                }
+                return new FirefoxDriver(profileFF);
 			}
 			return null;
 		}

@@ -2,6 +2,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using Selenium.Base.Api;
+using System.Configuration;
 
 namespace Selenium.Base.Browsers
 {
@@ -20,7 +21,11 @@ namespace Selenium.Base.Browsers
 			if (browserType == Type)
 			{
 				var profileCH = new ChromeOptions();
-				var browser = new ChromeDriver(profileCH);
+                if (ConfigurationManager.AppSettings["UI.Tests.Reports.output.path"] != null && ConfigurationManager.AppSettings["UI.Tests.Reports.output.path"].Equals("true"))
+                {
+                    profileCH.AddArguments("--disable-web-security");
+                }
+                var browser = new ChromeDriver(profileCH);
 				browser.Manage().Cookies.DeleteAllCookies();
 				return browser;
 			}
