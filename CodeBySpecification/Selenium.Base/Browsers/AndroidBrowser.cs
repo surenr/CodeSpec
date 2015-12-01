@@ -34,7 +34,19 @@ namespace Selenium.Base.Browsers
 					capabilities.SetCapability(keyArray[(keyArray.Length - 1)], tempVallue);
 				}
 				AppiumDriver<AppiumWebElement> browser = new AndroidDriver<AppiumWebElement>(new Uri(ConfigurationManager.AppSettings["UI.Tests.Appium.URI"]), capabilities);
-				return browser;
+                var x = browser.Contexts;
+                if (ConfigurationManager.AppSettings["UI.Tests.Appium.context"] != null && !ConfigurationManager.AppSettings["UI.Tests.Appium.context"].Equals(""))
+                {
+                    foreach (string contextName in browser.Contexts)
+                    {
+                        if (contextName.Contains(ConfigurationManager.AppSettings["UI.Tests.Appium.context"].ToUpper()))
+                        {
+                            browser.Context = contextName;
+                        }
+                    }
+                }
+                var z = browser.Context;
+                return browser;
 			}
 			return null;
 		}
