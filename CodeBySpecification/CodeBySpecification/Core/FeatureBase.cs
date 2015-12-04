@@ -337,16 +337,19 @@ namespace CodeBySpecification.Core
 			UiAutomationService.DragAndDrop(elementToDrag, elementToDrop);
 		}
 
-		#endregion
+        #endregion
 
-		#region Enter <value> to <element>
+        #region Enter <value> to <element>
+
+        
+
         //I enter value from data source with the key 'key' to the element
-		[Given(@"I enter( value of)? ""(.*)"" to the ""(.*)""")]
-		[When(@"I enter( value of)? ""(.*)"" to the ""(.*)""")]
-		[Then(@"I enter( value of)? ""(.*)"" to the ""(.*)""")]
-		[Given(@"Enter( value of)? ""(.*)"" to the ""(.*)""")]
-		[When(@"Enter( value of)? ""(.*)"" to the ""(.*)""")]
-		[Then(@"Enter( value of)? ""(.*)"" to the ""(.*)""")]
+        [Given(@"I enter( | value of)? ""(.*)"" to the ""(.*)""")]
+		[When(@"I enter( | value of)? ""(.*)"" to the ""(.*)""")]
+		[Then(@"I enter( | value of)? ""(.*)"" to the ""(.*)""")]
+		[Given(@"Enter( | value of)? ""(.*)"" to the ""(.*)""")]
+		[When(@"Enter( | value of)? ""(.*)"" to the ""(.*)""")]
+		[Then(@"Enter( | value of)? ""(.*)"" to the ""(.*)""")]
 		public void EnterToThe(string valueOf, string value, string elementKey)
 		{
             if(valueOf == "")
@@ -366,18 +369,18 @@ namespace CodeBySpecification.Core
 			
 		}
 
-		[Given(@"I enter (value|key) ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
-		[When(@"I entervalue (of)? ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
-		[Then(@"I enter( value of)? ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
-		[Given(@"Enter( value of)? ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
-		[When(@"Enter( value of)? ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
-		[Then(@"Enter( value of)? ""(.*)"" to the ""(.*)"" with the ""(.*)"" of ""(.*)""")]
-		public void EnterToTheWithTheOf(string valueOf, string value, string elementKey, string selectionMethod, string selection)
-		{
-            if (valueOf == "value")
-		{
-			UiAutomationService.EnterTextTo(elementKey, value, selectionMethod, selection);
-		}
+        [Given(@"I enter( | value of)? ""(.*)"" to element ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+        [When(@"I enter( | value of)? ""(.*)"" to element ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+        [Then(@"I enter( | value of)? ""(.*)"" to element ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+        [Given(@"Enter( | value of)? ""(.*)"" to element ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+        [When(@"Enter( | value of)? ""(.*)"" to element ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+        [Then(@"Enter( | value of)? ""(.*)"" to element ""(.*)"" with the ""(.*)"" of ""(.*)""")]
+        public void EnterToTheWithTheOf(string valueOf, string value, string elementKey, string selectionMethod, string selection)
+        {
+            if (valueOf == "")
+            {
+                UiAutomationService.EnterTextTo(elementKey, value, selectionMethod, selection);
+            }
             else
             {
                 if (dataRepoManager.DataExists(value))
@@ -388,9 +391,10 @@ namespace CodeBySpecification.Core
                 }
 
             }
-		}
+        }
 
-		#endregion
+
+        #endregion
         #region Select <value> of <element>
 
         [Given(@"I select ""(.*)"" of the ""(.*)""")]
