@@ -7,8 +7,6 @@ namespace Report.Base.Service
 {
 	public class HtmlReportService : IReportService
 	{
-		private static string path;
-
 		public HtmlReportService()
 		{
 		}
