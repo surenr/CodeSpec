@@ -1,11 +1,100 @@
----
-layout: demo_default
-title: Home
----
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/styles.css" />
+<meta name="viewport" content="width=device-width">
+</head>
+<body ng-app='app'>
+	<div id="appCtrl" class="container" ng-controller='PostsCtrl'>
 
-<h2>Available tests</h2>
-<ol>
-  <li><a href="forms">Form Manupilation</a></li>
-  <li><a href="frames">Frame Manupilation</a></li>
-  <li><a href="drag_and_drop">Drap and Drop</a></li>
-</ol>
+		<nav class="navbar navbar-default ">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<!--<div class="maintitle">MeDo</div>
+					<div class="subtitle">Never miss a thing</div>-->
+					<div class="navbar-brand">
+						<div class="maintitle"><span style="color:#b0de00">Me</span><span style="color:#10c6db">Do</span></div>
+						<div class="subtitle">Never miss a thing</div>
+					</div>
+				</div>
+				<ul class="nav navbar-nav navbar-right">
+				<li><a><span class="welcomemsg">Welcome Suren, Today is Monday, 21st February 2016</span><br/><span class="copyrightmsg">&copy; Suren Rodrigo, 2016-2017</span></a></li>
+				</ul>
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#">Home</a></li>
+					<li><a href="#">About Us</a></li>
+					<li><a href="#">Contact Us</a></li>
+				</ul>
+
+			</div>
+		</nav>
+      <div class="panel panel-info">
+        <div class="panel-heading">
+			<h3 class="panel-title">My Lists</h3>
+		</div>
+		<div class="panel-body">
+			<span ng-repeat='myTodoList in myTodoLists' class="mytodolist label label-default" style="background-color:{{myTodoList.Color}}" draggable="true" id="{{myTodoList.Id}}" ondragstart="ownerListDrag(event)">{{myTodoList.Name}}
+			&nbsp;<a ng-click="RemoveList(myTodoList.Id)"><span class="glyphicon glyphicon-remove" style="font-size:12px;"></span></a>
+			</span>
+			<a ng-click="addNewList()" class="btn btn-info btn-md"> <span class="glyphicon glyphicon-plus"></span> Add New</a></span>
+		
+		</div>
+      </div>
+      <form role="form">
+        <div class="form-group">
+          <div class="input-group">
+            <a id="itemBodyLoc"></a>
+            <input ng-model='itemBody' class='form-control' id="txtItemBody" />
+            <span class="input-group-btn">
+              <button id="btnAddItem" ng:click='doAction()' class="btn btn-default">Add Item</button>
+            </span>
+          </div>
+        </div>
+      </form>
+  		<ul class="list-group">
+        <li class="list-group-item listcontrols">
+          <div class="row">
+            <div class="col-xs-12 col-sm-10">
+              <div class="checkbox">
+                <label><input type="checkbox" value="">Select All</label>
+              </div>
+            </div>
+            <div class="col-xs-6 col-sm-2">
+              <span class="todolist glyphicon glyphicon-ok-circle"></span>
+              <span class="todolist glyphicon glyphicon-trash"></span>
+            </div>
+          </div>
+  	    </li>
+  			<li class="list-group-item" ng-repeat='todoItem in todoitems'>
+          <div class="row">
+            <div class="col-xs-11 col-sm-10">
+              <div class="checkbox"  id="task_{{todoItem.Id}}" ondrop="ownerListDropped(event)" ondragover="ownerListAllowDrop(event)">
+                <label ng-class="{completeditem: todoItem.isCompleted}"><input  type="checkbox" value="{{todoItem.Id}}" ng-disabled="todoItem.isCompleted==true"><strong>@{{todoItem.addedDate.toDateString()}}</strong>&nbsp;{{todoItem.body}}</label>
+				<span ng-repeat='inListItem in todoItem.inLists' class="mytodolist label label-default" style="background-color:{{myTodoLists[inListItem].Color}}" id="{{myTodoLists[inListItem].Id}}">{{myTodoLists[inListItem].Name}}
+				&nbsp;<a ng-click="ownerListRemove(todoItem,inListItem)"><span class="glyphicon glyphicon-remove" style="font-size:12px;"></span></a>
+				</span>
+				
+			  </div>
+            </div>
+            <div class="col-xs-7 col-sm-2">
+
+              <button  ng-click="reOpenTask(todoItem.Id)" class="todolist btn-link glyphicon glyphicon-share-alt" ng-show="todoItem.isCompleted"></button>
+              <button  ng-click="completeTask(todoItem.Id)" class="todolist btn-link glyphicon glyphicon-ok-circle" ng-show="!todoItem.isCompleted"></button>
+              <button  ng-click="editTask(todoItem.Id)" class="todolist btn-link glyphicon glyphicon-edit" ng-show="!todoItem.isCompleted"></button>
+              <!--span class="todolist glyphicon glyphicon-calendar" ng-show="!todoItem.isCompleted"></span-->
+              <button ng-click="removeTask(todoItem.Id)" class="todolist btn-link glyphicon glyphicon-trash"></button>
+            </div>
+          </div>
+
+  	    </li>
+
+  		</ul>
+
+	</div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+	<script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  <script src="scripts/app.js" type="text/javascript"></script>
+</body>
+</html>
