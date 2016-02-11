@@ -34,7 +34,8 @@
 			<h3 class="panel-title">My Lists</h3>
 		</div>
 		<div class="panel-body">
-			<span ng-repeat='myTodoList in myTodoLists' class="mytodolist label label-default" style="background-color:{{myTodoList.Color}}" draggable="true" id="{{myTodoList.Id}}" ondragstart="ownerListDrag(event)">{{myTodoList.Name}}
+			<span ng-repeat='myTodoList in myTodoLists' class="mytodolist label label-default" style="background-color:{{myTodoList.Color}}" draggable="true" id="{{myTodoList.Id}}" ondragstart="ownerListDrag(event)">
+			<a ng-click="LoadList(myTodoList.Id)" class="ListLink">{{myTodoList.Name}}</a>
 			&nbsp;<a ng-click="RemoveList(myTodoList.Id)"><span class="glyphicon glyphicon-remove" style="font-size:12px;"></span></a>
 			</span>
 			<a ng-click="addNewList()" class="btn btn-info btn-md"> <span class="glyphicon glyphicon-plus"></span> Add New</a></span>
@@ -57,7 +58,12 @@
           <div class="row">
             <div class="col-xs-12 col-sm-10">
               <div class="checkbox">
-                <label><input type="checkbox" value="">Select All</label>
+                <label><input type="checkbox" value="">Select All</label>&nbsp;
+				<label>Selected List: <span class="mytodolist label label-default" style="background-color:#aeaeae;" id="myListAll" ng-show="selectedList==-1">All</span>
+				<span class="mytodolist label label-default" style="background-color:{{myTodoLists[inListItem].Color}}" id="{{myTodoLists[selectedList].Id}}" ng-show="selectedList!=-1">{{myTodoLists[selectedList].Name}}
+				&nbsp;<a ng-click="LoadList('')"><span class="glyphicon glyphicon-remove" style="font-size:12px;"></span></a>
+				</span>
+				</label>
               </div>
             </div>
             <div class="col-xs-6 col-sm-2">

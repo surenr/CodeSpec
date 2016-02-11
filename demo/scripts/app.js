@@ -79,9 +79,6 @@ var ownerListDropped =  function(ev) {
     });
 };
 
-window.ownerListAllowDrop = new Function();
-window.ownerListDrag = new Function();
-window.ownerListDropped = new Function();
 window.ownerListAllowDrop = ownerListAllowDrop;
 window.ownerListDrag = ownerListDrag;
 window.ownerListDropped = ownerListDropped;
@@ -134,7 +131,7 @@ appLogic.completeToDoItem = function(todoItemList,itemId){
     }
   }
 };
-appLogic.addToDoItem = function(todoItemList,body){
+appLogic.addToDoItem = function(todoItemList,body,selectedList){
   if(todoItemList && body){
     var nextItemId = todoItemList.length + 1;
     var i=0;
@@ -143,13 +140,17 @@ appLogic.addToDoItem = function(todoItemList,body){
         i=0; nextItemId++; continue;
       }
     }
-    todoItemList.unshift({
+	var objectToAdd = {
       Id: nextItemId.toString(),
       addedDate: new Date(),
       body: body,
-      inLists: ["General"],
+	  inLists: [],
       isCompleted: false
-    });
+    };
+	if(selectedList!=-1){
+		objectToAdd.inLists[objectToAdd.inLists.length] = selectedList;
+	}
+    todoItemList.unshift(objectToAdd);
   }
 };
 
@@ -165,26 +166,30 @@ appLogic.editToDoItem = function(todoItemList,editItemId,newBody){
   }
 };
 
+
+
 //angulaer code start here
 var app = angular.module('app',[]);
 app.controller('PostsCtrl',function($scope,$location,$anchorScroll){
   var addItem = function(){
-    appLogic.addToDoItem($scope.todoitems,$scope.itemBody);
+    appLogic.addToDoItem($scope.todoitems,$scope.itemBody,$scope.selectedList);
     $scope.itemBody = null;
+	testToDoItems = $scope.todoitems.slice();
   };
-
-	
  
   
   $scope.reOpenTask = function(selectedItemId){
 
     $scope.todoitems = appLogic.reOpenToDoItem($scope.todoitems,selectedItemId);
+	testToDoItems = $scope.todoitems.slice();
   };
   $scope.completeTask = function(selectedItemId){
     appLogic.completeToDoItem($scope.todoitems,selectedItemId);
+	testToDoItems = $scope.todoitems.slice();
   };
   $scope.removeTask = function(selectedItemId){
     appLogic.removeToDoItem($scope.todoitems,selectedItemId);
+	testToDoItems = $scope.todoitems.slice();
   };
   $scope.editTask = function(selectedItemId){
     $scope.doAction = function(){
@@ -192,6 +197,7 @@ app.controller('PostsCtrl',function($scope,$location,$anchorScroll){
         $scope.doAction = addItem;
         $("#btnAddItem").html("Add Item");
         $scope.itemBody = null;
+		testToDoItems = $scope.todoitems.slice()
     };
 
     $("#btnAddItem").html("Update Item");
@@ -212,6 +218,7 @@ app.controller('PostsCtrl',function($scope,$location,$anchorScroll){
 		 for(var i=0;i<taskObj.inLists.length;i++){
 			 if(taskObj.inLists[i]==inListIndex){
 				 taskObj.inLists.splice(i,1);
+				 testToDoItems = $scope.todoitems.slice()
 				 break;
 			 }
 		 }
@@ -252,8 +259,27 @@ app.controller('PostsCtrl',function($scope,$location,$anchorScroll){
 	  
   };
   
+  $scope.LoadList = function(myListId){
+	  var filteredList = testToDoItems.slice();  
+	  if(myListId){
+		
+		filteredList = filteredList.filter(function(taskObj){
+			for(var i=0;i<myLists.length;i++){
+				if(myLists[i].Id==myListId){
+					$scope.selectedList = i;
+					return !$.inArray(i,taskObj.inLists);
+				}
+			}
+		});
+	  }
+	  else{
+		  $scope.selectedList = -1;
+	  }
+	  $scope.todoitems = filteredList;
+  };
+  $scope.selectedList = -1;
   $scope.doAction = addItem;
-  $scope.todoitems = testToDoItems;
+  $scope.todoitems = testToDoItems.slice();
   $scope.myTodoLists = myLists;
 });
 

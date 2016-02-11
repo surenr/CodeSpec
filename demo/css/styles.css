@@ -75,3 +75,8 @@ font-family: Comic Sans, Comic Sans MS, cursive;
 	font-size:15px;
 	 font-family: Comic Sans, Comic Sans MS, cursive;
 }
+
+a.ListLink:link {
+	text-decoration:none !important;
+	color:#ffffff !important;
+}
