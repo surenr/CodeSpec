@@ -1,286 +1,112 @@
-(function(){
+(function(common){
 'use strict';
 
 //random colors
 var randomColors = ["#C63D0F","#3B3738","#7E8F7C","#005A31","#A8CD1B","#CBE32D","#F3FAB6","#558C89","#74AFAD","#D9853B","#DE1B1B","#7D1935","#4A96AD","#E44424","#FF9009","#DF3D82"]
-var myLists = [{Id:"general", Name: "General",Color: "#C63D0F"},{Id:"home", Name: "Home",Color: "#3B3738"},{Id:"personal", Name: "Personal",Color: "#7E8F7C"}];
-
-var testToDoItems = [
-  {
-      Id: "1",
-      addedDate: new Date("2016-02-05T11:20:00"),
-      body: 'Talk to Andre and schedule a meeting for Monday.',
-      inLists: [],
-      isCompleted: true
-  },
-  {
-      Id: "2",
-      addedDate: new Date("2016-02-05T11:30:00"),
-      body: 'Buy medecin for Thinithi',
-      inLists: [],
-      isCompleted: true
-  },
-  {
-      Id: "3",
-      addedDate: new Date("2016-02-06T10:30:00"),
-      body: 'Do Exersises',
-      inLists: [],
-      isCompleted: false
-  },
-  {
-      Id: "4",
-      addedDate: new Date("2016-02-06T11:30:00"),
-      body: 'Code Review all pending tasks',
-      inLists: [],
-      isCompleted: false
-  },
-  {
-      Id: "5",
-      addedDate: new Date("2016-02-06T11:30:00"),
-      body: 'Buy gift fro wife',
-      inLists: [],
-      isCompleted: false
-  }
-
-];
-var ownerListAllowDrop =  function(ev) {
-    ev.preventDefault();
-	};
-
-var ownerListDrag =  function(ev) {
-		ev.dataTransfer.setData("text", ev.target.id);
-	};
-
-var ownerListDropped =  function(ev) {
-    ev.preventDefault();
-    var data = ev.dataTransfer.getData("text");
-	var scope = angular.element($("#appCtrl")).scope();
-	var alreadyDropped = false;
-    scope.$apply(function(){
-        var taskId = ev.target.id.replace("task_","");
-		var i = 0;var j=0;
-		for(;i<scope.todoitems.length;i++){
-			if(scope.todoitems[i].Id==taskId){
-				for(j=0;j<myLists.length;j++){
-					if(myLists[j].Id==data){
-						alreadyDropped = false;
-						for(var k=0;k<scope.todoitems[i].inLists.length;k++){
-							if(scope.todoitems[i].inLists[k]==j){
-								alreadyDropped=true;
-							}
-						}
-						if(!alreadyDropped)
-							scope.todoitems[i].inLists[scope.todoitems[i].inLists.length] = j;
-					}
-				}
-				
-			}
-		}
-    });
-};
-
-window.ownerListAllowDrop = ownerListAllowDrop;
-window.ownerListDrag = ownerListDrag;
-window.ownerListDropped = ownerListDropped;
-
-var appLogic = {};
-
-appLogic.getRandomColor = function(){
+var getRandomColor  = function(){
 	return randomColors[Math.floor(Math.random() * randomColors.length)];
 };
-
-appLogic.removeToDoItem = function(todoItemList,itemId){
-  if(todoItemList && itemId){
-    var i=0; var itemToDeleteIndex = -1;
-    for(;i<todoItemList.length;i++){
-      if(todoItemList[i].Id==itemId){
-        itemToDeleteIndex = i;
-        break;
-      }
-    }
-    if(itemToDeleteIndex!=-1){
-      var confirmDelete = confirm("Are you sure you want to delete Item \""+todoItemList[i].body+"\"");
-      if(confirmDelete){
-          todoItemList.splice(itemToDeleteIndex,1);
-      }
-    }
-  }
-};
-
-appLogic.reOpenToDoItem = function(todoItemList,itemId){
-  if(todoItemList && itemId){
-    var i=0;
-    for(;i<todoItemList.length;i++){
-      if(todoItemList[i].Id==itemId){
-        todoItemList[i].isCompleted = false;
-        break;
-      }
-    }
-  }
-  return todoItemList;
-};
-
-appLogic.completeToDoItem = function(todoItemList,itemId){
-  if(todoItemList && itemId){
-    var i=0;
-    for(;i<todoItemList.length;i++){
-      if(todoItemList[i].Id==itemId){
-        todoItemList[i].isCompleted = true;
-        break;
-      }
-    }
-  }
-};
-appLogic.addToDoItem = function(todoItemList,body,selectedList){
-  if(todoItemList && body){
-    var nextItemId = todoItemList.length + 1;
-    var i=0;
-    for(;i<todoItemList.length;i++){
-      if(todoItemList[i].Id==nextItemId.toString()){
-        i=0; nextItemId++; continue;
-      }
-    }
-	var objectToAdd = {
-      Id: nextItemId.toString(),
-      addedDate: new Date(),
-      body: body,
-	  inLists: [],
-      isCompleted: false
-    };
-	if(selectedList!=-1){
-		objectToAdd.inLists[objectToAdd.inLists.length] = selectedList;
-	}
-    todoItemList.unshift(objectToAdd);
-  }
-};
-
-appLogic.editToDoItem = function(todoItemList,editItemId,newBody){
-  if(todoItemList && editItemId, newBody){
-    var i=0;
-    for(;i<todoItemList.length;i++){
-      if(todoItemList[i].Id==editItemId){
-        todoItemList[i].body = newBody;
-        break;
-      }
-    }
-  }
-};
-
-
-
-//angulaer code start here
-var app = angular.module('app',[]);
-app.controller('PostsCtrl',function($scope,$location,$anchorScroll){
-  var addItem = function(){
-    appLogic.addToDoItem($scope.todoitems,$scope.itemBody,$scope.selectedList);
-    $scope.itemBody = null;
-	testToDoItems = $scope.todoitems.slice();
-  };
- 
-  
-  $scope.reOpenTask = function(selectedItemId){
-
-    $scope.todoitems = appLogic.reOpenToDoItem($scope.todoitems,selectedItemId);
-	testToDoItems = $scope.todoitems.slice();
-  };
-  $scope.completeTask = function(selectedItemId){
-    appLogic.completeToDoItem($scope.todoitems,selectedItemId);
-	testToDoItems = $scope.todoitems.slice();
-  };
-  $scope.removeTask = function(selectedItemId){
-    appLogic.removeToDoItem($scope.todoitems,selectedItemId);
-	testToDoItems = $scope.todoitems.slice();
-  };
-  $scope.editTask = function(selectedItemId){
-    $scope.doAction = function(){
-        appLogic.editToDoItem($scope.todoitems,selectedItemId,$scope.itemBody);
-        $scope.doAction = addItem;
-        $("#btnAddItem").html("Add Item");
-        $scope.itemBody = null;
-		testToDoItems = $scope.todoitems.slice()
-    };
-
-    $("#btnAddItem").html("Update Item");
-    var i=0;
-    for(;i<$scope.todoitems.length;i++){
-      if($scope.todoitems[i].Id==selectedItemId){
-        $scope.itemBody = $scope.todoitems[i].body;
-      }
-    }
-    $location.hash("itemBodyLoc");
-    $anchorScroll()
-    $("#txtItemBody").focus();
-  };
-
-  $scope.ownerListRemove = function(taskObj,inListIndex){
-	 
-	 if(taskObj && inListIndex!='undefined'){
-		 for(var i=0;i<taskObj.inLists.length;i++){
-			 if(taskObj.inLists[i]==inListIndex){
-				 taskObj.inLists.splice(i,1);
-				 testToDoItems = $scope.todoitems.slice()
-				 break;
-			 }
-		 }
-	 } 
-  };
-  
-  $scope.addNewList = function(){
-	var newName = prompt("Please enter a name for the new list");
-	var isExisting = false;
-	if(newName){
-		for(var i=0;i<myLists.length;i++){
-			if(myLists[i].Name.toUpperCase()===newName.toUpperCase()){
-				isExisting=true;
-				break;
-			}
-				
+	
+	var app = {};
+	app.taskList = [];
+	app.addNewTask = function(taskBody,taskDateTime){
+		var getTaskList = common.MeDo.TaskManager.GetTasks();
+		common.MeDo.Validator.validateNewTaskCreation(getTaskList,taskBody,taskDateTime);
+		var newTask = {
+			Id: common.MeDo.TaskManager.GeNextTaskId(),
+			  scheduledDate: taskDateTime,
+			  addedDate: new Date(),
+			  body: taskBody,
+			  inLists: [],
+			  isCompleted: false
 		}
-		if(!isExisting){
-			myLists[myLists.length] = {Id:newName.toLowerCase().replace(" ",""), Name: newName,Color: appLogic.getRandomColor()};
-		}
-		else {
-			alert("List with name \""+newName+"\" already exists");
-		}
-	}
-  };
-  
-  $scope.RemoveList = function(myListId){
-	 
-	for(var i=0;i<myLists.length;i++){
-		if(myLists[i].Id.toUpperCase()===myListId.toUpperCase()){
-			if(confirm("Are you sure to delete the todo list \""+myLists[i].Name+"\"?")){
-				myLists.splice(i,1);
-				break;
-			 }
-		}
-			
-	}
-	  
-  };
-  
-  $scope.LoadList = function(myListId){
-	  var filteredList = testToDoItems.slice();  
-	  if(myListId){
+		common.MeDo.TaskManager.addTask(newTask);
+	};
+	
+	app.CompleteTask = function(taskId){
+		var objectToUpdate = {
+			Id : taskId,
+			isCompleted : true
+		};
+		common.MeDo.TaskManager.UpdateTask(objectToUpdate);
+	};
+	
+	app.ReOpenTask = function(taskId){
+		var objectToUpdate = {
+			Id : taskId,
+			isCompleted : false
+		};
+		common.MeDo.TaskManager.UpdateTask(objectToUpdate);
+	};
+	
+	app.UpdateTask = function(taskId,taskBody,scheduledDate){
 		
-		filteredList = filteredList.filter(function(taskObj){
-			for(var i=0;i<myLists.length;i++){
-				if(myLists[i].Id==myListId){
-					$scope.selectedList = i;
-					return !$.inArray(i,taskObj.inLists);
-				}
-			}
+		if(!taskBody) throw new common.MeDo.Error("ERROR_007");
+		if(scheduledDate && scheduledDate<(new Date())) throw new common.MeDo.Error("ERROR_008");
+		var objectToUpdate = {
+			Id : taskId,
+			body : taskBody
+		};
+		
+		if(scheduledDate)
+			objectToUpdate.scheduledDate = scheduledDate;
+		common.MeDo.TaskManager.UpdateTask(objectToUpdate);
+		
+	};
+	
+	app.RemoveTask = function(taskId){
+		var objectToDelete = {
+			Id: ""+taskId+""
+		};
+		common.MeDo.TaskManager.RemoveTask(objectToDelete);
+	};
+	
+	app.AddNewList = function(listName){
+		if(!listName) throw new common.MeDo.Error("ERROR_009");
+		var newId = listName.toLowerCase().replace(" ","_");
+		if(common.MeDo.ListManager.GetListById(newId)>-1) throw new common.MeDo.Error("ERROR_010");
+		var newObj = {Id:newId, Name: listName,Color: getRandomColor()};
+		common.MeDo.ListManager.AddList(newObj);
+	};
+	
+	app.RemoveList  = function(listName){
+		if(!listName) throw new common.MeDo.Error("ERROR_009");
+		var objectToRemove = {Id:listName};
+		common.MeDo.ListManager.RemoveList(objectToRemove);
+	};
+	
+	app.AddToList = function(taskId, listId){
+		var task = common.MeDo.TaskManager.GetTaskById(taskId);
+		var listIndex = common.MeDo.ListManager.GetListById(listId);
+		
+		if(!task) throw new common.MeDo.Error("ERROR_006");
+		if(listIndex==-1) throw new common.MeDo.Error("ERROR_012");
+		
+		var existingIndex = _.indexOf(task.inLists,listIndex);
+		if(existingIndex>-1) throw new common.MeDo.Error("ERROR_013");
+		
+		task.inLists[task.inLists.length] = listIndex;
+	};
+	
+	app.RemoveFromList = function(taskId,listId){
+		var task = common.MeDo.TaskManager.GetTaskById(taskId);
+		var listIndex = common.MeDo.ListManager.GetListById(listId);
+		
+		if(!task) throw new common.MeDo.Error("ERROR_006");
+		if(listIndex==-1) throw new common.MeDo.Error("ERROR_012");	
+		var existingIndex = _.indexOf(task.inLists,listIndex);
+		if(existingIndex==-1) throw new common.MeDo.Error("ERROR_014");
+		task.inLists.splice(existingIndex,1);
+	};
+	
+	app.GetTaskList = function(filter){
+		if(!filter || Object.keys(filter).length==0) return common.MeDo.TaskManager.GetTasks();
+		return _.filter(common.MeDo.TaskManager.GetTasks(),function(object){
+			var returnBool = true;
+			if(filter["Completed"])
+				returnBool = returnBool && object.isCompleted==filter["Completed"];
 		});
-	  }
-	  else{
-		  $scope.selectedList = -1;
-	  }
-	  $scope.todoitems = filteredList;
-  };
-  $scope.selectedList = -1;
-  $scope.doAction = addItem;
-  $scope.todoitems = testToDoItems.slice();
-  $scope.myTodoLists = myLists;
-});
-
-}());
+	};
+	if(!common.MeDo) common.MeDo = {};	
+	common.MeDo.App = app;
+}(window));
