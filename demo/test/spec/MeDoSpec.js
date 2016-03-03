@@ -1,3 +1,46 @@
+var testToDoItems = [
+  {
+	  Id: "1",
+	  addedDate: new Date("2016-02-05T11:20:00"),
+	  scheduledDate: new Date(2016,2,25),
+	  body: 'Talk to Andre and schedule a meeting for Monday.',
+	  inLists: [0,1],
+	  isCompleted: true
+  },
+  {
+	  Id: "2",
+	  addedDate: new Date("2016-02-05T11:30:00"),
+	  scheduledDate: new Date(2016,2,26),
+	  body: 'Buy medecin for Thinithi',
+	  inLists: [0,1],
+	  isCompleted: true
+  },
+  {
+	  Id: "3",
+	  addedDate: new Date("2016-02-06T10:30:00"),
+	  scheduledDate: new Date(2016,2,26),
+	  body: 'Do Exersises and Buy books',
+	  inLists: [0,2],
+	  isCompleted: false
+  },
+  {
+	  Id: "4",
+	  addedDate: new Date("2016-02-06T11:30:00"),
+	  scheduledDate: new Date(2016,2,27),
+	  body: 'Code Review all pending tasks',
+	  inLists: [1,2],
+	  isCompleted: false
+  },
+  {
+	  Id: "5",
+	  addedDate: new Date("2016-02-06T11:30:00"),
+	  scheduledDate: new Date(2016,2,28),
+	  body: 'Buy gift fro wife',
+	  inLists: [2],
+	  isCompleted: false
+  }
+
+];
 describe("List Manager",function(){
 	it("Test List Manager object to exists in window",function(){
 		expect(typeof window.MeDo.ListManager).toBe('object');
@@ -347,6 +390,7 @@ describe("MeDo Application",function(){
 		window.MeDo.App.RemoveList("test_list");
 		expect(window.MeDo.ListManager.GetListById("test_list")).toBe(-1);
 	});
+	
 	//make a task belong to one or more listStyleType
 	it("Trying to add a none existing task to list will throw an exception",function(){
 		expect(function(){window.MeDo.App.AddToList()}).toThrow(new window.MeDo.Error("ERROR_006"));
@@ -355,6 +399,7 @@ describe("MeDo Application",function(){
 	it("Trying to add a task to none existing list will throw an exception",function(){
 		expect(function(){window.MeDo.App.AddToList("1")}).toThrow(new window.MeDo.Error("ERROR_012"));
 	});
+	
 	it("We can add a valid task to a valid list",function(){
 		var testTask = window.MeDo.TaskManager.GetTaskById("1");
 		expect(testTask.inLists.length).toBe(0);
@@ -365,6 +410,7 @@ describe("MeDo Application",function(){
 		expect(function(){window.MeDo.App.AddToList("1","general");}).toThrow(new window.MeDo.Error("ERROR_013"));
 	});
 	
+	
 	it("Trying to remove a none existing task from list will throw an exception",function(){
 		expect(function(){window.MeDo.App.RemoveFromList()}).toThrow(new window.MeDo.Error("ERROR_006"));
 	});
@@ -372,6 +418,7 @@ describe("MeDo Application",function(){
 	it("Trying to remove none existing list from task will throw an exception",function(){
 		expect(function(){window.MeDo.App.RemoveFromList("1")}).toThrow(new window.MeDo.Error("ERROR_012"));
 	});
+	
 	
 	it("We can remove an existing list from task.",function(){
 		var testTask = window.MeDo.TaskManager.GetTaskById("1");
@@ -390,19 +437,100 @@ describe("MeDo Application",function(){
 		expect(window.MeDo.App.GetTaskList({}).length).toBe(window.MeDo.TaskManager.GetTasks().length);
 		expect(window.MeDo.App.GetTaskList().length).toBe(window.MeDo.TaskManager.GetTasks().length);
 	});
+	
 	//setting the completed/not completed status will result in loading completed or not completd tasks
-	it("Having empty filters will return the full list of tasks.",function(){
+	it("Setting completed/not completed status will result in filtering by status.",function(){
+		
+		spyOn(window.MeDo.TaskManager,"GetTasks").and.returnValue(testToDoItems);
+		
 		var completedObj = {"Completed":true};
 		var notCompletedObj = {"Completed": false};
-		expect(window.MeDo.App.GetTaskList(completedObj).length).toBe(2);
-		expect(window.MeDo.App.GetTaskList(notCompletedObj).length).toBe(3);
+		var completedFilteredList = window.MeDo.App.GetTaskList(completedObj);
+		var notCompletedFilteredList = window.MeDo.App.GetTaskList(notCompletedObj)
+		//ensure our spy is working
+		expect(window.MeDo.TaskManager.GetTasks).toHaveBeenCalled()
+		expect(completedFilteredList.length).toBe(2);
+		expect(notCompletedFilteredList.length).toBe(3);
 	});
+	
 	//setting active list will result in only tasks in that list
+	it("Setting active list will return objects belonging to that list.",function(){
+		
+		spyOn(window.MeDo.TaskManager,"GetTasks").and.returnValue(testToDoItems);
+		
+		var generalListObj = {"ActiveList":"general"};
+		var homeListObj = {"ActiveList": "home"};
+		var generalFilteredList = window.MeDo.App.GetTaskList(generalListObj);
+		var homeFilteredList = window.MeDo.App.GetTaskList(homeListObj)
+		//ensure our spy is working
+		expect(window.MeDo.TaskManager.GetTasks).toHaveBeenCalled()
+		expect(generalFilteredList.length).toBe(3);
+		expect(homeFilteredList.length).toBe(3);
+	});
 	
 	//setting active date/range will only load tasks within that scheduled date period
+	it("Setting active date/range will return objects belonging to that list.",function(){
+		
+		spyOn(window.MeDo.TaskManager,"GetTasks").and.returnValue(testToDoItems);
+		
+		var firstActiveDateRangeFilter = {"ScheduleDateRange":{
+				"From" : new Date(2016,2,25),
+				"To" : new Date(2016,2,26)
+			}
+		};
+		
+		var secondActiveDateRangeFilter = {"ScheduleDateRange":{
+				"From" : new Date(2016,2,26),
+				"To" : new Date(2016,2,28)
+			}
+		};
+		
+		var firstDateRangeFilteredList = window.MeDo.App.GetTaskList(firstActiveDateRangeFilter);
+		var secondDateRangeFilteredList = window.MeDo.App.GetTaskList(secondActiveDateRangeFilter)
+		//ensure our spy is working
+		expect(window.MeDo.TaskManager.GetTasks).toHaveBeenCalled()
+		expect(firstDateRangeFilteredList.length).toBe(3);
+		expect(secondDateRangeFilteredList.length).toBe(4);
+	});
 	
 	//filtering by taskbody will result in loading only task that matches text pattern
+	it("filtering by taskbody will return objects belonging to that list.",function(){
+		
+		spyOn(window.MeDo.TaskManager,"GetTasks").and.returnValue(testToDoItems);
+		
+		var firstTaskBodyFilter = {"TaskBody": "Buy" };
+		
+		var secondTaskBodyFilter = {"TaskBody": "Andre"	};
+		
+		var firstTaskBodyFilteredList = window.MeDo.App.GetTaskList(firstTaskBodyFilter);
+		var secondTaskBodyFilteredList = window.MeDo.App.GetTaskList(secondTaskBodyFilter)
+		//ensure our spy is working
+		expect(window.MeDo.TaskManager.GetTasks).toHaveBeenCalled()
+		expect(firstTaskBodyFilteredList.length).toBe(3);
+		expect(secondTaskBodyFilteredList.length).toBe(1);
+	});
 	
 	//tasks that are displyed can be filterd by completed/not completed, date/range, text body and by list 
-	
+	it("multiple filters can be given for the filtering",function(){
+		
+		spyOn(window.MeDo.TaskManager,"GetTasks").and.returnValue(testToDoItems);
+		
+		var firstFilter = {
+			"ScheduleDateRange":{
+						"From" : new Date(2016,2,26),
+						"To" : new Date(2016,2,28)
+					},
+			"TaskBody": "Buy",
+			"ActiveList": "personal",
+			"Completed": false
+		};
+		
+				
+		var firstFilteredList = window.MeDo.App.GetTaskList(firstFilter);
+		
+		//ensure our spy is working
+		expect(window.MeDo.TaskManager.GetTasks).toHaveBeenCalled()
+		expect(firstFilteredList.length).toBe(2);
+		
+	});
 });

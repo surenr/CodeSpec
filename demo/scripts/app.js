@@ -101,11 +101,59 @@ var getRandomColor  = function(){
 	
 	app.GetTaskList = function(filter){
 		if(!filter || Object.keys(filter).length==0) return common.MeDo.TaskManager.GetTasks();
-		return _.filter(common.MeDo.TaskManager.GetTasks(),function(object){
+		var filterFunction = function(object){
 			var returnBool = true;
-			if(filter["Completed"])
-				returnBool = returnBool && object.isCompleted==filter["Completed"];
-		});
+			var completedStatus = {consider:false, status:false}, 
+				activeList = {consider:false, status:false}, 
+				dateRange = {consider:false, status:false}, 
+				taskBody = {consider:false, status:false};
+			
+			if(filter["Completed"]!=undefined){
+				completedStatus.consider = true;
+				completedStatus.status =  object.isCompleted==filter["Completed"];
+			}
+			
+			if(filter["ActiveList"]!= undefined){
+				var activeListIndex = common.MeDo.ListManager.GetListById(filter["ActiveList"]);
+				activeList.consider = true;
+				if(activeListIndex==-1){
+					activeList.status =  false;
+				}
+				else{
+					var listIndex = _.indexOf(object.inLists,activeListIndex);
+					if(listIndex==-1) {
+						activeList.status= false;
+					}
+					else {
+						activeList.status = true
+					}
+					
+				}
+			}
+			
+			if(filter["ScheduleDateRange"]!=undefined){
+				dateRange.consider = true;
+				dateRange.status = object.scheduledDate>=filter["ScheduleDateRange"]["From"] && 
+				object.scheduledDate<=filter["ScheduleDateRange"]["To"];
+			}
+			
+			if(filter["TaskBody"]!=undefined){
+				taskBody.consider = true
+				taskBody.status = object.body.toLowerCase().indexOf(filter["TaskBody"].toLowerCase())!=-1;
+			}
+			
+			if(completedStatus.consider)
+				returnBool = returnBool && completedStatus.status;
+			if(activeList.consider)
+				returnBool = returnBool && activeList.status;
+			if(dateRange.consider)
+				returnBool = returnBool && dateRange.status;
+			if(taskBody.consider)
+				returnBool = returnBool && taskBody.status;
+			
+			return returnBool;
+		};
+		return _.filter(common.MeDo.TaskManager.GetTasks(),filterFunction);
 	};
 	if(!common.MeDo) common.MeDo = {};	
 	common.MeDo.App = app;
