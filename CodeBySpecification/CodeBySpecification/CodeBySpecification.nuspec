@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>CodeSpec</id>
-    <version>1.5</version>
+    <version>1.7</version>
     <title>Zero Code UI Testing For .NET</title>
     <authors>Suren Rodrigo</authors>
     <owners>Suren Rodrigo</owners>
@@ -11,8 +11,8 @@
     <iconUrl>https://raw.githubusercontent.com/surenr/CodeSpec/master/icon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>CodeSpec is a framework that is created to allow users to write UI tests without writing a single line of test code.</description>
-    <releaseNotes>Support for IFrames is Added. Also Support for Apium based Android testing, Reporting and video recording is provided.</releaseNotes>
-    <copyright>Copyright 2015</copyright>
+    <releaseNotes>Support for IFrames is Added. Stabalized the code and ensured it works with latest versions. Fixed Bugs</releaseNotes>
+    <copyright>Copyright 2016</copyright>
     <tags></tags>
   </metadata>
   <files>

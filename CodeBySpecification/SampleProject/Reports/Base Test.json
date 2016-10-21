@@ -1,0 +1,24 @@
+{
+  "title": "Base Test",
+  "description": "\tIn order to check ability of vedio capturing\r\n\tI want to google for some stuffs and record them",
+  "tags": [
+    "UIAutomationTest",
+    "UIAutomationReport"
+  ],
+  "scenarios": [
+    {
+      "title": "Google for Cats",
+      "startTime": "10/21/2016 6:56:37 PM",
+      "endTime": "10/21/2016 6:56:51 PM",
+      "tags": [],
+      "status": "ok"
+    },
+    {
+      "title": "Google for Dogs",
+      "startTime": "10/21/2016 6:56:51 PM",
+      "endTime": "10/21/2016 6:56:56 PM",
+      "tags": [],
+      "status": "ok"
+    }
+  ]
+}

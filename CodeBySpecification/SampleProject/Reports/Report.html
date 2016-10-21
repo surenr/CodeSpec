@@ -1,0 +1,109 @@
+<style media="screen">
+body{
+  padding: 0;margin: 0;
+  font-family: monospace;
+}
+h2{
+  font-family: monospace;
+}
+h3{
+  font-family: monospace;
+}
+hr{
+  border: none;
+  border-top: 1px solid #ccc;
+}
+ul{
+  padding: 0;
+}
+.header{
+  background: #E6E6E6;
+  border-bottom: 1px solid #D6D6D6;
+  padding: 1px 15px;
+  color: #717171;
+  font-family: monospace;
+}
+.container{
+  padding: 20px;
+}
+.feature{
+  border: 1px solid #CECECE;
+  padding: 30px;
+  box-shadow: 1px 1px 1px 1px #E0E0E0;
+  margin-bottom: 10px;
+  padding-top: 40px;
+}
+.scenario{
+  cursor: pointer;
+  list-style: none;
+  border: 1px solid #eee;
+  padding: 10px;
+  margin: 10px 0;
+}
+.scenario h3{
+  margin: 5px;
+  line-height: 32px;
+  height: 32px;
+}
+
+.scenario h3 img{
+  height: 16px;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: normal;
+}
+
+.OK{
+  border: 1px solid #2B9642;
+}
+.ERROR{
+  border: 1px solid #E0626E;
+}
+</style>
+<body>
+  <div class="header"><h1>CodeSpec 1.0</h1></div>
+  <div class="container">
+
+      <div class="feature">
+        <h2>Base Test</h2>
+        <hr>
+
+        <p>	In order to check ability of vedio capturing
+	I want to google for some stuffs and record them</p>
+        <ul>
+
+            <li id="el-0-0" class="scenario OK" onclick="togglePanel(this.id)">
+              <h3>
+                  <img  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAQCAYAAADJViUEAAABOklEQVQoU5XTzyvlURjH8ZcFko2VHymSJEozkkJpFlZWsxAaSWEWWLCzkP/AQklRlKYZG6WRlY2F2IgmUUiShZBsLCYJpa/Oreu698qpZ3HOed7P+Tyfp5Mh/arCUaqUjDRsDg5Qg/tkeengfsyjDwufhf+hAJeo/wzciA00YBtN2EksEMmuQBHyQ0SvteIUXVhCCdZwExdXEdyJX8jGHq5DTGIftRgJLRTiKx7QEzPsG1awip94TNJjVjAuUvUdm/FuVwdpJ2jDXVyBPPxFWWjpdfaJoyrGOdqDkhgf7RdRiqvYYSJciePQ3y1asB4MvUA5zlLBvRjDD8yiDrsYwDLG8ScVPIcO5OI3JjCKbvwP0odSwYd4QpSwFWdYM2bwjC/J4OgjDGIqFEicViaGMR3m/M7tD37o2+sXi4E+jGE1PSsAAAAASUVORK5CYII=" />
+
+                Google for Cats
+              </h3>
+              <div  id="panel-el-0-0" style="display:none">
+                Start time : 10/21/2016 6:56:37 PM <br>
+                End time : 10/21/2016 6:56:51 PM <br>
+                              </div>
+            </li>
+            <li id="el-0-1" class="scenario OK" onclick="togglePanel(this.id)">
+              <h3>
+                  <img  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAQCAYAAADJViUEAAABOklEQVQoU5XTzyvlURjH8ZcFko2VHymSJEozkkJpFlZWsxAaSWEWWLCzkP/AQklRlKYZG6WRlY2F2IgmUUiShZBsLCYJpa/Oreu698qpZ3HOed7P+Tyfp5Mh/arCUaqUjDRsDg5Qg/tkeengfsyjDwufhf+hAJeo/wzciA00YBtN2EksEMmuQBHyQ0SvteIUXVhCCdZwExdXEdyJX8jGHq5DTGIftRgJLRTiKx7QEzPsG1awip94TNJjVjAuUvUdm/FuVwdpJ2jDXVyBPPxFWWjpdfaJoyrGOdqDkhgf7RdRiqvYYSJciePQ3y1asB4MvUA5zlLBvRjDD8yiDrsYwDLG8ScVPIcO5OI3JjCKbvwP0odSwYd4QpSwFWdYM2bwjC/J4OgjDGIqFEicViaGMR3m/M7tD37o2+sXi4E+jGE1PSsAAAAASUVORK5CYII=" />
+
+                Google for Dogs
+              </h3>
+              <div  id="panel-el-0-1" style="display:none">
+                Start time : 10/21/2016 6:56:51 PM <br>
+                End time : 10/21/2016 6:56:56 PM <br>
+                              </div>
+            </li>
+        </ul>
+      </div>
+  </div>
+  <script>
+  function togglePanel(id)
+  {
+
+    scenario =	document.querySelector('#panel-'+id);
+    scenario.style.display = scenario.style.display === 'none' ? '' : 'none';
+  }
+
+  </script>
+</body>

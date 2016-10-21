@@ -7,38 +7,30 @@
 			<stepAssembly assembly="CodeBySpecification" />
 		</stepAssemblies>
 	</specFlow>
-    <appSettings xdt:Transform="Insert">
+	<appSettings xdt:Transform="Insert">
 
-	<!-- Web Testing related Settings -->
-	 <add key="UI.Tests.SUT.Url" value="http://surenr.github.io/CodeSpec/demo/"  />
-	 <add key="UI.Tests.Timeout" value="10" />
-	 
-	 <!-- Uncomment the required browser. When testing Android devices you need to uncomment Android browser -->
-	 <!-- NB: Only one browser can be uncommented at any given time. -->
-	 <add key="UI.Tests.Target.Browser" value="FireFox" /> 
-	 <!-- <add key="UI.Tests.Target.Browser" value="InternetExplorer" /> -->
-	 <!--<add key="UI.Tests.Target.Browser" value="Chrome" /> -->
-	 <!--<add key="UI.Tests.Target.Browser" value="Android" /> -->
-	
-	 
-	<!-- Mobile Testing related settings. We use APIUM to support mobile testing. Please provide the required configurations below -->
-	 <add key="UI.Tests.Appium.URI" value="APIUM_SERVER_URL" />
-	 <add key="UI.Tests.Appium.capability.platformName" value="ANDROID_OR_IOS" />
-	 <add key="UI.Tests.Appium.capability.platformVersion" value="PLATFORM_VERSION" />
-	 <add key="UI.Tests.Appium.capability.deviceName" value="MOBILE_DEVICE_NAME" />
-	 <add key="UI.Tests.Appium.capability.bundleId" value="BUNDLE_NAME_OF_THE_APP" />
+		<!-- Web Testing related Settings -->
+		<add key="UI.Tests.SUT.Url" value="http://surenr.github.io/CodeSpec/demo/" />
+		<add key="UI.Tests.Timeout" value="10" />
 
-  <add key="UI.Tests.Reports.output.path" value="$FullPath$Reports" /> <!-- The test result report is generated here. -->
-	<!-- 	You can chose to have a CSV based object repository. Refer to Tutorial for more information -->
-	<add key="UI.Tests.Object.Definitions.Path" value="$FullPath$ObjectRepo"/> <!-- This folder must be available. Please create it if it doesn't exists -->
-	<add key="ClientSettingsProvider.ServiceUri" value="" />
-  </appSettings>
-	<runtime>
-			<assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
-				<dependentAssembly>
-					<assemblyIdentity name="Newtonsoft.Json" publicKeyToken="30ad4fe6b2a6aeed" culture="neutral" />
-					<bindingRedirect oldVersion="0.0.0.0-7.0.0.0" newVersion="7.0.0.0" />
-				</dependentAssembly>
-			</assemblyBinding>
-		</runtime>
+		<!-- Uncomment the required browser. When testing Android devices you need to uncomment Android browser -->
+		<!-- NB: Only one browser can be uncommented at any given time. -->
+		<add key="UI.Tests.Target.Browser" value="FireFox" />
+		<!-- <add key="UI.Tests.Target.Browser" value="InternetExplorer" /> -->
+		<!--<add key="UI.Tests.Target.Browser" value="Chrome" /> -->
+		<!--<add key="UI.Tests.Target.Browser" value="Android" /> -->
+
+		<add key="UI.Tests.Reports.output.path" value="$FullPath$Reports" />
+		<!-- The test result report is generated here. -->
+
+		<add key="UI.Tests.Screenshots.output.path" value="$FullPath$Screenshots" />
+		<!-- The screen shots are stored here. -->
+
+		<!-- 	You can chose to have a CSV based object repository. Refer to Tutorial for more information -->
+		<add key="UI.Tests.Object.Definitions.Path" value="$FullPath$ObjectRepo" />
+		<!-- This folder must be available. Please create it if it doesn't exists -->
+
+		<add key="UI.Tests.Object.Drivers.Path" value="$FullPath$Drivers" />
+		<add key="ClientSettingsProvider.ServiceUri" value="" />
+	</appSettings>
 </configuration>

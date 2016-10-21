@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<OrderedTest name="UserDashboard" storage="c:\users\milinduk\documents\codespec\codebyspecification\codespecsampletest\orderedtests\userdashboard.orderedtest" id="ae3a8234-7cba-4813-aec8-8871762c4ec4" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
-  <TestLinks>
-    <TestLink id="f44aefc9-8d1b-55c1-ffdb-b6c9f3c80884" name="GivenIGoToDashboard" storage="..\bin\debug\codespecsampletest.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-    <TestLink id="37a75e51-c21b-24ec-bede-f27a2308ee20" name="LoginToTheSystem" storage="..\bin\debug\codespecsampletest.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-    <TestLink id="75b41bec-7ef6-c536-0c46-18f5b603ac34" name="ChangeMyName" storage="..\bin\debug\codespecsampletest.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  </TestLinks>
-</OrderedTest>

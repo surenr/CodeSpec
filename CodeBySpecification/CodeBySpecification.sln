@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeBySpecification", "CodeBySpecification\CodeBySpecification.csproj", "{814D506D-78ED-4A55-A1E9-83343C35DE10}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -16,16 +16,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestFramework.Base", "TestF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObjectRepository.Base", "ObjectRepository.Base\ObjectRepository.Base.csproj", "{AF521C77-3AE2-43BA-B1F6-9CEEC71A55EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleWebProjectTest", "CodeSpecSampleTest\SampleWebProjectTest.csproj", "{584B8F4D-20B6-44C6-BCCE-3E3F71158027}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenRecorder.Base", "ScreenRecorder.Base\ScreenRecorder.Base.csproj", "{FAA221C6-BE9E-4FC2-9B7D-3FD62536F16C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Report.Base", "Report.Base\Report.Base.csproj", "{4FBFD570-AC63-40B9-ACA9-89C9EDD3C968}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatatRepository.Base", "DatatRepository.Base\DatatRepository.Base.csproj", "{F0069B7E-8A66-4715-B5FD-5BA00BA619B0}"
 	ProjectSection(ProjectDependencies) = postProject
 		{0D000C6F-12E9-4135-BD46-81FE6A1865D4} = {0D000C6F-12E9-4135-BD46-81FE6A1865D4}
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleProject", "SampleProject\SampleProject.csproj", "{336592C2-4A4B-4D6A-A235-C3E3778AF52F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,14 +51,6 @@ Global
 		{AF521C77-3AE2-43BA-B1F6-9CEEC71A55EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF521C77-3AE2-43BA-B1F6-9CEEC71A55EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF521C77-3AE2-43BA-B1F6-9CEEC71A55EB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{584B8F4D-20B6-44C6-BCCE-3E3F71158027}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{584B8F4D-20B6-44C6-BCCE-3E3F71158027}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{584B8F4D-20B6-44C6-BCCE-3E3F71158027}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{584B8F4D-20B6-44C6-BCCE-3E3F71158027}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FAA221C6-BE9E-4FC2-9B7D-3FD62536F16C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FAA221C6-BE9E-4FC2-9B7D-3FD62536F16C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FAA221C6-BE9E-4FC2-9B7D-3FD62536F16C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FAA221C6-BE9E-4FC2-9B7D-3FD62536F16C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4FBFD570-AC63-40B9-ACA9-89C9EDD3C968}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4FBFD570-AC63-40B9-ACA9-89C9EDD3C968}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4FBFD570-AC63-40B9-ACA9-89C9EDD3C968}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -69,6 +59,10 @@ Global
 		{F0069B7E-8A66-4715-B5FD-5BA00BA619B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F0069B7E-8A66-4715-B5FD-5BA00BA619B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F0069B7E-8A66-4715-B5FD-5BA00BA619B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{336592C2-4A4B-4D6A-A235-C3E3778AF52F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{336592C2-4A4B-4D6A-A235-C3E3778AF52F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{336592C2-4A4B-4D6A-A235-C3E3778AF52F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{336592C2-4A4B-4D6A-A235-C3E3778AF52F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

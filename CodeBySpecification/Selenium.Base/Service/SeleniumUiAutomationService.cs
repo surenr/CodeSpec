@@ -1,23 +1,21 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using CodeBySpecification.API.Domain;
 using CodeBySpecification.API.Service.Api;
-using ObjectRepository.Base.Service;
 using DataRepository.Base.Service;
+using ObjectRepository.Base.Service;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 using Selenium.Base.Api;
 using Selenium.Base.Browsers;
 using TestFramework.Base.Service;
-using OpenQA.Selenium.Appium.Android;
-using OpenQA.Selenium.Appium;
-using System.IO;
-using System.Drawing.Imaging;
 
 namespace Selenium.Base.Service
 {
@@ -27,7 +25,7 @@ namespace Selenium.Base.Service
 		private readonly string SutUrl = ConfigurationManager.AppSettings["UI.Tests.SUT.Url"];
 		private readonly ITestAssertService assert = new MSTestAssertService();
 		private readonly IObjectRepoService objectRepoManager = new CSVObjectRepositoryService();
-        private readonly IDataRepoService dataRepoManager = new CSVDataRepositoryService();
+		private readonly IDataRepoService dataRepoManager = new CSVDataRepositoryService();
 		private string objectRepoResource = null;
 
 		public object GetBrowser { get; set; }
@@ -85,14 +83,14 @@ namespace Selenium.Base.Service
 			element.SendKeys(text);
 		}
 
-        public virtual void SelectValueOf(string elementKey, string text, string selectionMethod = null, string selection = null)
-        {
-            var element = selectionMethod != null ? GetElement(elementKey, selectionMethod, selection) : GetElementByKey(elementKey);
-            if (element == null) assert.Fail("\"" + elementKey + "\" is not avilable to input the value \"" + text + "\"");
-            new SelectElement(element).SelectByText(text);
-        }
+		public virtual void SelectValueOf(string elementKey, string text, string selectionMethod = null, string selection = null)
+		{
+			var element = selectionMethod != null ? GetElement(elementKey, selectionMethod, selection) : GetElementByKey(elementKey);
+			if (element == null) assert.Fail("\"" + elementKey + "\" is not avilable to input the value \"" + text + "\"");
+			new SelectElement(element).SelectByText(text);
+		}
 
-        public void GotoUrl(string url)
+		public void GotoUrl(string url)
 		{
 			var driver = ((IWebDriver) GetBrowser);
 			driver.Navigate().GoToUrl(new Uri(url));
@@ -171,10 +169,8 @@ namespace Selenium.Base.Service
 			{
 				new FireFoxBrowser(browserType),
 				new IEBrowser(browserType),
-				new ChromeBrowser(browserType),
-                new AndroidBrowser(browserType),
-                new iOSBrowser(browserType),
-            };
+				new ChromeBrowser(browserType)
+				};
 
 			if (browser == null)
 			{
@@ -188,8 +184,8 @@ namespace Selenium.Base.Service
 				browser.Manage().Window.Maximize();
 				if (browserType != "Android" && browserType != "iOS")
 				{
-                    browser.Manage().Cookies.DeleteAllCookies();
-                }
+					browser.Manage().Cookies.DeleteAllCookies();
+				}
 				GetBrowser = browser;
 			}
 			if (objectRepoManager.ObjectCount() == 0)
@@ -204,7 +200,7 @@ namespace Selenium.Base.Service
 			var driver = (IWebDriver) GetBrowser;
 			var action = new Actions(driver);
 			action.DragAndDrop(locatorFrom, locatorTo).Perform();
-        }
+		}
 
 		public void DragAndDrop(string dragElementKey, string dropElementKey, string dragElementSelectionMethod = null, string dragElementSelection = null, string dropElementKeySelectionMethod = null, string dropElementKeySelection = null)
 		{
@@ -283,48 +279,48 @@ namespace Selenium.Base.Service
 			assert.IsEqual(value, valueElement);
 		}
 
-        public void switchToFrame(string selectionMethod, string selection)
-        {
+		public void switchToFrame(string selectionMethod, string selection)
+		{
 			var driver = ((IWebDriver) GetBrowser);
-            driver.SwitchTo().Frame(GetElementBy(selectionMethod, selection));
-        }
+			driver.SwitchTo().Frame(GetElementBy(selectionMethod, selection));
+		}
 
-        public void switchToDefaultContent()
-        {
+		public void switchToDefaultContent()
+		{
 			var driver = ((IWebDriver) GetBrowser);
-            driver.SwitchTo().DefaultContent();
-        }
+			driver.SwitchTo().DefaultContent();
+		}
 
-        public void GetTheValuesFrom(string objectRepoResource)
-        {
-            dataRepoManager.Populate(objectRepoResource);
-        }
+		public void GetTheValuesFrom(string objectRepoResource)
+		{
+			dataRepoManager.Populate(objectRepoResource);
+		}
 
-        public void GetScreenshot()
-        {
-            ITakesScreenshot takesScreenshot = (IWebDriver)GetBrowser as ITakesScreenshot;
-            if (takesScreenshot != null)
-            {
-                var screenshot = takesScreenshot.GetScreenshot();
+		public void GetScreenshot()
+		{
+			ITakesScreenshot takesScreenshot = (IWebDriver) GetBrowser as ITakesScreenshot;
+			if (takesScreenshot != null)
+			{
+				var screenshot = takesScreenshot.GetScreenshot();
 
-                string screenshotFilePath =  Path.Combine(ConfigurationManager.AppSettings["UI.Tests.Reports.output.path"] + "\\screenshot\\", string.Format("{0:yyyy-MM-dd_hh-mm-ss-tt}", DateTime.Now) + "_screenshot.png");
+				string screenshotFilePath = Path.Combine(ConfigurationManager.AppSettings["UI.Tests.Screenshots.output.path"] + "\\", string.Format("{0:yyyy-MM-dd_hh-mm-ss-tt}", DateTime.Now) + "_screenshot.png");
 
-                screenshot.SaveAsFile(screenshotFilePath, ImageFormat.Png);
+				screenshot.SaveAsFile(screenshotFilePath, ImageFormat.Png);
 
-                Console.WriteLine("Screenshot: {0}", new Uri(screenshotFilePath));
-            }
-        }
+				Console.WriteLine("Screenshot: {0}", new Uri(screenshotFilePath));
+			}
+		}
 
-        public void typeToPrompt(string text)
-        {
-            var driver = ((IWebDriver)GetBrowser);
-            driver.SwitchTo().Alert().SendKeys(text);
-        }
+		public void typeToPrompt(string text)
+		{
+			var driver = ((IWebDriver) GetBrowser);
+			driver.SwitchTo().Alert().SendKeys(text);
+		}
 
-        public void textInAlert(string text)
-        {
-            var driver = ((IWebDriver)GetBrowser);
-            assert.IsEqual(text, driver.SwitchTo().Alert().Text);
-        }
-    }
+		public void textInAlert(string text)
+		{
+			var driver = ((IWebDriver) GetBrowser);
+			assert.IsEqual(text, driver.SwitchTo().Alert().Text);
+		}
+	}
 }
